@@ -46,7 +46,7 @@ describe('desktop Host pipe protocol', () => {
         headers: [['content-type', 'application/json']],
         hasBody: true,
       },
-      { type: 'data', streamId: 7, data: Buffer.from('{"ok":true}') },
+      { type: 'data', streamId: 7, data: new TextEncoder().encode('{"ok":true}') },
       { type: 'end', streamId: 7 },
       { type: 'cancel', streamId: 7 },
     ])

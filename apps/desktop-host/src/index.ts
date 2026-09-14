@@ -279,7 +279,7 @@ interface NodeRequestInit extends RequestInit {
 export async function runDesktopHost(
   runtimeDir: string,
   projectDir: string,
-  writeResponse: (frame: Buffer) => Promise<void>,
+  writeResponse: (frame: Uint8Array) => Promise<void>,
   options: { allowLinkedPackages?: boolean } = {},
 ): Promise<DesktopHostController> {
   const absoluteProject = resolve(projectDir)
@@ -389,7 +389,7 @@ async function main(): Promise<void> {
   const requestPipe = createReadStream('', { fd: DESKTOP_REQUEST_PIPE_FD, autoClose: false })
   const responsePipe = createWriteStream('', { fd: DESKTOP_RESPONSE_PIPE_FD, autoClose: false })
   let responseWriteTail: Promise<void> = Promise.resolve()
-  const writeResponse = (frame: Buffer): Promise<void> => {
+  const writeResponse = (frame: Uint8Array): Promise<void> => {
     const write = responseWriteTail.then(async () => {
       if (responsePipe.destroyed) throw new Error('dsh desktop: Electron response pipe is unavailable')
       if (!responsePipe.write(frame)) await once(responsePipe, 'drain')

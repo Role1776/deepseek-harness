@@ -12,6 +12,7 @@
     { "path": "../../packages/boot/app-boot" },
     { "path": "../../packages/boot/cmdline" },
     { "path": "../../packages/client/connection/tsconfig.host.json" },
+    { "path": "../../packages/client/desktop-transport/tsconfig.host.json" },
     { "path": "../../packages/client/modules" },
     { "path": "../../packages/host/webserver" },
     { "path": "../../packages/util/launch-environment" }

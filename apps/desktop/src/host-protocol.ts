@@ -137,8 +137,9 @@ export class DesktopHostResponseDecoder {
    * @param chunk - next bytes read from the Host response pipe.
    * @returns complete frames in pipe order.
    */
-  push(chunk: Buffer): DesktopHostResponseFrame[] {
-    this.buffer = this.buffer.byteLength === 0 ? chunk : Buffer.concat([this.buffer, chunk])
+  push(chunk: Uint8Array): DesktopHostResponseFrame[] {
+    const bytes = Buffer.from(chunk.buffer, chunk.byteOffset, chunk.byteLength)
+    this.buffer = this.buffer.byteLength === 0 ? bytes : Buffer.concat([this.buffer, bytes])
     const frames: DesktopHostResponseFrame[] = []
     for (;;) {
       const frame = this.next()

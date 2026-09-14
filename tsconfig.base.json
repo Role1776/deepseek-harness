@@ -169,6 +169,8 @@
       "@deepseek-ai/dsh-client-ui-sidebar-files": ["./packages/client/ui-sidebar-files/src"],
       "@deepseek-ai/dsh-client-ui-sidebar-files/client": ["./packages/client/ui-sidebar-files/src/client"],
       "@deepseek-ai/dsh-client-store": ["./packages/client/store/src/index.ts"],
+      "@deepseek-ai/dsh-client-desktop-transport": ["./packages/client/desktop-transport/src/index.ts"],
+      "@deepseek-ai/dsh-client-desktop-transport/client": ["./packages/client/desktop-transport/src/client/index.ts"],
       "@deepseek-ai/dsh-client-ui-renderer": ["./packages/client/ui-renderer/src"],
       "@deepseek-ai/dsh-client-ui-renderer/client": ["./packages/client/ui-renderer/src/client"],
       "@deepseek-ai/dsh-client-ui-renderer/invariant": ["./packages/client/ui-renderer/src/invariant.ts"],

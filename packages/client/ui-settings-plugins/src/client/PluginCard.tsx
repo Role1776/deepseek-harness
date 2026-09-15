@@ -17,8 +17,8 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import clsx from 'clsx'
 import { IconChevronDownOutline14, Tag } from '@deepseek-ai/dsh-client-ui-primitives'
-import type { CardShell } from './card-form.ts'
-import type { PluginsSettingsLocaleKey } from './locales.ts'
+import type { CardShell } from '../model/card-form.ts'
+import type { PluginsSettingsLocaleKey } from '../model/locales.ts'
 import css from './PluginCard.module.css'
 
 /** Card chrome shared by every plugin section. */

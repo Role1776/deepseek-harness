@@ -3,8 +3,8 @@
 import type { InjectFace, PropsLocale, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
 import { ValueField } from './fields.tsx'
 import { PluginCard } from './PluginCard.tsx'
-import type { BashCardFace } from './bash-card-controller.ts'
-import type {} from './slot-contract.ts'
+import type { BashCardFace } from '../model/bash-card-controller.ts'
+import type {} from '../model/slots.ts'
 
 /** Props the renderer binds for the shell card. */
 export type BashCardProps =

@@ -4,7 +4,7 @@ import { useEffect, useId, useRef, useState } from 'react'
 import type {
   HostObservable, InjectFace, PropsLocale, PropsRenderSlots, PropsRuntime,
 } from '@deepseek-ai/dsh-client-ui-slots'
-import type { PluginsSettingsLocaleKey } from './locales.ts'
+import type { PluginsSettingsLocaleKey } from '../model/locales.ts'
 import css from './PluginsSettingsSection.module.css'
 
 /** One tab projected from a `settings.plugins.tab` contribution. */

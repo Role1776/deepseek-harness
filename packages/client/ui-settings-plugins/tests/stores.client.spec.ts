@@ -6,19 +6,19 @@
 import { describe, expect, it, vi } from 'vitest'
 import type { SettingsPathOpView } from '@deepseek-ai/dsh-api-remotes/client'
 import { RemoteError, stubSettingsScope, type StubSettingsScope } from '@deepseek-ai/dsh-client-test-runtime'
-import { CardForm, numberField, textField } from '../src/client/card-form.ts'
-import { AgentLoopCardController, type AgentLoopSettings } from '../src/client/agent-loop-card-controller.ts'
-import { BashCardController, type BashSettings } from '../src/client/bash-card-controller.ts'
+import { CardForm, numberField, textField } from '../src/model/card-form.ts'
+import { AgentLoopCardController, type AgentLoopSettings } from '../src/model/agent-loop-card-controller.ts'
+import { BashCardController, type BashSettings } from '../src/model/bash-card-controller.ts'
 import {
   SettingsDescribeMirror, type SettingsMirrorSnapshot,
 } from '@deepseek-ai/dsh-client-ui-settings/src/model/settings-mirror.ts'
-import { ConfigurablePluginsTabController } from '../src/client/tab-store.ts'
+import { ConfigurablePluginsTabController } from '../src/model/tab-store.ts'
 import {
   SubagentModelSelectionCardController,
   subagentModelCandidates,
   type SubagentModelSelectionSettings,
-} from '../src/client/subagent-model-selection-card-controller.ts'
-import { WebSearchCardController, type WebSearchSettings } from '../src/client/web-search-card-controller.ts'
+} from '../src/model/subagent-model-selection-card-controller.ts'
+import { WebSearchCardController, type WebSearchSettings } from '../src/model/web-search-card-controller.ts'
 
 /** Make the stub behave like a Host that accepts every write. */
 function acceptWrites<T>(host: StubSettingsScope<T>): void {

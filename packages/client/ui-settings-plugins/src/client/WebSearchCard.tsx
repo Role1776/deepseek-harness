@@ -7,8 +7,8 @@
 import type { InjectFace, PropsLocale, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
 import { SecretField, ValueField } from './fields.tsx'
 import { PluginCard } from './PluginCard.tsx'
-import type { WebSearchCardFace } from './web-search-card-controller.ts'
-import type {} from './slot-contract.ts'
+import type { WebSearchCardFace } from '../model/web-search-card-controller.ts'
+import type {} from '../model/slots.ts'
 
 /** Props the renderer binds for the web-search card. */
 export type WebSearchCardProps =

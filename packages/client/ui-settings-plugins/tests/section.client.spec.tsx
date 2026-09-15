@@ -16,13 +16,13 @@ import { SubagentModelSelectionCard } from '../src/client/SubagentModelSelection
 import type { SubagentModelSelectionCardProps } from '../src/client/SubagentModelSelectionCard.tsx'
 import { WebSearchCard } from '../src/client/WebSearchCard.tsx'
 import type { WebSearchCardProps } from '../src/client/WebSearchCard.tsx'
-import type { AgentLoopCardState } from '../src/client/agent-loop-card-controller.ts'
-import type { BashCardState } from '../src/client/bash-card-controller.ts'
-import type { CardFieldState, CardShell } from '../src/client/card-form.ts'
-import type { ConfigurablePluginsTabState } from '../src/client/tab-store.ts'
-import type { WebSearchCardState } from '../src/client/web-search-card-controller.ts'
-import type { SubagentModelSelectionCardState } from '../src/client/subagent-model-selection-card-controller.ts'
-import { en } from '../src/client/locales.ts'
+import type { AgentLoopCardState } from '../src/model/agent-loop-card-controller.ts'
+import type { BashCardState } from '../src/model/bash-card-controller.ts'
+import type { CardFieldState, CardShell } from '../src/model/card-form.ts'
+import type { ConfigurablePluginsTabState } from '../src/model/tab-store.ts'
+import type { WebSearchCardState } from '../src/model/web-search-card-controller.ts'
+import type { SubagentModelSelectionCardState } from '../src/model/subagent-model-selection-card-controller.ts'
+import { en } from '../src/model/locales.ts'
 
 afterEach(cleanup)
 

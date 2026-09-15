@@ -5,8 +5,8 @@ import type { InjectFace, PropsLocale, PropsRuntime } from '@deepseek-ai/dsh-cli
 import type {
   SubagentModelCandidate,
   SubagentModelSelectionCardFace,
-} from './subagent-model-selection-card-controller.ts'
-import type {} from './slot-contract.ts'
+} from '../model/subagent-model-selection-card-controller.ts'
+import type {} from '../model/slots.ts'
 import { PluginCard } from './PluginCard.tsx'
 import css from './SubagentModelSelectionCard.module.css'
 

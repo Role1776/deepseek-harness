@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { RemoteError } from '@deepseek-ai/dsh-client-test-runtime'
 import type { RemoteResult } from '@deepseek-ai/dsh-api-remotes/client'
 import { SettingsDescribeMirror } from '@deepseek-ai/dsh-client-ui-settings/src/model/settings-mirror.ts'
-import { SettingsDocumentStore } from '../src/client/settings-document-store.ts'
+import { SettingsDocumentStore } from '../src/model/settings-document-store.ts'
 
 /** Store over a real mirror derived from the same scripted context. */
 function derivedDocumentStore(remote: object) {

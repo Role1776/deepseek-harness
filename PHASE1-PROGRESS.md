@@ -30,10 +30,10 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | ui-schedule | done |
 | ui-session | done |
 | ui-settings | done |
-| ui-settings-general | pending |
+| ui-settings-general | done |
 | ui-settings-models | pending |
 | ui-settings-plugin-inventory | done |
-| ui-settings-plugins | pending |
+| ui-settings-plugins | done |
 | ui-sidebar | done |
 | ui-sidebar-documentpreview | pending |
 | ui-sidebar-files | done |
@@ -94,3 +94,4 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 - **Split the Service file, not just the folder.** ui-workspace `client/navigation.ts` mixed the framework-free `UiWorkspace` contract, its `declare module '@deepseek-ai/cordis'` merge, the `DirectoryBrowseError` class, and `recentWorkspace` with the `UiWorkspaceService extends Service` subclass. The pure parts moved to `model/navigation.ts`; the subclass stayed in `client/navigation.ts` and imports them back. The service spec then imports `UiWorkspaceService` from the view path and `DirectoryBrowseError` from the model path.
 - **A `contract/slots.ts` moves whole to `model/slots.ts`.** ui-workspace's type-only contract file (owner props, injected shares, composed props, `SlotMap` merge) became `model/slots.ts` with its only relative import (`../stores.ts` → `./stores.ts`); the client `index.ts` re-exports the same names from the new path, and the catalog regen repins every `source`.
 - **Exemption entries for files that did not move stay.** ui-workspace's four `vitest.config.ts` exclusions name view files (`client/index.ts`, the two top-level `.tsx`, `rows/WorkspaceBrowser.tsx`) that remain in place, so none is removed; the moved model files are gated and hit 100% through the existing specs.
+- **A type-only contract without a `SlotMap` merge keeps its own name.** ui-settings-plugins' `slot-contract.ts` declares `settings.plugin.item` and moved whole to `model/slots.ts` (the catalog repinned its `source`); ui-settings-general's `shell-contract.ts` holds only owner/injected/composed props types and no `SlotMap` merge — the `LocaleNamespaceMap` merge stays in `client/index.ts` — so it moved as `model/shell-contract.ts` rather than being renamed `slots.ts`. Check for the `declare module` before choosing the filename.

@@ -9,8 +9,8 @@
 
 import { Fragment } from 'react'
 import type { InjectFace, PropsLocale, PropsRenderSlots, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
-import type {} from './slot-contract.ts'
-import type { ConfigurablePluginsTabFace } from './tab-store.ts'
+import type {} from '../model/slots.ts'
+import type { ConfigurablePluginsTabFace } from '../model/tab-store.ts'
 import css from './PluginsSettingsSection.module.css'
 
 /** Props the renderer binds for the configurable tab. */

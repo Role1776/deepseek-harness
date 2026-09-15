@@ -3,8 +3,8 @@
 import type { InjectFace, PropsLocale, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
 import { ValueField } from './fields.tsx'
 import { PluginCard } from './PluginCard.tsx'
-import type { AgentLoopCardFace } from './agent-loop-card-controller.ts'
-import type {} from './slot-contract.ts'
+import type { AgentLoopCardFace } from '../model/agent-loop-card-controller.ts'
+import type {} from '../model/slots.ts'
 
 /** Props the renderer binds for the agent-loop card. */
 export type AgentLoopCardProps =

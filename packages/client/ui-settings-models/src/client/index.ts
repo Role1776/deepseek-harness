@@ -21,16 +21,16 @@ import { DeepSeekOnboardingDialog } from './DeepSeekOnboardingDialog.tsx'
 import type { DeepSeekOnboardingInjected } from './DeepSeekOnboardingDialog.tsx'
 import { WelcomeNotice } from './WelcomeNotice.tsx'
 import type { WelcomeNoticeInjected } from './WelcomeNotice.tsx'
-import { decodeWelcomeSection, WelcomeNoticeStore } from './welcome-store.ts'
-import { ModelsSettingsStore } from './store.ts'
-import { createModelsOperations } from './operations.ts'
-import { createSettingsSchemaOperations } from './schema-operations.ts'
-import { en, zh, type ModelsKey } from './locales.ts'
+import { decodeWelcomeSection, WelcomeNoticeStore } from '../model/welcome-store.ts'
+import { ModelsSettingsStore } from '../model/store.ts'
+import { createModelsOperations } from '../model/operations.ts'
+import { createSettingsSchemaOperations } from '../model/schema-operations.ts'
+import { en, zh, type ModelsKey } from '../model/locales.ts'
 import { WELCOME_NOTICE_SETTINGS_NAMESPACE } from '../onboarding-copy.ts'
 
 export type { ModelsSectionInjected, ModelsSectionProps } from './ModelsSection.tsx'
-export type { ModelsFooterOwnerProps, ProviderCardExtrasOwnerProps } from './slot-contract.ts'
-export type { ModelsKey } from './locales.ts'
+export type { ModelsFooterOwnerProps, ProviderCardExtrasOwnerProps } from '../model/slots.ts'
+export type { ModelsKey } from '../model/locales.ts'
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {
   interface LocaleNamespaceMap {
@@ -43,8 +43,8 @@ declare module '@deepseek-ai/dsh-client-ui-slots' {
 const NS = 'settings.models'
 export type {
   ModelsSettingsState, ProviderDirectoryEntry, ProviderRow,
-} from './store.ts'
-export type { ModelDiscoveryOutcome, ModelsOperations, SettingsWriteOutcome } from './operations.ts'
+} from '../model/store.ts'
+export type { ModelDiscoveryOutcome, ModelsOperations, SettingsWriteOutcome } from '../model/operations.ts'
 
 /**
  * Refetch the page snapshot only after its first load: an unopened Models

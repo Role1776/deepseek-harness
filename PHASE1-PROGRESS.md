@@ -26,12 +26,12 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | ui-plan | done |
 | ui-primitives | pending |
 | ui-reference | done |
-| ui-renderer | pending |
+| ui-renderer | done |
 | ui-schedule | done |
 | ui-session | done |
 | ui-settings | done |
 | ui-settings-general | done |
-| ui-settings-models | pending |
+| ui-settings-models | done |
 | ui-settings-plugin-inventory | done |
 | ui-settings-plugins | done |
 | ui-sidebar | done |
@@ -95,3 +95,8 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 - **A `contract/slots.ts` moves whole to `model/slots.ts`.** ui-workspace's type-only contract file (owner props, injected shares, composed props, `SlotMap` merge) became `model/slots.ts` with its only relative import (`../stores.ts` → `./stores.ts`); the client `index.ts` re-exports the same names from the new path, and the catalog regen repins every `source`.
 - **Exemption entries for files that did not move stay.** ui-workspace's four `vitest.config.ts` exclusions name view files (`client/index.ts`, the two top-level `.tsx`, `rows/WorkspaceBrowser.tsx`) that remain in place, so none is removed; the moved model files are gated and hit 100% through the existing specs.
 - **A type-only contract without a `SlotMap` merge keeps its own name.** ui-settings-plugins' `slot-contract.ts` declares `settings.plugin.item` and moved whole to `model/slots.ts` (the catalog repinned its `source`); ui-settings-general's `shell-contract.ts` holds only owner/injected/composed props types and no `SlotMap` merge — the `LocaleNamespaceMap` merge stays in `client/index.ts` — so it moved as `model/shell-contract.ts` rather than being renamed `slots.ts`. Check for the `declare module` before choosing the filename.
+- **A renderer package's only model code is its resolution/ordering, not its React machinery.** ui-renderer's `scoped-slots.tsx` dispatch (single/keyed/list/chain election, dry cells, row order) was pure but returned `ReactNode`, so it became `model/outlet-plan.ts` returning a discriminated `OutletPlan`; the view keeps the `guarded` boundary/kit synthesis and switches over the plan. The cordis `Service` (`registry.ts`), React contexts/hooks (`bindings.tsx`, `bind.ts`), JSX components, and the DOM mount (`index.ts`) all stay view.
+- **A new test file MUST carry the `.client.` infix.** A spec named `outlet-plan.spec.ts` imported client-only `ui-slots` source, so the root host test program (`tsconfig.host.json`) pulled the client tree in and `tsc -b` failed with cascaded TS6307 errors across `ui-slots`/`store`. Rename to `outlet-plan.client.spec.ts`; the client program is selected by that infix.
+- **Repointing a spec's client import can drop a same-block import that did not match the grep.** ui-settings-models `provider-form.client.spec.tsx` imported `SettingsDescribeMirror` from ui-settings' model on the line between two `../src/client/*` imports; editing only the matched lines silently removed it. Read the whole import block before rewriting, not just grep hits.
+- **An exempt file that moves to `model` becomes gated and its stale exclusion must go.** ui-settings-models `welcome-store.ts` was listed in `vitest.config.ts` `coverage.exclude`; moving it to `model/` left the old path dead and the new model file under the 100% gate, which its existing `welcome-store.client.spec.ts` satisfies (its two pre-existing `v8 ignore` guards carry over). Remove the stale exemption; keep the still-exempt view file (`DeepSeekOnboardingDialog.tsx`).
+- **Extract the exported pure blocks, not every view-local predicate.** ui-settings-models moved its whole pure modules (`store`, `welcome-store`, `operations`, `schema-operations`, `apiKey`, `locales`, `slot-contract.ts` → `model/slots.ts`) plus the exported/standalone helper blocks (`deepseek-models.ts` capacity + validation, `section.ts` selectors/actions, `provider-editor.ts` draft/path-ops/ref). Unexported helpers that only gate one component's own render (e.g. ModelListEditor's `textOf`/`adopt`) stayed in the view. `src/onboarding-copy.ts` stays framework-free at the package root, as `theme-settings.ts` does in ui-theme.

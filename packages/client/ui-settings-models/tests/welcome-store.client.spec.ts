@@ -4,7 +4,7 @@ import { SettingsSchemaService } from '@deepseek-ai/dsh-client-ui-settings/src/c
 import { SettingsDescribeMirror } from '@deepseek-ai/dsh-client-ui-settings/src/model/settings-mirror.ts'
 import { SettingsScopeController } from '@deepseek-ai/dsh-client-ui-settings/src/model/settings-scope.ts'
 import { RemoteError } from '@deepseek-ai/dsh-client-test-runtime'
-import { decodeWelcomeSection, WelcomeNoticeStore } from '../src/client/welcome-store.ts'
+import { decodeWelcomeSection, WelcomeNoticeStore } from '../src/model/welcome-store.ts'
 import {
   WELCOME_NOTICE_ACK_FIELD, WELCOME_NOTICE_SETTINGS_NAMESPACE, WELCOME_NOTICE_VERSION,
 } from '../src/onboarding-copy.ts'

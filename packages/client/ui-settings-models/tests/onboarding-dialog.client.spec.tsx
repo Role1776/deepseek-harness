@@ -10,9 +10,9 @@ import { bindSnapshotSelector, RemoteError } from '@deepseek-ai/dsh-client-test-
 import { DeepSeekOnboardingDialog } from '../src/client/DeepSeekOnboardingDialog.tsx'
 import type { DeepSeekOnboardingDialogProps } from '../src/client/DeepSeekOnboardingDialog.tsx'
 import { SettingsDescribeMirror } from '@deepseek-ai/dsh-client-ui-settings/src/model/settings-mirror.ts'
-import { ModelsSettingsStore } from '../src/client/store.ts'
-import { createModelsOperations } from '../src/client/operations.ts'
-import { en } from '../src/client/locales.ts'
+import { ModelsSettingsStore } from '../src/model/store.ts'
+import { createModelsOperations } from '../src/model/operations.ts'
+import { en } from '../src/model/locales.ts'
 import { settingsSchema } from './settings-schema.client.ts'
 
 // Every fixture carries the resource hook the resources plugin merges into GlobalStandardProps.

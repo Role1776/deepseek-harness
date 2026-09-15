@@ -1,8 +1,8 @@
 /** Pure first-run readiness projection over the shared Models join. */
 import { describe, expect, it } from 'vitest'
 import type { CredentialInfo } from '@deepseek-ai/dsh-api-remotes/client'
-import type { ModelsSettingsState, ProviderRow } from '../src/client/store.ts'
-import { onboardingReadiness, providerUsable } from '../src/client/store.ts'
+import type { ModelsSettingsState, ProviderRow } from '../src/model/store.ts'
+import { onboardingReadiness, providerUsable } from '../src/model/store.ts'
 
 const missingCredential: CredentialInfo = { configured: false, writable: true }
 

@@ -8,21 +8,23 @@ import type {
   CredentialInfo, RemoteResult, SettingsNamespaceView,
 } from '@deepseek-ai/dsh-api-remotes/client'
 import type { JsonValue } from '@deepseek-ai/dsh-util-values'
+import { ModelsSection } from '../src/client/ModelsSection.tsx'
 import {
-  ModelsSection, needsSetup, providerCopy, providerTargetLabel, removeProviderProfile,
-} from '../src/client/ModelsSection.tsx'
+  needsSetup, providerCopy, providerTargetLabel, removeProviderProfile,
+} from '../src/model/section.ts'
 import type { ModelsSectionInjected, ModelsSectionProps } from '../src/client/ModelsSection.tsx'
-import { pathOps } from '../src/client/ProviderEditor.tsx'
+import { pathOps } from '../src/model/provider-editor.ts'
 import {
-  DeepSeekModelsEditor, formatCapacity, modelDrafts, parseCapacity, validateDeepSeekModels,
+  DeepSeekModelsEditor,
 } from '../src/client/DeepSeekModelsEditor.tsx'
-import { apiKeyFailure } from '../src/client/apiKey.ts'
+import { formatCapacity, modelDrafts, parseCapacity, validateDeepSeekModels } from '../src/model/deepseek-models.ts'
+import { apiKeyFailure } from '../src/model/apiKey.ts'
 import { SettingsDescribeMirror } from '@deepseek-ai/dsh-client-ui-settings/src/model/settings-mirror.ts'
-import { deriveKeyRef, ModelsSettingsStore } from '../src/client/store.ts'
-import { createModelsOperations } from '../src/client/operations.ts'
-import type { ModelsOperations } from '../src/client/operations.ts'
-import type { ProviderRow } from '../src/client/store.ts'
-import { en } from '../src/client/locales.ts'
+import { deriveKeyRef, ModelsSettingsStore } from '../src/model/store.ts'
+import { createModelsOperations } from '../src/model/operations.ts'
+import type { ModelsOperations } from '../src/model/operations.ts'
+import type { ProviderRow } from '../src/model/store.ts'
+import { en } from '../src/model/locales.ts'
 import { settingsSchema } from './settings-schema.client.ts'
 
 afterEach(cleanup)

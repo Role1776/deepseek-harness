@@ -1731,7 +1731,7 @@ export const CLIENT_SLOT_API: readonly ClientSlotEntry[] = [
     occupants: [],
     replaceRisk: 'none',
     example: 'return {\n  inject: [\'slots\'],\n  apply(ctx) {\n    ctx.slots.inject(\'settings.models.footer\', () => ctx.slots.register(\n      { name: \'settings.models.footer\', id: \'my-entry\', order: 100, label: \'My entry\' },\n      () => React.createElement(\'div\', null, \'hello\'),\n    ))\n  },\n}',
-    source: 'packages/client/ui-settings-models/src/client/slot-contract.ts:38',
+    source: 'packages/client/ui-settings-models/src/model/slots.ts:38',
   },
   {
     key: 'settings.models.provider-card',
@@ -1768,7 +1768,7 @@ export const CLIENT_SLOT_API: readonly ClientSlotEntry[] = [
     occupants: [],
     replaceRisk: 'none',
     example: 'return {\n  inject: [\'slots\'],\n  apply(ctx) {\n    ctx.slots.inject(\'settings.models.provider-card\', () => ctx.slots.register(\n      { name: \'settings.models.provider-card\', key: \'<one key the owner dispatches>\' },\n      () => React.createElement(\'div\', null, \'hello\'),\n    ))\n  },\n}',
-    source: 'packages/client/ui-settings-models/src/client/slot-contract.ts:33',
+    source: 'packages/client/ui-settings-models/src/model/slots.ts:33',
   },
   {
     key: 'settings.onboarding',

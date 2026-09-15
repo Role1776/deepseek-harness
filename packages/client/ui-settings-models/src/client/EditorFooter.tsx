@@ -14,7 +14,7 @@
  */
 
 import type { ReactNode } from 'react'
-import type { en } from './locales.ts'
+import type { en } from '../model/locales.ts'
 import styles from './ModelsSection.module.css'
 
 /** Props of {@link EditorFooter}. */

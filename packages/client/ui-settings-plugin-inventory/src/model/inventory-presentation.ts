@@ -143,7 +143,8 @@ export function groupEnabledIn(
   return found
 }
 
-/*
+/** Status-dot state for each fiber phase.
+ *
  * `pending` is the only phase with no work under way. `loading` and
  * `unloading` are both live transitions the Host is running — an async
  * disposer can hold `unloading` for a while — so both animate.
@@ -159,6 +160,7 @@ export const PHASE_DOT_STATES = {
 /** Enablement states one inventory row can report. */
 export type EnablementKind = 'enabled' | 'disabled' | 'conditional' | 'preset' | 'failed'
 
+/** Tag tone for each enablement state one inventory row can report. */
 export const TAG_TONES = {
   enabled: 'success',
   disabled: 'neutral',

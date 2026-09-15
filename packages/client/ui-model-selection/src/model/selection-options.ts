@@ -28,7 +28,10 @@ function descriptionOf(
   return key !== undefined && model.description === en[key] ? t(key) : model.description
 }
 
-/** Flatten the directory into popup rows; failure rows are listed for visibility but never selectable. */
+/** Flatten the directory into popup rows; failure rows are listed for visibility but never selectable.
+ * @param directory - Model directory snapshot for the Session.
+ * @param t - Locale translator for the model namespace.
+ * @returns Popup rows, one per listed model. */
 export function optionsOf(directory: ModelDirectoryState, t: TranslateNS<'model'>): SelectOption[] {
   const rows: SelectOption[] = []
   for (const group of directory.groups) {

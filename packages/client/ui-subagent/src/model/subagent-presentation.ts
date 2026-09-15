@@ -27,7 +27,10 @@ export function diagnosticReason(
   }
 }
 
-/** Compact token count shared in shape with the conversation stats strip. */
+/** Compact token count shared in shape with the conversation stats strip.
+ * @param value - Token count to format.
+ * @param t - Locale translator for the subagent namespace.
+ * @returns Localized compact token count. */
 export function formatTokens(value: number, t: TranslateNS<typeof NS>): string {
   const scaled = (next: number): string => next >= 100
     ? String(Math.round(next))
@@ -37,7 +40,9 @@ export function formatTokens(value: number, t: TranslateNS<typeof NS>): string {
   return t('tokens.million', { value: scaled(value / 1_000_000) })
 }
 
-/** Sum the four disjoint durable provider-usage buckets. */
+/** Sum the four disjoint durable provider-usage buckets.
+ * @param usage - Projected token usage, or undefined when absent.
+ * @returns The summed token count, or undefined without usage. */
 export function tokenTotal(
   usage: SessionProjectionMap['tokenUsage'] | undefined,
 ): number | undefined {
@@ -47,7 +52,11 @@ export function tokenTotal(
       + usage.cacheReadTokens + usage.cacheWriteTokens
 }
 
-/** Exact whole-second active-turn duration for one catalog row. */
+/** Exact whole-second active-turn duration for one catalog row.
+ * @param summary - Session summary carrying the subagent timing projection.
+ * @param activity - Whether the row's subagent is running or inactive.
+ * @param now - Current time for a running turn.
+ * @returns The active-turn duration in milliseconds, or undefined without timing. */
 export function activityDuration(
   summary: SessionSummary | undefined,
   activity: 'running' | 'inactive',
@@ -87,7 +96,10 @@ function splitDuration(ms: number): DurationParts {
   }
 }
 
-/** Format a duration with decreasing visual precision at larger scales. */
+/** Format a duration with decreasing visual precision at larger scales.
+ * @param ms - Duration in milliseconds.
+ * @param t - Locale translator for the subagent namespace.
+ * @returns Localized duration text. */
 export function formatDuration(ms: number, t: TranslateNS<typeof NS>): string {
   const { seconds, minutes, hours, days, totalMinutes, totalHours } = splitDuration(ms)
   if (days >= 365) {
@@ -125,7 +137,10 @@ export function formatDuration(ms: number, t: TranslateNS<typeof NS>): string {
   return t('duration.seconds', { seconds })
 }
 
-/** Preserve exact whole seconds for hover and accessible naming. */
+/** Preserve exact whole seconds for hover and accessible naming.
+ * @param ms - Duration in milliseconds.
+ * @param t - Locale translator for the subagent namespace.
+ * @returns Localized exact duration text. */
 export function formatExactDuration(ms: number, t: TranslateNS<typeof NS>): string {
   const { seconds, minutes, hours, days } = splitDuration(ms)
   return days === 0
@@ -138,7 +153,9 @@ export function formatExactDuration(ms: number, t: TranslateNS<typeof NS>): stri
     })
 }
 
-/** Claim the composer for one-shot history or an unavailable continuation owner. */
+/** Claim the composer for one-shot history or an unavailable continuation owner.
+ * @param owner - Composer chain props for the selected Session.
+ * @returns The read-only takeover reason, or null when the normal composer stays. */
 export function selectReadOnlySubagent(owner: ComposerChainProps): SubagentReadOnlyMatch | null {
   const subagent = owner.session?.subagent
   if (subagent === undefined || subagent === null) return null

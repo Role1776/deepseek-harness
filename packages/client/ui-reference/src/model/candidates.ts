@@ -1,5 +1,5 @@
 /** Framework-free projections from Remote reference candidates to trigger rows. */
-import type { InputTriggerCrumb } from '@deepseek-ai/dsh-client-ui-input-trigger/client'
+import type { InputTriggerCandidate, InputTriggerCrumb } from '@deepseek-ai/dsh-client-ui-input-trigger/client'
 import { relativeTime } from '@deepseek-ai/dsh-client-ui-primitives'
 import { formatFileMention } from '@deepseek-ai/dsh-file-reference/grammar'
 import type { FileReferenceCandidate } from '@deepseek-ai/dsh-file-reference/types'
@@ -76,7 +76,7 @@ export function fileCandidate(
   preserveQuote: boolean,
   withLocation: boolean,
   t: Translate,
-) {
+): readonly InputTriggerCandidate[] {
   const mention = formatFileMention(candidate, preserveQuote)
   if (mention === undefined) return []
   const slash = candidate.path.lastIndexOf('/')
@@ -116,7 +116,7 @@ export function sessionCandidate(
   now: number,
   home: string | undefined,
   t: Translate,
-) {
+): InputTriggerCandidate {
   const { unit, n } = relativeTime(updatedAt, now)
   const age = unit === 'now' ? t('time.now') : t(`time.${unit}`, { n })
   // Candidates are ranked by workspace affinity, so the location only tells

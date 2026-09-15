@@ -6,7 +6,9 @@ import type { MessageImageSpec } from './slots.ts'
  * the rendered aspect ratio clamped to [0.25, 4] — the overflow is cropped by
  * `object-fit: cover` — and never upscaled past the image's natural size. The
  * crop anchor keeps the top of very tall images and the left of very wide
- * ones, where the informative content usually starts. */
+ * ones, where the informative content usually starts.
+ * @param dimensions - Natural width and height of the image.
+ * @returns Rendered width, height, and CSS object-position anchor. */
 export function singleFit(
   dimensions: { readonly width: number; readonly height: number },
 ): { width: number; height: number; objectPosition: string } {
@@ -21,7 +23,9 @@ export function singleFit(
   }
 }
 
-/** Intrinsic dimensions of one gallery entry; a preview's stay unknown until its intake probe resolved. */
+/** Intrinsic dimensions of one gallery entry; a preview's stay unknown until its intake probe resolved.
+ * @param image - Gallery entry to measure.
+ * @returns The entry's intrinsic dimensions, or undefined while a preview probe is pending. */
 export function dimensionsOf(image: MessageImageSpec): { readonly width: number; readonly height: number } | undefined {
   if ('attachment' in image) return image.attachment
   return image.preview.width !== undefined && image.preview.height !== undefined

@@ -50,7 +50,8 @@ export class PendingInteractionDomain<T extends SessionPendingInteractionBase> {
     private readonly changed: () => void,
   ) {}
 
-  /** Current interactions in insertion order. */
+  /** Current interactions in insertion order.
+   * @returns The current interactions. */
   valuesSnapshot(): readonly T[] {
     return [...this.values.values()].map(entry => entry.interaction)
   }
@@ -76,7 +77,8 @@ export class PendingInteractionDomain<T extends SessionPendingInteractionBase> {
     }
   }
 
-  /** Remove every pending value and return the operations that settle their owners. */
+  /** Remove every pending value and return the operations that settle their owners.
+   * @returns The owner-settling operations, one per removed value. */
   release(): readonly (() => Promise<void>)[] {
     const delegates = [...this.values.values()].map(entry => entry.delegate)
     this.values.clear()

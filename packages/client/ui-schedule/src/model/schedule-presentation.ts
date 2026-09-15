@@ -35,7 +35,10 @@ function unitLabel(unit: TimeUnit, value: number, t: TranslateNS<typeof NS>): st
   return t(value === 1 ? pair[0] : pair[1], { count: value })
 }
 
-/** Pick the largest exact whole unit without rounding the durable interval. */
+/** Pick the largest exact whole unit without rounding the durable interval.
+ * @param record - Schedule record whose interval to describe.
+ * @param t - Locale translator for the schedule namespace.
+ * @returns Localized frequency text, or the one-shot label. */
 export function formatScheduleFrequency(
   record: ScheduleRecord,
   t: TranslateNS<typeof NS>,
@@ -51,7 +54,10 @@ export function formatScheduleFrequency(
   return t('frequency.every', { value, unit: unitLabel(selected.unit, value, t) })
 }
 
-/** Format the durable UTC target in the browser's current locale and time zone. */
+/** Format the durable UTC target in the browser's current locale and time zone.
+ * @param scheduledAt - Durable UTC target time.
+ * @param locale - Locale to format in, or the browser default.
+ * @returns Localized date and time text. */
 export function formatScheduleLocalTime(scheduledAt: string, locale?: string): string {
   return new Intl.DateTimeFormat(locale, {
     dateStyle: 'medium',
@@ -59,7 +65,11 @@ export function formatScheduleLocalTime(scheduledAt: string, locale?: string): s
   }).format(Date.parse(scheduledAt))
 }
 
-/** Human relative target using the largest natural clock unit. */
+/** Human relative target using the largest natural clock unit.
+ * @param scheduledAt - Durable UTC target time.
+ * @param now - Current time to measure against.
+ * @param t - Locale translator for the schedule namespace.
+ * @returns Localized relative time text. */
 export function formatScheduleRelative(
   scheduledAt: string,
   now: number,
@@ -77,7 +87,10 @@ export function formatScheduleRelative(
   return t(difference > 0 ? 'relative.future' : 'relative.overdue', { value, unit })
 }
 
-/** Overdue records first, then ascending target time; exact ties stay stable. */
+/** Overdue records first, then ascending target time; exact ties stay stable.
+ * @param records - Schedule records to order.
+ * @param now - Current time that separates overdue from upcoming.
+ * @returns A new array of the records in display order. */
 export function orderScheduleRecords(
   records: readonly ScheduleRecord[],
   now: number,

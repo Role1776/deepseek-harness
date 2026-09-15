@@ -6,7 +6,9 @@
  */
 import type { DirectoryEntry, DirectoryListing } from '@deepseek-ai/dsh-api-remotes/client'
 
-/** Failure text from the injected directory operation. */
+/** Failure text from the injected directory operation.
+ * @param error - Error thrown by the directory operation.
+ * @returns The RPC error message, an Error's message, or the error's string form. */
 export function failureText(error: unknown): string {
   if (error !== null && typeof error === 'object' && 'rpcError' in error) {
     const rpcError = error.rpcError
@@ -47,6 +49,9 @@ export const DRAFT_PREVIEW_DEBOUNCE_MS = 250
  * Breadcrumb rows for display: inside the home subtree the chain starts at a
  * localized Home crumb; outside it the full ancestry shows, the root labeled
  * by its own path.
+ * @param listing - Current directory listing with its crumbs and home path.
+ * @param homeLabel - Localized label for the home crumb.
+ * @returns Rows to render as breadcrumbs.
  */
 export function displayCrumbs(listing: DirectoryListing, homeLabel: string): DirectoryEntry[] {
   const homeIndex = listing.crumbs.findIndex(crumb => crumb.path === listing.home)
@@ -63,6 +68,8 @@ export function displayCrumbs(listing: DirectoryListing, homeLabel: string): Dir
  * TODO: replace with a host-stamped `separator` field on the wire
  * DirectoryListing so the platform fact travels verbatim (the trade-off is
  * recorded in the directory-picker capability seam Agent Note).
+ * @param listing - Current directory listing whose home path carries the platform.
+ * @returns The platform path separator.
  */
 export function separatorOf(listing: DirectoryListing): '\\' | '/' {
   return listing.home.includes('\\') ? '\\' : '/'
@@ -132,6 +139,11 @@ export function readDraft(
  * obeying the toggle. Counting only displayable rows keeps that true because
  * every hidden name is dot-prefixed, and a matching prefix therefore reveals
  * it; otherwise the level could narrow to nothing.
+ * @param entries - Rows of the listed level.
+ * @param selectedPath - Path of the selected row, exempt from every filter.
+ * @param showHidden - Whether hidden rows are visible.
+ * @param filterPrefix - Typed prefix to narrow by, or null when unfiltered.
+ * @returns Rows the column renders.
  */
 export function visibleEntries(
   entries: readonly DirectoryEntry[],

@@ -8,7 +8,9 @@ import type { SessionJob as JobView } from '@deepseek-ai/dsh-api-session-control
 import type { StateDotState } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { TranslateNS } from '@deepseek-ai/dsh-client-ui-slots'
 
-/** A job the registry still holds open, and whose duration therefore ticks. */
+/** A job the registry still holds open, and whose duration therefore ticks.
+ * @param job - Job to classify.
+ * @returns True while the job is running or stopping. */
 export function isLive(job: JobView): boolean {
   return job.status === 'running' || job.status === 'stopping'
 }

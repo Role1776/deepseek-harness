@@ -18,7 +18,7 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | ui-goal | done |
 | ui-input-trigger | done |
 | ui-jobs | done |
-| ui-layout | pending |
+| ui-layout | done |
 | ui-message-feedback | done |
 | ui-model-selection | done |
 | ui-open-in-app | done |
@@ -46,7 +46,7 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | ui-trajectory | pending |
 | ui-user-questions | done |
 | ui-workflow-run | done |
-| ui-workspace | pending |
+| ui-workspace | done |
 
 ## Notes for next session
 
@@ -88,3 +88,9 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 - **A formatter that reads only build-time env moves.** ui-sidebar `SidebarRoot.tsx`'s `localBuildVersion()` reads `process.env.DSH_CLIENT_*` and nothing DOM; it became `model/build-version.ts`, and the view imports it back. Its existing render-path test cases keep the file at 100%.
 - **Re-base a moved file's own relative imports against its new directory, not its depth.** ui-theme `client/settings-store.ts` imported `../theme-settings.ts`; from `model/settings-store.ts` the correct path is still `../theme-settings.ts` (both are children of `src`), not `../../`. Deriving the specifier from the source directory rather than hand-counting levels avoids this.
 - **A pure domain file can carry types, frozen registries, and validators together.** ui-theme's `client/index.ts` mixed its public token types, the `BUILTIN_THEMES`/`BUILTIN_INSPECT_TOKENS` data, `dynamicToken`, and `validateOverrides` with the DOM-bound `ThemeRuntime` and `bootstrapFontSize`. All the pure parts moved to `model/theme.ts` and the service imports them back; the `declare module` Context/Events merges stayed in the entry because they name the service class.
+- **A package-wide `src/*` coverage exclude matches nested files.** `packages/client/ui-layout/src/*` exempted every file under `src/client/`, not just direct children (vitest's matcher lets `*` cross directories here), so moving files to `src/model` left them exempt. Narrow the glob to the one still-uncovered view file (`src/client/index.ts`) instead of keeping the whole tree exempt; after the split every other layout file hits 100%.
+- **A store whose only DOM touch is a bootstrap read stays model by parameterizing it.** ui-layout `stores.ts` read `window.innerWidth` in `init`; it moved whole to `model/stores.ts` as `createLayoutStore(initialViewportWidth)`, and the view (`client/index.ts`) and every spec pass `window.innerWidth`. A single DOM read is not a reason to leave state and actions in the view.
+- **The Context `declare module` merge stays in the entry.** ui-layout moved the `SlotMap`/`GlobalStandardProps` declarations and the `SidebarOwnerProps`/`RightbarOwnerProps`/`UsePanelInfo` types to `model/slots.ts`, but the `declare module '@deepseek-ai/cordis'` `ctx.layout` merge stayed in `client/index.ts` because it names the service; repoint its `import('../model/service.ts').ILayout`.
+- **Split the Service file, not just the folder.** ui-workspace `client/navigation.ts` mixed the framework-free `UiWorkspace` contract, its `declare module '@deepseek-ai/cordis'` merge, the `DirectoryBrowseError` class, and `recentWorkspace` with the `UiWorkspaceService extends Service` subclass. The pure parts moved to `model/navigation.ts`; the subclass stayed in `client/navigation.ts` and imports them back. The service spec then imports `UiWorkspaceService` from the view path and `DirectoryBrowseError` from the model path.
+- **A `contract/slots.ts` moves whole to `model/slots.ts`.** ui-workspace's type-only contract file (owner props, injected shares, composed props, `SlotMap` merge) became `model/slots.ts` with its only relative import (`../stores.ts` → `./stores.ts`); the client `index.ts` re-exports the same names from the new path, and the catalog regen repins every `source`.
+- **Exemption entries for files that did not move stay.** ui-workspace's four `vitest.config.ts` exclusions name view files (`client/index.ts`, the two top-level `.tsx`, `rows/WorkspaceBrowser.tsx`) that remain in place, so none is removed; the moved model files are gated and hit 100% through the existing specs.

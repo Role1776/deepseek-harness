@@ -23,19 +23,19 @@ import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
 import type {} from '@deepseek-ai/dsh-client-ui-layout/client'
 // Type-only: pulls the Session root standard-hook merge.
 import type {} from '@deepseek-ai/dsh-client-ui-session/client'
-import type { WorkspaceBrowserInjected, WorkspacePickerInjected } from './contract/slots.ts'
+import type { WorkspaceBrowserInjected, WorkspacePickerInjected } from '../model/slots.ts'
 import { UiWorkspaceService } from './navigation.ts'
-import { createWorkspaceViewStore } from './stores.ts'
+import { createWorkspaceViewStore } from '../model/stores.ts'
 import { WorkspaceBrowser } from './rows/WorkspaceBrowser.tsx'
 import { WorkspacePicker } from './WorkspacePicker.tsx'
-import { en, zh, type WorkspaceKey } from './locales.ts'
+import { en, zh, type WorkspaceKey } from '../model/locales.ts'
 
-export type { UiWorkspace } from './navigation.ts'
+export type { UiWorkspace } from '../model/navigation.ts'
 export type {
   DirectoryFlowOwnerProps, DirectoryFlowSlotName, DirectoryPickingHooks, DirectoryPickingInjected,
   WorkspaceBrowserInjected, WorkspaceBrowserProps, WorkspacePickerInjected, WorkspacePickerProps,
-} from './contract/slots.ts'
-export type { WorkspaceKey } from './locales.ts'
+} from '../model/slots.ts'
+export type { WorkspaceKey } from '../model/locales.ts'
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {
   interface GlobalStandardProps {

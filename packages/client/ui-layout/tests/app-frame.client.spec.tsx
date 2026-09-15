@@ -7,7 +7,7 @@ import { act, cleanup, render } from '@testing-library/react'
 import { AppFrame } from '../src/client/AppFrame.tsx'
 import type { AppFrameProps } from '../src/client/AppFrame.tsx'
 import type { MainPanelId, RightbarOwnerProps, SidebarOwnerProps } from '../src/client/index.ts'
-import { createLayoutStore } from '../src/client/stores.ts'
+import { createLayoutStore } from '../src/model/stores.ts'
 import type { WorkspaceSnapshot } from '@deepseek-ai/dsh-api-workspace-controller/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 
@@ -62,7 +62,7 @@ function resize(width: number): void {
 
 function mountFrame(windowWidth = frameWidth) {
   vi.stubGlobal('innerWidth', windowWidth)
-  const instance = createLayoutStore().create()
+  const instance = createLayoutStore(window.innerWidth).create()
   const slotCalls: { key: string; props: object; options: RenderOpts | undefined }[] = []
   const renderSlot: AppFrameProps['renderSlot'] = (key, owner, options) => {
     slotCalls.push({ key, props: owner, options })

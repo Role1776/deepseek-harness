@@ -12,7 +12,8 @@ import type { RemoteResult } from '@deepseek-ai/dsh-api-remotes/client'
 import { SessionId } from '@deepseek-ai/dsh-session/types'
 import { LayoutController } from '@deepseek-ai/dsh-client-ui-layout/client'
 import type { MainPanelId } from '@deepseek-ai/dsh-client-ui-layout/client'
-import { DirectoryBrowseError, UiWorkspaceService } from '../src/client/navigation.ts'
+import { UiWorkspaceService } from '../src/client/navigation.ts'
+import { DirectoryBrowseError } from '../src/model/navigation.ts'
 
 const sid = (id: string): SessionId => SessionId(id)
 const wid = (id: string): WorkspaceId => id as WorkspaceId

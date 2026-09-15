@@ -7,8 +7,8 @@ import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import {
   deriveFlat, deriveGroups, deriveSearchResults, owningGroupKey, workspaceLabel,
   UNGROUPED_KEY,
-} from '../src/client/tree.ts'
-import { createWorkspaceViewStore } from '../src/client/stores.ts'
+} from '../src/model/tree.ts'
+import { createWorkspaceViewStore } from '../src/model/stores.ts'
 
 const sid = (id: string) => id as SessionId
 const wid = (id: string) => id as WorkspaceId

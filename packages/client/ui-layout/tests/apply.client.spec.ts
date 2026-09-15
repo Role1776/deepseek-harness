@@ -9,8 +9,8 @@ import { LocaleRuntime } from '@deepseek-ai/dsh-client-locale/client'
 import { apply as themeApply, inject as themeInject, ThemeRuntime } from '@deepseek-ai/dsh-client-ui-theme/client'
 import { apply, inject, LayoutController } from '@deepseek-ai/dsh-client-ui-layout/client'
 import { apply as nodeApply } from '@deepseek-ai/dsh-client-ui-layout'
-import type { MainPanelId } from '../src/client/service.ts'
-import type { createLayoutStore } from '../src/client/stores.ts'
+import type { MainPanelId } from '../src/model/service.ts'
+import type { createLayoutStore } from '../src/model/stores.ts'
 
 const owners = new Set<Fiber>()
 let originalRootStyle: string | null

@@ -249,7 +249,7 @@ export default defineConfig({
         'packages/client/ui-primitives/src/DisclosureRow.tsx',
         'packages/client/ui-tool/src/*',
         'packages/client/ui-slots/src/*',
-        'packages/client/ui-layout/src/*',
+        'packages/client/ui-layout/src/client/index.ts',
         'packages/client/web/src/*',
         'packages/host/webserver/src/*',
         // The browser-worker runtime and its image packer: the executing

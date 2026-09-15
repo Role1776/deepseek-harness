@@ -20,13 +20,13 @@ import type {
 } from '@deepseek-ai/dsh-api-session-controller/client'
 import type { WorkspaceId, WorkspaceView } from '@deepseek-ai/dsh-api-workspace-controller/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type { WorkspaceBrowserProps } from '../contract/slots.ts'
-import type { SessionNode, SessionOrderBy } from '../tree.ts'
+import type { WorkspaceBrowserProps } from '../../model/slots.ts'
+import type { SessionNode, SessionOrderBy } from '../../model/tree.ts'
 import {
   deriveFlat, deriveGroups, deriveSearchResults, owningGroupKey, UNGROUPED_KEY,
-} from '../tree.ts'
+} from '../../model/tree.ts'
 import { ProjectRowItem, SearchResultItem, SessionNodeItem } from './Rows.tsx'
-import { FLAT_SESSION_ORDER_KEY } from '../stores.ts'
+import { FLAT_SESSION_ORDER_KEY } from '../../model/stores.ts'
 import { WorkspacePickFlow } from '../WorkspacePicker.tsx'
 import css from './WorkspaceBrowser.module.css'
 

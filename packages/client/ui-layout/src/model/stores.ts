@@ -73,15 +73,17 @@ type LayoutActions = {
  * and keeps that px preference across resizes and close. Drag writes clamp to
  * the current frame's range. Narrow sidebar toggles change only the expansion
  * override; opening the right panel clears that override.
+ * @param initialViewportWidth - frame width in px before the first measurement,
+ *   supplied by the view so this store stays free of browser globals.
  * @returns the store handle (spec + type + identity + factory in one).
  */
-export function createLayoutStore(): EngineStoreHandle<LayoutState, LayoutActions>  {
+export function createLayoutStore(initialViewportWidth: number): EngineStoreHandle<LayoutState, LayoutActions>  {
   const handle = defineStore({
     init: (): LayoutState => ({
       panelInfo: { activePanelId: null },
       layoutInfo: {
         sidebar: SIDEBAR_DEFAULT,
-        viewportWidth: window.innerWidth,
+        viewportWidth: initialViewportWidth,
         narrowExpanded: false,
         rightbar: null,
         rightbarShown: false,

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
-import { LayoutController } from '../src/client/service.ts'
-import type { MainPanelId, PanelActions } from '../src/client/service.ts'
+import { LayoutController } from '../src/model/service.ts'
+import type { MainPanelId, PanelActions } from '../src/model/service.ts'
 
 function fakePanels(): PanelActions {
   return {

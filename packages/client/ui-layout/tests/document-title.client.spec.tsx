@@ -6,7 +6,7 @@ import { bindSnapshotSelector } from '@deepseek-ai/dsh-client-test-runtime'
 import type { SessionListState } from '@deepseek-ai/dsh-api-session-controller/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import { DocumentTitle } from '../src/client/DocumentTitle.tsx'
-import type { MainPanelId, PanelInfo } from '../src/client/service.ts'
+import type { MainPanelId, PanelInfo } from '../src/model/service.ts'
 
 let originalTitle: string
 beforeEach(() => { originalTitle = document.title })

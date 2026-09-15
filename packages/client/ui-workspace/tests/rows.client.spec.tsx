@@ -7,8 +7,8 @@ import { makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
 import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts'
 import type { RowDragProps } from '../src/client/rows/Rows.tsx'
 import { ProjectRowItem, SearchResultItem, SessionNodeItem } from '../src/client/rows/Rows.tsx'
-import type { GroupNode, SearchResultNode, SessionNode } from '../src/client/tree.ts'
-import { zh } from '../src/client/locales.ts'
+import type { GroupNode, SearchResultNode, SessionNode } from '../src/model/tree.ts'
+import { zh } from '../src/model/locales.ts'
 
 afterEach(cleanup)
 

@@ -10,9 +10,9 @@ import type {} from '@deepseek-ai/dsh-client-locale/client'
 import { bindSnapshotSelector, makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
 import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts'
 import type { SessionPendingInteractionSnapshot } from '@deepseek-ai/dsh-client-ui-session/client'
-import type { DirectoryFlowOwnerProps, WorkspacePickerProps } from '../src/client/contract/slots.ts'
+import type { DirectoryFlowOwnerProps, WorkspacePickerProps } from '../src/model/slots.ts'
 import { WorkspacePicker } from '../src/client/WorkspacePicker.tsx'
-import { zh } from '../src/client/locales.ts'
+import { zh } from '../src/model/locales.ts'
 
 // Every fixture carries the resource hook the resources plugin merges into GlobalStandardProps.
 const useResource = (() => ({ status: 'none' as const, value: undefined, failure: undefined, reload: () => {} })) as GlobalStandardProps['useResource']

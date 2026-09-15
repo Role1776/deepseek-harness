@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { clampWidth, computeColumns } from '../src/client/columns.ts'
+import { clampWidth, computeColumns } from '../src/model/columns.ts'
 
 describe('clampWidth', () => {
   it('clamps into the range and rounds', () => {

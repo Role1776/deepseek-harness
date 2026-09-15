@@ -31,7 +31,7 @@ import type { SessionSearchResultItem } from '@deepseek-ai/dsh-api-session-contr
 import type { RemoteHostFacts } from '@deepseek-ai/dsh-api-remotes/client'
 import type { WorkspaceId, WorkspaceView } from '@deepseek-ai/dsh-api-workspace-controller/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type { createWorkspaceViewStore } from '../stores.ts'
+import type { createWorkspaceViewStore } from './stores.ts'
 
 /**
  * Owner share of the directory-flow holes: the complete conversation between

@@ -11,11 +11,11 @@ import type { SessionPendingInteractionSnapshot } from '@deepseek-ai/dsh-client-
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import type { MainPanelId } from '@deepseek-ai/dsh-client-ui-layout/client'
 import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts'
-import type { WorkspaceBrowserProps } from '../src/client/contract/slots.ts'
-import { createWorkspaceViewStore, FLAT_SESSION_ORDER_KEY } from '../src/client/stores.ts'
-import { UNGROUPED_KEY } from '../src/client/tree.ts'
+import type { WorkspaceBrowserProps } from '../src/model/slots.ts'
+import { createWorkspaceViewStore, FLAT_SESSION_ORDER_KEY } from '../src/model/stores.ts'
+import { UNGROUPED_KEY } from '../src/model/tree.ts'
 import { WorkspaceBrowser } from '../src/client/rows/WorkspaceBrowser.tsx'
-import { zh } from '../src/client/locales.ts'
+import { zh } from '../src/model/locales.ts'
 
 // Every fixture carries the resource hook the resources plugin merges into GlobalStandardProps.
 const useResource = (() => ({ status: 'none' as const, value: undefined, failure: undefined, reload: () => {} })) as GlobalStandardProps['useResource']

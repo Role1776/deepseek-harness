@@ -5,10 +5,10 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import {
   PendingQuestion, planReviewOf, type QuestionComposerProps, type QuestionWait,
-} from '../src/client/contract/slots.ts'
-import { createQuestionDraftStore } from '../src/client/draft-store.ts'
+} from '../src/model/slots.ts'
+import { createQuestionDraftStore } from '../src/model/draft-store.ts'
 import { QuestionComposer } from '../src/client/QuestionComposer.tsx'
-import { en, zh } from '../src/client/locales.ts'
+import { en, zh } from '../src/model/locales.ts'
 import { en as commonEn } from '@deepseek-ai/dsh-client-locale/src/locales/en.ts'
 import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts'
 

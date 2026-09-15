@@ -6,7 +6,7 @@ import type { RunningToolCall, ToolResultNode } from '@deepseek-ai/dsh-client-ui
 import { makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
 import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts'
 import { SkillRow } from '../src/client/SkillRow.tsx'
-import { zh } from '../src/client/locales.ts'
+import { zh } from '../src/model/locales.ts'
 
 type SkillRowProps = Parameters<typeof SkillRow>[0]
 

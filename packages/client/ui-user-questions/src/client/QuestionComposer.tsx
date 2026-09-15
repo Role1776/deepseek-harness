@@ -8,9 +8,10 @@ import {
 import {
   planReviewOf,
   type QuestionAnswer, type QuestionComposerProps,
-} from './contract/slots.ts'
-import type { PendingQuestion } from './contract/slots.ts'
-import type { QuestionDraftAnswer, QuestionDraftProgress } from './draft-store.ts'
+} from '../model/slots.ts'
+import type { PendingQuestion } from '../model/slots.ts'
+import type { QuestionDraftAnswer, QuestionDraftProgress } from '../model/draft-store.ts'
+import { parseRecommendedLabel } from '../model/presentation.ts'
 import { PlanReviewPanel } from './PlanReviewPanel.tsx'
 import css from './QuestionComposer.module.css'
 
@@ -21,18 +22,6 @@ import css from './QuestionComposer.module.css'
  * verbatim.
  */
 type Feedback = { key: 'error.incomplete' | 'error.unanswered' } | { text: string }
-
-/**
- * Split the conventional recommendation suffix without changing the answer value.
- * @param label - Original option label returned if selected.
- * @returns Display label plus recommendation state.
- */
-export function parseRecommendedLabel(label: string): { label: string; recommended: boolean } {
-  const suffix = /\s*(?:\((?:recommended|推荐)\)|（(?:recommended|推荐)）)\s*$/i
-  return suffix.test(label)
-    ? { label: label.replace(suffix, ''), recommended: true }
-    : { label, recommended: false }
-}
 
 /** Return whether a text-field key event belongs to an active IME composition. */
 function isComposing(event: KeyboardEvent<HTMLTextAreaElement>): boolean {

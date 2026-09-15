@@ -12,7 +12,7 @@ import type {} from '@deepseek-ai/dsh-client-ui-conversation/client'
 import { apply, inject, type OpenInAppActionInjected } from '../src/client/index.ts'
 import { apply as nodeApply } from '../src/index.ts'
 import { OpenInAppAction } from '../src/client/OpenInAppAction.tsx'
-import { en, NS, zh } from '../src/client/locales.ts'
+import { en, NS, zh } from '../src/model/locales.ts'
 
 afterEach(() => {
   vi.unstubAllGlobals()

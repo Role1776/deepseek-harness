@@ -14,13 +14,14 @@ import type { ChatFileMentions } from '@deepseek-ai/dsh-client-ui-chat/client'
 import type {} from '@deepseek-ai/dsh-client-locale/client'
 import type {} from '@deepseek-ai/dsh-client-ui-conversation/client'
 import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
-import { PresentedOpenController } from './present-open.ts'
+import { PresentedOpenController } from '../model/present-open.ts'
 import { PresentRow } from './PresentRow.tsx'
-import { Deliverables, selectDeliverables, type DeliverablesInjected } from './Deliverables.tsx'
-import { en, NS, zh, type DeliverablesKey } from './locales.ts'
+import { Deliverables } from './Deliverables.tsx'
+import { selectDeliverables, type DeliverablesInjected } from '../model/deliverables-presentation.ts'
+import { en, NS, zh, type DeliverablesKey } from '../model/locales.ts'
 import {
   deliverablesDefinition, presentedForClosing, producedFileMentions, selectProducedFiles,
-} from './turn-deliverables.ts'
+} from '../model/turn-deliverables.ts'
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {
   interface LocaleNamespaceMap {
@@ -30,7 +31,7 @@ declare module '@deepseek-ai/dsh-client-ui-slots' {
 }
 
 export { ProducedFiles, type ProducedFilesProps } from './ProducedFiles.tsx'
-export { producedForClosing } from './turn-deliverables.ts'
+export { producedForClosing } from '../model/turn-deliverables.ts'
 
 /** Required services for the tail-slot registration and its dictionaries. */
 export const inject = ['slots', 'locale', 'uiConversation', 'remote', 'remote.session']

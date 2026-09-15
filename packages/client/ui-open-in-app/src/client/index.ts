@@ -11,9 +11,10 @@ import type {} from '@deepseek-ai/dsh-client-locale/client'
 import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
 import type {} from '@deepseek-ai/dsh-client-ui-session/client'
 import { OPEN_IN_APP_ICON_PREFIX } from '@deepseek-ai/dsh-host-open-in-app/shared'
-import { OpenInAppController } from './controller.ts'
-import { OpenInAppAction, type OpenInAppActionInjected } from './OpenInAppAction.tsx'
-import { en, NS, zh, type OpenInAppKey } from './locales.ts'
+import { OpenInAppController } from '../model/controller.ts'
+import { OpenInAppAction } from './OpenInAppAction.tsx'
+import type { OpenInAppActionInjected } from '../model/slots.ts'
+import { en, NS, zh, type OpenInAppKey } from '../model/locales.ts'
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {
   interface LocaleNamespaceMap {
@@ -22,7 +23,7 @@ declare module '@deepseek-ai/dsh-client-ui-slots' {
   }
 }
 
-export type { OpenInAppActionInjected, OpenInAppActionProps } from './OpenInAppAction.tsx'
+export type { OpenInAppActionInjected, OpenInAppActionProps } from '../model/slots.ts'
 
 /** Required services for locale registration and the header-slot contribution. */
 export const inject = ['sessions', 'slots', 'locale']

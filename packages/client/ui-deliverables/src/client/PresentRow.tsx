@@ -3,22 +3,12 @@ import { useState } from 'react'
 import { DisclosureRow, StateDot } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { ToolCallViewProps } from '@deepseek-ai/dsh-client-ui-tool/client'
 import type { PropsLocale } from '@deepseek-ai/dsh-client-ui-slots'
-import type { NS } from './locales.ts'
+import type { NS } from '../model/locales.ts'
+import { fileNames } from '../model/present-formatters.ts'
 import css from './PresentRow.module.css'
 
 type PresentRowProps = ToolCallViewProps & PropsLocale<typeof NS>
 
-/** Raw arguments can be partial while a call is streaming. */
-function fileNames(raw: string): string {
-  let args: unknown
-  try { args = JSON.parse(raw) }
-  catch { return raw } // Truncated tool JSON remains visible until the call completes.
-  if (typeof args !== 'object' || args === null || !('files' in args) || !Array.isArray(args.files)) return raw
-  return args.files.flatMap((file: unknown) =>
-    typeof file === 'object' && file !== null && 'path' in file && typeof file.path === 'string'
-      ? [file.path] : [],
-  ).join(', ')
-}
 
 /**
  * Render a present call using its recorded arguments and result.

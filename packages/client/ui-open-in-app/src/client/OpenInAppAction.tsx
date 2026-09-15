@@ -1,69 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { IconChevronDownOutline14, Menu, Tooltip, type MenuItem } from '@deepseek-ai/dsh-client-ui-primitives'
-import type { ObservableSnapshot } from '@deepseek-ai/dsh-client-store'
-import type { InjectFace, PropsLocale, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
 import type {} from '@deepseek-ai/dsh-client-ui-conversation/client'
-import { NS, type OpenInAppKey } from './locales.ts'
+import { nameableApps } from '../model/app-labels.ts'
+import type { OpenInAppActionProps } from '../model/slots.ts'
 import css from './OpenInAppAction.module.css'
-
-/** Browser operations and state injected into the Session Header contribution. */
-export interface OpenInAppActionInjected {
-  hooks: {
-    openInAppApps: ObservableSnapshot<readonly string[] | null>
-    openInAppChoice: ObservableSnapshot<string>
-  }
-  launch: (appId: string, path: string) => Promise<void>
-  choose: (appId: string) => void
-  iconUrl: (appId: string) => string
-}
-
-/** Full props for the Session-header open-in-app split button. */
-export type OpenInAppActionProps =
-  PropsRuntime<'conversation.session.header.utilities'>
-  & PropsLocale<typeof NS>
-  & InjectFace<OpenInAppActionInjected>
-
-/**
- * Label keys per catalog id: the browser renders only ids it can name, so a
- * host catalog extension without a matching dictionary entry stays invisible
- * instead of showing a raw id.
- */
-const APP_LABEL_KEY: Record<string, OpenInAppKey | undefined> = {
-  finder: 'app.finder',
-  explorer: 'app.explorer',
-  filemanager: 'app.filemanager',
-  cursor: 'app.cursor',
-  vscode: 'app.vscode',
-  vscodeinsiders: 'app.vscodeinsiders',
-  windsurf: 'app.windsurf',
-  zed: 'app.zed',
-  sublimetext: 'app.sublimetext',
-  xcode: 'app.xcode',
-  androidstudio: 'app.androidstudio',
-  intellij: 'app.intellij',
-  pycharm: 'app.pycharm',
-  webstorm: 'app.webstorm',
-  phpstorm: 'app.phpstorm',
-  goland: 'app.goland',
-  rider: 'app.rider',
-  rustrover: 'app.rustrover',
-  fork: 'app.fork',
-  sourcetree: 'app.sourcetree',
-  github: 'app.github',
-  tower: 'app.tower',
-  gitkraken: 'app.gitkraken',
-  smartgit: 'app.smartgit',
-  sublimemerge: 'app.sublimemerge',
-  ghostty: 'app.ghostty',
-  warp: 'app.warp',
-  iterm: 'app.iterm',
-  kitty: 'app.kitty',
-  terminal: 'app.terminal',
-  windowsterminal: 'app.windowsterminal',
-  gitbash: 'app.gitbash',
-  gnometerminal: 'app.gnometerminal',
-  konsole: 'app.konsole',
-}
 
 /** App ids whose icon image already failed this page; a 404 icon is fetched once, not per menu open. */
 const failedIcons = new Set<string>()
@@ -142,9 +82,7 @@ export function OpenInAppAction(props: OpenInAppActionProps): React.JSX.Element 
     clearTimeout(errorTimer.current)
   }, [])
 
-  const apps = (available ?? [])
-    .map(id => ({ id, labelKey: APP_LABEL_KEY[id] }))
-    .filter((entry): entry is { id: string; labelKey: OpenInAppKey } => entry.labelKey !== undefined)
+  const apps = nameableApps(available)
   const currentEntry = apps.find(entry => entry.id === choice) ?? apps[0]
   if (currentEntry === undefined || cwd === undefined || cwd === '') return null
 

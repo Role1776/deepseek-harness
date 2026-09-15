@@ -5,7 +5,7 @@ import { afterEach, expect, it, vi } from 'vitest'
 import type { RunningToolCall, ToolResultNode } from '@deepseek-ai/dsh-client-ui-chat/client'
 import { makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
 import { PresentRow } from '../src/client/PresentRow.tsx'
-import { en } from '../src/client/locales.ts'
+import { en } from '../src/model/locales.ts'
 
 afterEach(cleanup)
 type Props = Parameters<typeof PresentRow>[0]

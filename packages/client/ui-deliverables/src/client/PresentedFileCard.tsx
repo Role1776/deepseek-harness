@@ -7,15 +7,11 @@ import {
 } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { PropsLocale } from '@deepseek-ai/dsh-client-ui-slots'
 import type { PresentedAction, PresentedHost } from '../presented.ts'
-import type { PresentedOpenPhase } from './present-open.ts'
-import { basename, type PresentedPath } from './turn-deliverables.ts'
-import type { NS } from './locales.ts'
+import type { PresentedOpenPhase } from '../model/present-open.ts'
+import { basename, type PresentedPath } from '../model/turn-deliverables.ts'
+import { cardDescription } from '../model/present-formatters.ts'
+import type { NS } from '../model/locales.ts'
 import css from './Deliverables.module.css'
-
-function cardDescription(description: string | undefined, fallback: string): string {
-  const trimmed = description?.replace(/\s*(?:\([^()]*\)|（[^（）]*）)\s*$/u, '').trim()
-  return trimmed === undefined || trimmed === '' ? fallback : trimmed
-}
 
 /**
  * Render independent file actions without nesting buttons inside a clickable card.

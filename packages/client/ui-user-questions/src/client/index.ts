@@ -3,7 +3,7 @@
  * selector-routed entry of the conversation-declared composer chain, plus the
  * `question` dictionaries. The selector narrows the owner's currency to the
  * question carrier (matched prop), and the whole behavior surface rides the
- * carrier (domain encoding in contract/slots.ts PendingQuestion); copy rides
+ * carrier (domain encoding in model/slots.ts PendingQuestion); copy rides
  * the standard locale seat. Export discipline: packages/client/AGENTS.md.
  *
  * One entry, two shapes: the composer renders a request that declares a
@@ -22,15 +22,15 @@ import type { TypertClientEventListener } from '@deepseek-ai/dsh-typert-protocol
 // Type-only: pulls the locale plugin's Context merge (ctx.locale).
 import type {} from '@deepseek-ai/dsh-client-locale/client'
 import type {} from '@deepseek-ai/dsh-api-session-controller/client'
-import { PendingQuestion } from './contract/slots.ts'
-import { createQuestionDraftStore } from './draft-store.ts'
+import { PendingQuestion } from '../model/slots.ts'
+import { createQuestionDraftStore } from '../model/draft-store.ts'
 import { QuestionComposer } from './QuestionComposer.tsx'
-import { en, zh, type QuestionKey } from './locales.ts'
+import { en, zh, type QuestionKey } from '../model/locales.ts'
 
 export type {
   PendingQuestion, PlanReview, QuestionAnswer, QuestionComposerProps, QuestionWait,
-} from './contract/slots.ts'
-export type { QuestionKey } from './locales.ts'
+} from '../model/slots.ts'
+export type { QuestionKey } from '../model/locales.ts'
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {
   interface LocaleNamespaceMap {

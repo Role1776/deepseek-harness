@@ -4,7 +4,7 @@ import { cleanup, fireEvent, render } from '@testing-library/react'
 import { afterEach, expect, it, vi } from 'vitest'
 import { makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
 import { PresentedFileCard } from '../src/client/PresentedFileCard.tsx'
-import { en, zh } from '../src/client/locales.ts'
+import { en, zh } from '../src/model/locales.ts'
 
 afterEach(cleanup)
 const props = () => ({

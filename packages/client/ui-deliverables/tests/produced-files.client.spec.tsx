@@ -21,15 +21,16 @@ import { SlotRegistry } from '@deepseek-ai/dsh-client-ui-renderer/client'
 import { apply as applyLocale, inject as localeInject } from '@deepseek-ai/dsh-client-locale/client'
 import type { ChatFileMentions, TurnTailOwnerProps } from '@deepseek-ai/dsh-client-ui-chat/client'
 import { makeTranslate, stubSettingsScope } from '@deepseek-ai/dsh-client-test-runtime'
-import { Deliverables, selectDeliverables, type DeliverablesInjected } from '../src/client/Deliverables.tsx'
-import { PresentedOpenController } from '../src/client/present-open.ts'
+import { Deliverables } from '../src/client/Deliverables.tsx'
+import { selectDeliverables, type DeliverablesInjected } from '../src/model/deliverables-presentation.ts'
+import { PresentedOpenController } from '../src/model/present-open.ts'
 import { ProducedFiles } from '../src/client/ProducedFiles.tsx'
 import {
   basename, deliverablesDefinition, presentedForClosing, producedFileMentions, producedForClosing, selectProducedFiles,
   type DeliverablesTurnData,
-} from '../src/client/turn-deliverables.ts'
+} from '../src/model/turn-deliverables.ts'
 import { apply, inject } from '../src/client/index.ts'
-import { en, zh } from '../src/client/locales.ts'
+import { en, zh } from '../src/model/locales.ts'
 import { SessionId } from '@deepseek-ai/dsh-session/types'
 import type { SessionEvent } from '@deepseek-ai/dsh-session/types'
 

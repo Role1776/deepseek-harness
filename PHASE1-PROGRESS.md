@@ -5,13 +5,13 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | Package | Status |
 |---|---|
 | ui-agent-preset | pending |
-| ui-approval | pending |
+| ui-approval | done |
 | ui-attachment | pending |
 | ui-brand-official | pending |
 | ui-chat | pending |
 | ui-commands | pending |
 | ui-conversation | pending |
-| ui-deliverables | pending |
+| ui-deliverables | done |
 | ui-directory-picker-browse | pending |
 | ui-directory-picker-native | pending |
 | ui-dockkit | pending |
@@ -21,8 +21,8 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | ui-layout | pending |
 | ui-message-feedback | pending |
 | ui-model-selection | pending |
-| ui-open-in-app | pending |
-| ui-permission-presets | pending |
+| ui-open-in-app | done |
+| ui-permission-presets | done |
 | ui-plan | done |
 | ui-primitives | pending |
 | ui-reference | pending |
@@ -38,13 +38,13 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | ui-sidebar-documentpreview | pending |
 | ui-sidebar-files | pending |
 | ui-sidebar-right | pending |
-| ui-skill | pending |
+| ui-skill | done |
 | ui-slots | pending |
 | ui-subagent | pending |
 | ui-theme | pending |
 | ui-tool | pending |
 | ui-trajectory | pending |
-| ui-user-questions | pending |
+| ui-user-questions | done |
 | ui-workflow-run | pending |
 | ui-workspace | pending |
 
@@ -56,3 +56,7 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 - **Keep type-only framework imports out.** A slot-declaration or injected-face interface that imports `HostObservable` from `ui-slots` as `import type` is allowed in `model`; a runtime React component import is not. Check `ui-goal/src/model/slots.ts` as the precedent.
 - **Do not move views to make the gate pass.** Views legitimately use React and the DOM. Only move a file that is framework-free; split one that mixes both.
 - **Gate corpus guard.** `scripts/verify-client-model-purity.ts` requires at least 40 `ui-*` packages. Adding or removing a package directory can trip it; update the bound only with a real corpus change.
+- **Split compiler faces.** A package with `tsconfig.client.json`/`tsconfig.host.json` leaves (ui-deliverables) must add `src/model` to the client leaf's `include`; the single-`tsconfig.json` packages already include all of `src`. Without it, `tsc -b` reports TS6307 both in the package project and in the root `tsconfig.client.json` test program that imports the model source. Adding the model directory also fixes the root program, because the leaf then emits the declarations the test program resolves.
+- **A moved file's own relative imports.** Repointing test paths is not enough: a moved file that imported a sibling (`../locales.ts`, `../draft-store.ts`, `./turn-deliverables.ts`) must repoint those too. In the ui-approval partial move `model/slots.ts` still said `../locales.ts`; only a compile/typecheck or a grep catches it, the purity gate does not.
+- **Split combined view imports.** `import { View, type Injected } from './Foo.tsx'` breaks when the type moves; split into `View` from the view and `type Injected` from `../model/slots.ts`, and repoint that type out of the `index.ts` re-export.
+- **README and JSDoc paths.** Moved-file prose references (`src/client/controller.ts` in ui-open-in-app README/zh, doc-comment `contract/slots.ts` in ui-user-questions index) go stale silently; grep the package README pair and index comments for the old path when a file moves.

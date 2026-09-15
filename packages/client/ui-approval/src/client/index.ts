@@ -8,8 +8,8 @@ import type { PendingInteractionPublisher } from '@deepseek-ai/dsh-client-ui-ses
 import type { TypertClientEventListener } from '@deepseek-ai/dsh-typert-protocol'
 import type {} from '@deepseek-ai/dsh-client-locale/client'
 import { ApprovalPanel } from './ApprovalPanel.tsx'
-import { PendingApproval } from './contract/slots.ts'
-import { en, zh } from './locales.ts'
+import { PendingApproval } from '../model/slots.ts'
+import { en, zh } from '../model/locales.ts'
 
 export type {
   ApprovalComposerProps,
@@ -17,8 +17,8 @@ export type {
   ApprovalDetailOwnerProps,
   ApprovalPresentationRequest,
   PendingApproval,
-} from './contract/slots.ts'
-export type { ApprovalKey } from './locales.ts'
+} from '../model/slots.ts'
+export type { ApprovalKey } from '../model/locales.ts'
 
 /** Required services: Agent scopes, Remote Events, Session UI, Slot registry, and copy. */
 export const inject = ['sessions', 'remote', 'uiSession', 'slots', 'locale']

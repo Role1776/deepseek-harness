@@ -3,39 +3,14 @@ import { useEffect, useState } from 'react'
 import type { TurnTailOwnerProps } from '@deepseek-ai/dsh-client-ui-chat/client'
 import { Button, IconChevronDownOutline14, IconChevronUpOutline14 } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { GlobalStandardProps, InjectFace, PropsLocale, SessionStandardProps } from '@deepseek-ai/dsh-client-ui-slots'
-import type { ObservableSnapshot } from '@deepseek-ai/dsh-client-store'
-import type { PresentedOpenController } from './present-open.ts'
+import type { DeliverablesInjected, DeliverablesMatch } from '../model/deliverables-presentation.ts'
 import { ProducedFiles } from './ProducedFiles.tsx'
-import { presentedForClosing, selectProducedFiles, type PresentedPath } from './turn-deliverables.ts'
-import type { NS } from './locales.ts'
+import type { NS } from '../model/locales.ts'
 import { presentedFileUrl } from '../presented.ts'
 import { PresentedFileCard } from './PresentedFileCard.tsx'
 import css from './Deliverables.module.css'
 
-interface DeliverablesMatch { produced: readonly string[]; presented: readonly PresentedPath[] }
-
 const COLLAPSED_PRESENTED_COUNT = 4
-
-/** Native-open callbacks and shared gesture status supplied by the plugin. */
-export interface DeliverablesInjected {
-  hooks: {
-    presentedOpen: ObservableSnapshot<ReturnType<PresentedOpenController['state']['getSnapshot']>>
-    presentedHost: ObservableSnapshot<ReturnType<PresentedOpenController['host']['getSnapshot']>>
-  }
-  reloadPresentedHost: PresentedOpenController['loadHost']
-  openPresented: PresentedOpenController['open']
-}
-
-/**
- * Claim turns containing modified paths or declared files.
- * @param owner - closing turn.
- * @returns matched files, or null for an empty turn.
- */
-export function selectDeliverables(owner: TurnTailOwnerProps): DeliverablesMatch | null {
-  const produced = selectProducedFiles(owner) ?? []
-  const presented = presentedForClosing(owner)
-  return produced.length + presented.length === 0 ? null : { produced, presented }
-}
 
 /**
  * Render workspace file actions and default-application buttons for declared files.

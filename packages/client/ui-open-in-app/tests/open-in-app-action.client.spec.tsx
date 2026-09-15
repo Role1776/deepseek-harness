@@ -5,8 +5,9 @@ import { makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
 import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
 import type { SessionListState } from '@deepseek-ai/dsh-api-session-controller/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import { OpenInAppAction, type OpenInAppActionProps } from '../src/client/OpenInAppAction.tsx'
-import { zh } from '../src/client/locales.ts'
+import { OpenInAppAction } from '../src/client/OpenInAppAction.tsx'
+import type { OpenInAppActionProps } from '../src/model/slots.ts'
+import { zh } from '../src/model/locales.ts'
 
 afterEach(() => {
   cleanup()

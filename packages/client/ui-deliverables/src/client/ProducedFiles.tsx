@@ -1,8 +1,9 @@
 import { LinkIcon, classifyLinkPath } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { PropsLocale } from '@deepseek-ai/dsh-client-ui-slots'
 import type { TurnTailOwnerProps } from '@deepseek-ai/dsh-client-ui-chat/client'
-import { basename } from './turn-deliverables.ts'
-import type { NS } from './locales.ts'
+import { basename } from '../model/turn-deliverables.ts'
+import { moreLabel } from '../model/present-formatters.ts'
+import type { NS } from '../model/locales.ts'
 import css from './ProducedFiles.module.css'
 
 /** Maximum number of file chips rendered before the remainder counter. */
@@ -13,9 +14,6 @@ export type ProducedFilesProps = Pick<TurnTailOwnerProps, 'openFile'> & {
   matched: readonly string[]
 } & PropsLocale<typeof NS>
 
-function moreLabel(t: ProducedFilesProps['t'], count: number): string {
-  return count === 1 ? t('produced.moreOne') : t('produced.more', { count: String(count) })
-}
 
 /**
  * Render one turn's produced files as openable chips.

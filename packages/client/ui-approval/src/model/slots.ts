@@ -4,7 +4,7 @@ import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import type {
   PropsLocale, PropsRenderSlots, PropsRuntime,
 } from '@deepseek-ai/dsh-client-ui-slots'
-import type { ApprovalKey } from '../locales.ts'
+import type { ApprovalKey } from './locales.ts'
 
 /* jscpd:ignore-start -- Approval and Question intentionally own independent pending-settlement lifecycles. */
 function settlePendingComposer(settle: () => void, failureMessage: string): Promise<void> {

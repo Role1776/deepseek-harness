@@ -19,11 +19,10 @@ import { RemoteMock } from '@deepseek-ai/dsh-remote-mock'
 import { apply as settingsApply, inject as settingsInject } from '@deepseek-ai/dsh-client-ui-settings/client'
 import type { CommandDecoration, PopupSelectSpec } from '@deepseek-ai/dsh-client-ui-commands/client'
 import type { PermissionSelect } from '@deepseek-ai/dsh-permission-presets/client'
-import {
-  PermissionRow, type PermissionRowInjected,
-} from '../src/client/PermissionRow.tsx'
+import { PermissionRow } from '../src/client/PermissionRow.tsx'
+import type { PermissionRowInjected } from '../src/model/slots.ts'
 import { apply, inject } from '../src/client/index.ts'
-import { accessEn, accessZh } from '../src/client/locales.ts'
+import { accessEn, accessZh } from '../src/model/locales.ts'
 
 const sid = (k: string): SessionId => k as SessionId
 

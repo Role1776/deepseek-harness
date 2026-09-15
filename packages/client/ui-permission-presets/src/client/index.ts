@@ -24,23 +24,20 @@ import type {} from '@deepseek-ai/dsh-client-ui-session/client'
 // Type-only: pulls the ctx.remote merge and the forwarded-event key face
 // (the settings invalidation rides the allowlist) into this program.
 import type {} from '@deepseek-ai/dsh-api-remotes/client'
-import type { CommandUiContract, SelectOption } from '@deepseek-ai/dsh-client-ui-commands/client'
+import type { CommandUiContract } from '@deepseek-ai/dsh-client-ui-commands/client'
 import type { ClientSessionContext } from '@deepseek-ai/dsh-client-ui-input-trigger/client'
-import type { PermissionSelect } from '@deepseek-ai/dsh-permission-presets/client'
 import { PermissionRow } from './PermissionRow.tsx'
-import type { PermissionRowInjected } from './PermissionRow.tsx'
+import type { PermissionRowInjected } from '../model/slots.ts'
 import {
   accessEn, accessZh, en, zh,
-} from './locales.ts'
-import {
-  displayPermissionPreset, FULL_ACCESS_PRESET,
-} from './presentation.ts'
-import { PermissionPresetSettingsController } from './settings-store.ts'
+} from '../model/locales.ts'
+import { optionsOf, selectOf } from '../model/permission-options.ts'
+import { PermissionPresetSettingsController } from '../model/settings-store.ts'
 
-export type { PermissionRowInjected, PermissionRowProps } from './PermissionRow.tsx'
+export type { PermissionRowInjected, PermissionRowProps } from '../model/slots.ts'
 export type {
   PermissionDefaultOption, PermissionSettingsState,
-} from './settings-store.ts'
+} from '../model/settings-store.ts'
 
 /** Required services (cordis fiber inject). */
 export const inject = [
@@ -49,34 +46,6 @@ export const inject = [
 ]
 
 const ACCESS_NS = 'permission.access'
-
-/** Read one session's current permissions projection value (undefined = capability absent). */
-function selectOf(session: SessionFace | undefined): PermissionSelect | undefined {
-  return session?.projections.faceOf('permissions').getSnapshot() as PermissionSelect | undefined
-}
-
-/** Flatten the projection select into popup rows; `custom` is display state, never a target. */
-function optionsOf(value: PermissionSelect, t: (key: string) => string): SelectOption[] {
-  return value.options
-    .filter(option => option.value !== 'custom')
-    .map(option => ({
-      id: option.value,
-      label: displayPermissionPreset(option.value, option.name, t),
-      ...(option.description !== undefined ? { detail: option.description } : {}),
-      ...(option.value === value.currentValue ? { active: true } : {}),
-      ...(option.value === FULL_ACCESS_PRESET
-        ? {
-          confirmation: {
-            title: t('confirm.title'),
-            description: t('confirm.description'),
-            acknowledgeLabel: t('confirm.acknowledge'),
-            cancelLabel: t('confirm.cancel'),
-            confirmLabel: t('confirm.enable'),
-          },
-        }
-        : {}),
-    }))
-}
 
 /**
  * Client plugin body: register the /permission popup picker over the

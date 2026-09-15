@@ -6,7 +6,7 @@ import { SettingsDescribeMirror } from '@deepseek-ai/dsh-client-ui-settings/src/
 import { RemoteError } from '@deepseek-ai/dsh-client-test-runtime'
 import {
   PermissionPresetSettingsController, permissionDefaultOf,
-} from '../src/client/settings-store.ts'
+} from '../src/model/settings-store.ts'
 
 const SCHEMA = {
   uid: 6,

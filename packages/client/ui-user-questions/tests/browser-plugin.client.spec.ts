@@ -5,8 +5,8 @@ import { SlotRegistry } from '@deepseek-ai/dsh-client-ui-renderer/client'
 import { LocaleRuntime } from '@deepseek-ai/dsh-client-locale/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import { QuestionComposer } from '../src/client/QuestionComposer.tsx'
-import { PendingQuestion } from '../src/client/contract/slots.ts'
-import { createQuestionDraftStore } from '../src/client/draft-store.ts'
+import { PendingQuestion } from '../src/model/slots.ts'
+import { createQuestionDraftStore } from '../src/model/draft-store.ts'
 import { apply, inject } from '../src/client/index.ts'
 
 const SESSION_ID = 'session-question' as SessionId

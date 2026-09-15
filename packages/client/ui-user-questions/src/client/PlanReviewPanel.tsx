@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Button, IconEditOutline16, MarkdownText } from '@deepseek-ai/dsh-client-ui-primitives'
-import type { PendingQuestion, PlanReview, QuestionComposerProps } from './contract/slots.ts'
+import type { PendingQuestion, PlanReview, QuestionComposerProps } from '../model/slots.ts'
 import css from './PlanReviewPanel.module.css'
 
 /** The panel's own props: the question domain face, the narrowed review, and the locale seat. */

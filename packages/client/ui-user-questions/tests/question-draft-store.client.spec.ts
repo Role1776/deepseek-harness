@@ -1,6 +1,6 @@
 /** Question-composer Session store behavior. */
 import { describe, expect, it } from 'vitest'
-import { createQuestionDraftStore, type QuestionDraftProgress } from '../src/client/draft-store.ts'
+import { createQuestionDraftStore, type QuestionDraftProgress } from '../src/model/draft-store.ts'
 
 const FIRST: QuestionDraftProgress = {
   index: 1,

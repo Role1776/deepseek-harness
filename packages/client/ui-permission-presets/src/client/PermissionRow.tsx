@@ -5,33 +5,14 @@
  */
 
 import { useEffect, useState } from 'react'
-import type { SnapshotStore } from '@deepseek-ai/dsh-client-store'
-import type { InjectFace, PropsLocale, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
 import {
   IconChevronDownOutline14, Menu, RiskConfirmation,
 } from '@deepseek-ai/dsh-client-ui-primitives'
-import type { PermissionSettingsState } from './settings-store.ts'
-import type { PermissionSettingsKey } from './locales.ts'
-import { displayPermissionPreset, FULL_ACCESS_PRESET } from './presentation.ts'
+import type { PermissionSettingsState } from '../model/settings-store.ts'
+import type { PermissionSettingsKey } from '../model/locales.ts'
+import { displayPermissionPreset, FULL_ACCESS_PRESET } from '../model/presentation.ts'
+import type { PermissionRowProps } from '../model/slots.ts'
 import css from './PermissionRow.module.css'
-
-/** Registration-side business face for the host-backed preference. */
-export interface PermissionRowInjected {
-  hooks: {
-    /** Permission settings snapshot bound by the renderer as usePermission. */
-    permission: SnapshotStore<PermissionSettingsState>
-  }
-  /** Load the descriptor when the row first renders. */
-  load: () => Promise<void>
-  /** Persist one advertised preset. */
-  select: (preset: string) => Promise<void>
-}
-
-/** Full component props. */
-export type PermissionRowProps =
-  PropsRuntime<'settings.general.item'>
-  & PropsLocale<'settings.permission'>
-  & InjectFace<PermissionRowInjected>
 
 /**
  * Render the new-session Permission default selector.

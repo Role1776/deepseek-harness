@@ -1,5 +1,7 @@
 # RN Windows — Phase 0 note (not built here)
 
+English | [中文](README.zh.md)
+
 Windows is out of scope for this macOS spike session; this directory is a
 placeholder so the app layout already reserves the platform.
 

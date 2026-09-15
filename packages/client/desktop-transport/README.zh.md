@@ -6,11 +6,11 @@ kind: "package-reference"
 
 [English](README.md) | 中文
 
-## Summary
+## 概述
 
-当 Electron 外壳以外的进程需要说桌面宿主 wire 协议时，使用此包。[桌面宿主](../../../apps/desktop-host/README.md)不暴露网络端口；它通过两个子描述符以成帧字节承载请求与响应（fd 3 承载请求，fd 4 承载响应），并将生命周期消息保留在 Node IPC 上。此包唯一地拥有该线上格式：`DesktopHostRequestDecoder` 与各响应编码器服务宿主，而导出的编码器、`DesktopHostResponseDecoder` 与 `DesktopTransport` 服务任意客户端。`DesktopTransport` 接收字节双工而非进程，因此同一客户端可运行在子进程管道、套接字或内存测试载体之上。
+当 Electron 外壳以外的进程需要说桌面宿主 wire 协议时，使用此包。[桌面宿主](../../../apps/desktop/README.zh.md)不暴露网络端口；它通过两个子描述符以成帧字节承载请求与响应（fd 3 承载请求，fd 4 承载响应），并将生命周期消息保留在 Node IPC 上。此包唯一地拥有该线上格式：`DesktopHostRequestDecoder` 与各响应编码器服务宿主，而导出的编码器、`DesktopHostResponseDecoder` 与 `DesktopTransport` 服务任意客户端。`DesktopTransport` 接收字节双工而非进程，因此同一客户端可运行在子进程管道、套接字或内存测试载体之上。
 
-## Table of Contents
+## 目录
 
 - [Use this package](#use-this-package)
   - [Talk to a host](#talk-to-a-host)
@@ -67,7 +67,7 @@ None；此包不组装模型请求。
 - **不拥有传输进程生命周期。** 载体与任何子进程由调用方拥有；此包既不启动也不停止宿主。
 
 <a id="dev-note"></a>
-### Dev Note
+### 开发备注
 
 <details>
 <summary>面向维护者的工作上下文——点击展开</summary>

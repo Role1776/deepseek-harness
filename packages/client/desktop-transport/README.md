@@ -8,7 +8,7 @@ English | [中文](README.zh.md)
 
 ## Summary
 
-Use this package when a process other than the Electron shell must speak the desktop host wire protocol. The [desktop host](../../../apps/desktop-host/README.md) exposes no network port; it carries requests and responses as framed bytes over two child descriptors (fd 3 for requests, fd 4 for responses) and keeps lifecycle messages on Node IPC. This package owns that wire format once: `DesktopHostRequestDecoder` and the response encoders serve the host, while the exported encoders, `DesktopHostResponseDecoder`, and `DesktopTransport` serve any client. `DesktopTransport` takes a byte duplex rather than a process, so the same client rides child pipes, sockets, or an in-memory test carrier.
+Use this package when a process other than the Electron shell must speak the desktop host wire protocol. The [desktop host](../../../apps/desktop/README.md) exposes no network port; it carries requests and responses as framed bytes over two child descriptors (fd 3 for requests, fd 4 for responses) and keeps lifecycle messages on Node IPC. This package owns that wire format once: `DesktopHostRequestDecoder` and the response encoders serve the host, while the exported encoders, `DesktopHostResponseDecoder`, and `DesktopTransport` serve any client. `DesktopTransport` takes a byte duplex rather than a process, so the same client rides child pipes, sockets, or an in-memory test carrier.
 
 ## Table of Contents
 

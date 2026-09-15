@@ -133,6 +133,7 @@ const README_ARTIFACT = /(?:^|\/)readme(?:\.md|\.zh\.md|\.i18n\.yaml)$/i
 const ROOT_PAIRED_DOCUMENT_ARTIFACT = /^(?:brand_guidelines|contributing|safety)(?:\.md|\.zh\.md|\.i18n\.yaml)$/i
 const NON_SOURCE_DIRECTORIES = new Set([
   'node_modules',
+  'Pods',
   'lib',
   '.pnpm-store',
   '.cache',
@@ -151,6 +152,8 @@ const NON_SOURCE_DIRECTORIES = new Set([
 export const TRANSLATION_SCOPE_GLOB_EXCLUDES = [
   '.agents/notes/archived/**',
   '**/node_modules/**',
+  // CocoaPods writes vendored dependency trees under apps/desktop-native/macos.
+  '**/Pods/**',
   '**/lib/**',
   '**/.pnpm-store/**',
   '**/.cache/**',

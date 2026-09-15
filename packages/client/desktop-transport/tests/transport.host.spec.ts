@@ -81,6 +81,24 @@ describe('DesktopTransport request', () => {
     await expect(response.text()).resolves.toBe('hello world')
   })
 
+  it('uses a supplied response factory instead of the global Response', async () => {
+    const carrier = new FakeCarrier()
+    const created: string[] = []
+    const transport = new DesktopTransport(carrier, {
+      createResponse: (body, init) => {
+        created.push(`${String(init.status)}:${init.headers.get('x-test') ?? ''}`)
+        return new Response(body, init)
+      },
+    })
+    const responsePromise = transport.request({ url: '/a' })
+    carrier.emit(encodeDesktopResponseStart(1, { status: 201, headers: [['x-test', 'yes']], hasBody: true }))
+    carrier.emit(encodeDesktopResponseData(1, new TextEncoder().encode('hi')))
+    carrier.emit(encodeDesktopResponseEnd(1))
+    const response = await responsePromise
+    expect(created).toEqual(['201:yes'])
+    await expect(response.text()).resolves.toBe('hi')
+  })
+
   it('chunks a buffered body and encodes its end', async () => {
     const carrier = new FakeCarrier()
     const transport = new DesktopTransport(carrier)

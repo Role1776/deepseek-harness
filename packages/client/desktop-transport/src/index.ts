@@ -31,4 +31,10 @@ export {
   encodeDesktopResponseStart,
 } from './codec.ts'
 
-export { DesktopTransport, type DesktopTransportCarrier, type DesktopTransportRequest } from './transport.ts'
+export {
+  DesktopTransport,
+  type DesktopResponseFactory,
+  type DesktopTransportCarrier,
+  type DesktopTransportOptions,
+  type DesktopTransportRequest,
+} from './transport.ts'

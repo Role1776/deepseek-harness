@@ -50,12 +50,39 @@ export interface DesktopTransportRequest {
   readonly signal?: AbortSignal
 }
 
+/**
+ * Build the streamed response returned by {@link DesktopTransport.request}.
+ * @param body - response body stream, or `null` when the response has no body.
+ * @param init - response status and headers.
+ * @returns the response object the caller receives.
+ */
+export type DesktopResponseFactory = (
+  body: ReadableStream<Uint8Array> | null,
+  init: { readonly status: number; readonly headers: Headers },
+) => Response
+
+/** Construction options for {@link DesktopTransport}. */
+export interface DesktopTransportOptions {
+  /**
+   * Response constructor. Defaults to the global `Response`; runtimes whose
+   * `Response` drops a streamed body (React Native) supply their own.
+   */
+  readonly createResponse?: DesktopResponseFactory
+}
+
 interface PendingResponse {
   readonly resolve: (response: Response) => void
   readonly reject: (error: Error) => void
   responseStarted: boolean
   controller?: ReadableStreamDefaultController<Uint8Array>
   removeAbort?: () => void
+}
+
+function defaultCreateResponse(
+  body: ReadableStream<Uint8Array> | null,
+  init: { readonly status: number; readonly headers: Headers },
+): Response {
+  return new Response(body, init)
 }
 
 function toBodyBytes(body: DesktopTransportRequest['body']): Uint8Array | null {
@@ -71,13 +98,16 @@ function errorOf(reason: unknown, fallback: string): Error {
 export class DesktopTransport {
   private readonly decoder = new DesktopHostResponseDecoder()
   private readonly pending = new Map<number, PendingResponse>()
+  private readonly createResponse: DesktopResponseFactory
   private nextStreamId = 1
   private closed: Error | undefined
 
   /**
    * @param carrier - byte carrier for request writes and response reads.
+   * @param options - response construction overrides.
    */
-  constructor(private readonly carrier: DesktopTransportCarrier) {
+  constructor(private readonly carrier: DesktopTransportCarrier, options: DesktopTransportOptions = {}) {
+    this.createResponse = options.createResponse ?? defaultCreateResponse
     carrier.onBytes((bytes) => { this.acceptBytes(bytes) })
     carrier.onClose((error) => { this.fail(error ?? new Error('dsh desktop: transport closed')) })
   }
@@ -212,7 +242,7 @@ export class DesktopTransport {
             start: (controller) => { pending.controller = controller },
           })
         }
-        pending.resolve(new Response(body, {
+        pending.resolve(this.createResponse(body, {
           status: frame.status,
           headers: new Headers(frame.headers.map(([name, value]) => [name, value] as [string, string])),
         }))

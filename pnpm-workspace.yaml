@@ -7,6 +7,9 @@ packages:
   - native/system/packages/*
   # Product assemblies over the package tier; apps/cli owns the `dsh` bin.
   - apps/*
+  # Phase 0 React Native spike: an isolated npm project (native pods, metro),
+  # deliberately outside the pnpm workspace so root installs never touch it.
+  - '!apps/desktop-native'
   # Private package owning repository-level benchmark dependencies.
   - benchmarks
   - website

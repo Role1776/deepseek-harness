@@ -57,6 +57,9 @@ Chat 中的一条用户消息把文件与图片放在同一个靠右、可换行
 | [`src/MessageImage.tsx`](src/MessageImage.tsx) | 单图尺寸、加载／重试、点击打开；本地提交回显预览直接显示其 object URL |
 | [`src/ImageLightbox.tsx`](src/ImageLightbox.tsx) | 铺在共享遮罩上的文档级模态预览 |
 | [`src/DropOverlay.tsx`](src/DropOverlay.tsx) | 不接收指针事件的拖放提示 portal |
+| [`src/model/slots.ts`](src/model/slots.ts) | 各视图共享的标签、spec 与 prop 声明（无框架依赖） |
+| [`src/model/labels.ts`](src/model/labels.ts) | conversation 命名空间的标签解析函数 |
+| [`src/model/message-image.ts`](src/model/message-image.ts) | 单图适配尺寸与画廊条目尺寸投影 |
 
 </details>
 

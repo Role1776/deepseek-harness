@@ -8,8 +8,9 @@ import { RemoteError, TestRemote } from '@deepseek-ai/dsh-client-test-runtime'
 import type { JsonValue } from '@deepseek-ai/dsh-util-values'
 import type { SettingsScope } from '@deepseek-ai/dsh-client-ui-settings/client'
 import { SettingsSchemaService } from '../src/client/schema.ts'
-import { SettingsScopeController, SettingsScopeBinder } from '../src/client/settings-scope.ts'
-import { SettingsDescribeMirror } from '../src/client/settings-mirror.ts'
+import { SettingsScopeController } from '../src/model/settings-scope.ts'
+import { SettingsScopeBinder } from '../src/client/settings-scope.ts'
+import { SettingsDescribeMirror } from '../src/model/settings-mirror.ts'
 
 const settingsSchema = new SettingsSchemaService(new Context())
 

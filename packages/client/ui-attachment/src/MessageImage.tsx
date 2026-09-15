@@ -1,68 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import type { ImageAttachmentRef } from '@deepseek-ai/dsh-attachment'
 import { ImageLightbox } from './ImageLightbox.tsx'
-import type { ImageLightboxLabels } from './ImageLightbox.tsx'
+import { dimensionsOf, singleFit } from './model/message-image.ts'
+import type { ImageLoader, MessageImageLabels, MessageImageSpec } from './model/slots.ts'
 import css from './MessageImage.module.css'
 
-/** Loads a session-authorized durable image URL and may expose a cached URL synchronously. */
-export type ImageLoader = ((attachment: ImageAttachmentRef) => Promise<string>) & {
-  peek?: (attachment: ImageAttachmentRef) => string | undefined
-}
-
-/** One gallery entry: a durable admitted reference, or a submission echo's local preview. */
-export type MessageImageSpec =
-  | { readonly attachment: ImageAttachmentRef }
-  | {
-    readonly preview: {
-      readonly url: string
-      readonly name?: string
-      readonly width?: number
-      readonly height?: number
-    }
-  }
-
-/** Message-image strings the owner resolves from its own locale namespace. */
-export interface MessageImageLabels {
-  /** Fallback display name for an unnamed image. */
-  image: string
-  /** Thumbnail tooltip inviting the original-image preview. */
-  open: string
-  /** Accessible thumbnail label; receives the image's display name. */
-  openNamed: (label: string) => string
-  /** Loading placeholder shown until bytes resolve. */
-  loading: string
-  /** Retry-control label shown when the load fails. */
-  loadFailed: string
-  /** Lightbox strings forwarded to the opened preview. */
-  lightbox: ImageLightboxLabels
-}
-
-/** Display box for a lone image (DeepSeek Chat rule): long edge 240px with
- * the rendered aspect ratio clamped to [0.25, 4] — the overflow is cropped by
- * `object-fit: cover` — and never upscaled past the image's natural size. The
- * crop anchor keeps the top of very tall images and the left of very wide
- * ones, where the informative content usually starts. */
-function singleFit(
-  dimensions: { readonly width: number; readonly height: number },
-): { width: number; height: number; objectPosition: string } {
-  const natural = dimensions.width / dimensions.height
-  const ratio = Math.min(4, Math.max(0.25, natural))
-  const box = ratio >= 1 ? { width: 240, height: 240 / ratio } : { width: 240 * ratio, height: 240 }
-  const scale = Math.min(1, dimensions.width / box.width, dimensions.height / box.height)
-  return {
-    width: Math.max(1, Math.round(box.width * scale)),
-    height: Math.max(1, Math.round(box.height * scale)),
-    objectPosition: natural < 0.25 ? 'center top' : natural > 4 ? 'left center' : 'center',
-  }
-}
-
-/** Intrinsic dimensions of one gallery entry; a preview's stay unknown until its intake probe resolved. */
-function dimensionsOf(image: MessageImageSpec): { readonly width: number; readonly height: number } | undefined {
-  if ('attachment' in image) return image.attachment
-  return image.preview.width !== undefined && image.preview.height !== undefined
-    ? { width: image.preview.width, height: image.preview.height }
-    : undefined
-}
+export type { ImageLoader, MessageImageLabels, MessageImageSpec } from './model/slots.ts'
 
 /**
  * Compact history renderer with retryable loading and click-to-open original

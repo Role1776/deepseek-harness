@@ -136,6 +136,7 @@ export const menuReduce: MenuReduce = (state, ev) => {
       const next = pos[at < 0
         ? (ev.dir === 1 ? 0 : pos.length - 1)
         : (at + ev.dir + pos.length) % pos.length]
+      /* v8 ignore next -- defensive: pos is non-empty here, so the computed index is always in range. */
       if (next === undefined) return state
       if (hl && next.source === hl.source && next.index === hl.index) return state
       return { ...state, highlight: next }

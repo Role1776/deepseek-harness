@@ -11,16 +11,16 @@ import type {} from '@deepseek-ai/dsh-api-session-controller/client'
 import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
 import type {} from '@deepseek-ai/dsh-client-ui-session/client'
 import { InputTriggerService } from './service.ts'
-import type { MenuViewInjected } from './slots.ts'
+import type { MenuViewInjected } from '../model/slots.ts'
 import { MenuView } from './MenuView.tsx'
-import { en, zh, type MenuKey } from './locales.ts'
+import { en, zh, type MenuKey } from '../model/locales.ts'
 
 export { InputTriggerService } from './service.ts'
-export { InputTriggerController } from './controller.ts'
-export type { InputTriggerControllerDeps, SourceRoster } from './controller.ts'
-export type { MenuViewInjected } from './slots.ts'
+export { InputTriggerController } from '../model/controller.ts'
+export type { InputTriggerControllerDeps, SourceRoster } from '../model/controller.ts'
+export type { MenuViewInjected } from '../model/slots.ts'
 export type { MenuViewProps } from './MenuView.tsx'
-export type { MenuKey } from './locales.ts'
+export type { MenuKey } from '../model/locales.ts'
 export type {
   ArbitrateKey, ArbitrateOutcome, BeginCommandRequest, CandidateRequest, ClientSessionContext,
   CommandClaim, ConsumeTokenRequest, HeaderRequest, InsertReferenceRequest, PickOutcome, PickVia,
@@ -28,13 +28,13 @@ export type {
   InputTriggerSource, SubmitAttachment, SubmitEnvelope, SubmitOutcome, TokenSpan, TriggerChar,
   TriggerGuard, TriggerPosition,
 } from '../types.ts'
-export type { DetectTrigger, ExactMatch, MenuEvent, MenuReduce, MenuState, TriggerHit } from '../core/contract.ts'
-export type { InputTriggerServiceContract } from './contract.ts'
+export type { DetectTrigger, ExactMatch, MenuEvent, MenuReduce, MenuState, TriggerHit } from '../model/contract.ts'
+export type { InputTriggerServiceContract } from '../model/service-contract.ts'
 
 declare module '@deepseek-ai/cordis' {
   interface Context {
     /** The outward face only; the concrete service stays inside this plugin. */
-    inputTriggers: import('./contract.ts').InputTriggerServiceContract
+    inputTriggers: import('../model/service-contract.ts').InputTriggerServiceContract
   }
 }
 

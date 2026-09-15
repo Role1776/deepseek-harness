@@ -3,7 +3,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, cleanup, fireEvent, render } from '@testing-library/react'
 import { AttachmentRail } from '../src/AttachmentRail.tsx'
-import type { AttachmentRailItem, AttachmentRailLabels } from '../src/AttachmentRail.tsx'
+import type { AttachmentRailItem, AttachmentRailLabels } from '../src/model/slots.ts'
 
 afterEach(cleanup)
 

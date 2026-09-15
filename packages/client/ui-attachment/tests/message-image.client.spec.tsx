@@ -7,7 +7,7 @@ import { AttachmentId } from '@deepseek-ai/dsh-attachment'
 import { EMPTY_CHAT_SNAPSHOT, type MessageImagesProps } from '@deepseek-ai/dsh-client-ui-chat/client'
 import { EMPTY_CONVERSATION_SNAPSHOT } from '@deepseek-ai/dsh-client-ui-conversation/client'
 import { ImageGallery, MessageImage } from '../src/MessageImage.tsx'
-import type { MessageImageLabels } from '../src/MessageImage.tsx'
+import type { MessageImageLabels } from '../src/model/slots.ts'
 import { MessageImages } from '../src/client/MessageImages.tsx'
 
 // Every session-scope fixture carries the resource hook the resources plugin merges into GlobalStandardProps.

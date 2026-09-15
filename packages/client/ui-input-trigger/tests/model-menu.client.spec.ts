@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import type { MenuState, TriggerHit } from '../src/core/contract.ts'
-import { exactMatch, MENU_CLOSED, menuReduce, seedGroups } from '../src/core/menu.ts'
+import type { MenuState, TriggerHit } from '../src/model/contract.ts'
+import { exactMatch, MENU_CLOSED, menuReduce, seedGroups } from '../src/model/menu.ts'
 
 const hit = (query = ''): TriggerHit => ({
   trigger: '/',

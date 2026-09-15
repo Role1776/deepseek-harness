@@ -9,7 +9,7 @@ import { SettingsSchemaService } from '@deepseek-ai/dsh-client-ui-settings/src/c
 import { PermissionRow } from '../src/client/PermissionRow.tsx'
 import type { PermissionRowProps } from '../src/model/slots.ts'
 import { zh } from '../src/model/locales.ts'
-import { SettingsDescribeMirror } from '@deepseek-ai/dsh-client-ui-settings/src/client/settings-mirror.ts'
+import { SettingsDescribeMirror } from '@deepseek-ai/dsh-client-ui-settings/src/model/settings-mirror.ts'
 import { PermissionPresetSettingsController } from '../src/model/settings-store.ts'
 
 // Every fixture carries the resource hook the resources plugin merges into GlobalStandardProps.

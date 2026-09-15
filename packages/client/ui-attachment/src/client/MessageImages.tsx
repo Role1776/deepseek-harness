@@ -1,6 +1,6 @@
 import type { MessageImagesProps } from '@deepseek-ai/dsh-client-ui-chat/client'
 import { ImageGallery } from '../MessageImage.tsx'
-import { messageImageLabels } from './labels.ts'
+import { messageImageLabels } from '../model/labels.ts'
 
 /** Historical message-image slot entry. */
 export function MessageImages({ images, loadImage, align, compact = false, t }: MessageImagesProps) {

@@ -13,9 +13,9 @@ import type {
   ArbitrateKey, ArbitrateOutcome, PickOutcome, ReferenceInsert,
 } from '@deepseek-ai/dsh-client-ui-conversation/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import { detectTrigger } from '../core/detect.ts'
-import { MENU_CLOSED, menuReduce, seedGroups } from '../core/menu.ts'
-import type { MenuEvent, MenuState, TriggerHit } from '../core/contract.ts'
+import { detectTrigger } from './detect.ts'
+import { MENU_CLOSED, menuReduce, seedGroups } from './menu.ts'
+import type { MenuEvent, MenuState, TriggerHit } from './contract.ts'
 import type {
   ClientSessionContext, InputTriggerCandidate, InputTriggerCrumb, InputTriggerSource, PickAction,
   SubmitEnvelope, TriggerChar, TriggerGuard,

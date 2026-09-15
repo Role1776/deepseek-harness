@@ -6,7 +6,7 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 |---|---|
 | ui-agent-preset | done |
 | ui-approval | done |
-| ui-attachment | pending |
+| ui-attachment | done |
 | ui-brand-official | view-only |
 | ui-chat | pending |
 | ui-commands | done |
@@ -16,7 +16,7 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | ui-directory-picker-native | done |
 | ui-dockkit | pending |
 | ui-goal | done |
-| ui-input-trigger | pending |
+| ui-input-trigger | done |
 | ui-jobs | done |
 | ui-layout | pending |
 | ui-message-feedback | done |
@@ -29,7 +29,7 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | ui-renderer | pending |
 | ui-schedule | done |
 | ui-session | done |
-| ui-settings | pending |
+| ui-settings | done |
 | ui-settings-general | pending |
 | ui-settings-models | pending |
 | ui-settings-plugin-inventory | done |
@@ -74,3 +74,12 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 - **A formatter stays in the view when it needs React component values.** ui-commands `presentation.ts` maps built-in host commands to icon components, so only its pure sectioning (`MenuSection`, `SECTION_ROWS`, `sectionRows`) moved to `model/presentation.ts`; the icon face (`builtinRowFace`) stayed in `src/client/presentation.ts`. `CommandDirectory`, `PopupSelectController`, `contract`, `resolution`, and `locales` were fully framework-free and moved whole.
 - **README implementation prose names moved paths.** ui-commands README/zh `## Understand the implementation` named `src/client/contract.ts`, `resolution.ts`, and `presentation.ts`; update both sides and re-record with `pnpm run verify-translation-pairing --write <README.md>`.
 - **Import only the model helpers the view still calls.** After moving ui-directory-picker-browse's pure helpers out of `DirectoryBrowser.tsx`, `draftDirectory` and `levelDirectory` were used only by the moved `readDraft`; importing them into the view failed `tsc` with TS6133. Keep such helpers module-private in the model file and import only what the view reads. The three debounce constants are shared by the model helpers and the view's timers, so they are exported and imported back rather than duplicated.
+- **A moved label resolver must bring its return types.** ui-attachment's `client/labels.ts` imported `AttachmentRailLabels`, `DropOverlayLabels`, `FileCardLabels`, `ImageLightboxLabels`, and `MessageImageLabels` from the view `.tsx` files; moving the resolver alone would leave `src/model/labels.ts` importing a `.tsx`. Move those interfaces to `src/model/slots.ts` as well, and re-export the moved type names from each view so its file-level exported names stay stable.
+- **Pure helpers inside a `.tsx` view move even when only one view calls them.** ui-attachment's `singleFit` and `dimensionsOf` sat in `MessageImage.tsx`; they became `src/model/message-image.ts`, and the view imports them back. A single-`tsconfig.json` package already includes `src/model` in its `include`, so no leaf change is needed.
+- **A package's existing `src/core/` pure tree may just be the model under another name.** ui-input-trigger's `src/core/{contract,detect,menu}.ts` were already framework-free; rename the directory to `src/model`, move `client/{locales,slots,controller,contract}.ts` in beside them (the service contract was renamed `model/service-contract.ts` to avoid colliding with the pipeline `contract.ts`), and repoint every import plus the README prose (`src/core/` → `src/model/`). Keep only the cordis `Service` subclass in `src/client`.
+- **Moving a `vitest.config.ts`-exempt controller to model needs a dedicated stub-bench spec.** ui-input-trigger's `client/controller.ts` was excluded alongside `core/{menu,detect}.ts`; all three are now gated. `tests/model-controller.client.spec.ts` builds the controller directly over a mutable `SourceRoster` array to cover the disposal guards, roster drift between track and pick, `refreshOpenMenu` launched-source filter, `serializeReference` missing-owner rejection, lexicon-notification teardown, and superseded fetch rejection. Remove the three stale exclude entries once the model files hit 100%; keep the service and host entries.
+- **Prefer deleting dead generality to a `v8 ignore` when a branch is unreachable by construction.** ui-input-trigger `boundaryOk` took a `TriggerChar` and branched `if (char === '/')`, but its only caller passes `ch` after `if (ch !== '/') continue`, so the non-slash arm could never run; dropping the parameter restored 100% branches with no ignore. The `next === undefined` guard in `menu.ts` is a genuine noUncheckedIndexedAccess artifact (index is always in range) and takes `/* v8 ignore next -- reason */`.
+- **The `./src/*` export is a real path API; a move must be grepped repo-wide.** Other Client packages import ui-settings internals as `@deepseek-ai/dsh-client-ui-settings/src/client/<file>.ts`, so moving `settings-mirror.ts`/`settings-scope.ts` to `model/` broke `ui-settings-general`, `ui-settings-plugins`, `ui-settings-models`, and `ui-permission-presets` tests. Update each consumer's spec path, not only the owning package's tests.
+- **Split a Service subclass from the controller it publishes instead of leaving the whole file in the view.** ui-settings `settings-scope.ts` held `SettingsScopeBinder extends Service` plus the framework-free `SettingsScopeController`; the controller moved to `model/settings-scope.ts`, and the binder stays. The controller no longer imports the `SettingsSchemaService` class: it takes a structural `SettingsSchemaOps` interface (`validate`/`rehydrate`) the Service satisfies, so model has no client-path dependency. `SchemaNode` moved to `model/schema.ts` and `client/schema.ts` re-exports it.
+- **The generated slot catalog pins slot-source paths.** Moving `contract/slots.ts` to `model/slots.ts` makes `verify-client-catalog` stale; run `pnpm run gen-client-catalog`. The regen also corrected a previously stale `ui-approval` path, so a package-only diff is not guaranteed.
+- **A moved file can carry a branch the full coverage run covers from elsewhere.** ui-settings `settings-mirror.ts`'s `String(error)` arm had no direct test in the package suite; moving it to model exposed it, and one added non-Error rejection case closed it. When a moved file reports a branch gap you did not expect, add the missing direct test rather than reaching for an exemption.

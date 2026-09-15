@@ -11,7 +11,7 @@ import { AgentLoopCardController, type AgentLoopSettings } from '../src/client/a
 import { BashCardController, type BashSettings } from '../src/client/bash-card-controller.ts'
 import {
   SettingsDescribeMirror, type SettingsMirrorSnapshot,
-} from '@deepseek-ai/dsh-client-ui-settings/src/client/settings-mirror.ts'
+} from '@deepseek-ai/dsh-client-ui-settings/src/model/settings-mirror.ts'
 import { ConfigurablePluginsTabController } from '../src/client/tab-store.ts'
 import {
   SubagentModelSelectionCardController,

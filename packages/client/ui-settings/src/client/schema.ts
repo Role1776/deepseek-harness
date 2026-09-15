@@ -2,9 +2,9 @@
 import { Service } from '@deepseek-ai/cordis'
 import type { Context } from '@deepseek-ai/cordis'
 import Schema from '@deepseek-ai/schemastery'
+import type { SchemaNode } from '../model/schema.ts'
 
-/** Live schemastery node used for settings introspection and validation. */
-export type SchemaNode = Schema
+export type { SchemaNode } from '../model/schema.ts'
 
 function cloneContainer(container: unknown, key: string): Record<string, unknown> | unknown[] {
   if (Array.isArray(container)) return [...container as unknown[]]

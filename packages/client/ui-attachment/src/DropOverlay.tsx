@@ -1,13 +1,8 @@
 import { createPortal } from 'react-dom'
+import type { DropOverlayLabels } from './model/slots.ts'
 import css from './DropOverlay.module.css'
 
-/** Drop-overlay strings the owner resolves from its own locale namespace. */
-export interface DropOverlayLabels {
-  /** Headline inviting the drop, or naming why it is unavailable. */
-  title: string
-  /** Limits line under the title; shown only while drops are accepted. */
-  desc?: string | undefined
-}
+export type { DropOverlayLabels } from './model/slots.ts'
 
 /**
  * Full-viewport invitation shown while a file drag is over the page

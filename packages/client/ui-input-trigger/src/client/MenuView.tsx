@@ -17,8 +17,8 @@ import clsx from 'clsx'
 import { IconChevronRightOutline14, ReferenceIcon, useAnchoredMaxHeight } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { PropsLocale } from '@deepseek-ai/dsh-client-ui-slots'
 import css from './MenuView.module.css'
-import type { MenuViewInjected } from './slots.ts'
-import type { MenuKey } from './locales.ts'
+import type { MenuViewInjected } from '../model/slots.ts'
+import type { MenuKey } from '../model/locales.ts'
 
 /** Full menu props: injected face + the locale seat. */
 export type MenuViewProps = MenuViewInjected & PropsLocale<'slash.menu'>

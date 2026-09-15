@@ -2,7 +2,7 @@
 import type {} from '@deepseek-ai/dsh-client-ui-conversation/client'
 import type { InputTriggerCrumb, PickAction } from '../types.ts'
 import type { SnapshotStore } from '@deepseek-ai/dsh-client-store'
-import type { MenuState } from '../core/contract.ts'
+import type { MenuState } from './contract.ts'
 
 /** Injected business face of the MenuView overlay entry (copy rides the standard locale seat, not this face). */
 export interface MenuViewInjected {

@@ -57,6 +57,9 @@ The plugin waits for `conversation.input.attachments`, `conversation.message.ima
 | [`src/MessageImage.tsx`](src/MessageImage.tsx) | Single image sizing, load/retry, click-to-open; local submission-echo previews render their object URL directly |
 | [`src/ImageLightbox.tsx`](src/ImageLightbox.tsx) | Document-level modal preview over the shared mask |
 | [`src/DropOverlay.tsx`](src/DropOverlay.tsx) | Pointer-inert drag invitation portal |
+| [`src/model/slots.ts`](src/model/slots.ts) | Framework-free label, spec, and prop declarations shared by the views |
+| [`src/model/labels.ts`](src/model/labels.ts) | Conversation-namespace label resolvers |
+| [`src/model/message-image.ts`](src/model/message-image.ts) | Lone-image fit sizing and gallery-entry dimension projection |
 
 </details>
 

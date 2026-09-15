@@ -1,9 +1,7 @@
 import type { TranslateNS } from '@deepseek-ai/dsh-client-ui-slots'
-import type { AttachmentRailLabels } from '../AttachmentRail.tsx'
-import type { DropOverlayLabels } from '../DropOverlay.tsx'
-import type { FileCardLabels } from '../FileCard.tsx'
-import type { ImageLightboxLabels } from '../ImageLightbox.tsx'
-import type { MessageImageLabels } from '../MessageImage.tsx'
+import type {
+  AttachmentRailLabels, DropOverlayLabels, FileCardLabels, ImageLightboxLabels, MessageImageLabels,
+} from './slots.ts'
 
 /**
  * Resolve original-image lightbox strings from the conversation namespace.

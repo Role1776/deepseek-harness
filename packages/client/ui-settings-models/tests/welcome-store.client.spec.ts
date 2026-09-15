@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest'
 import { Context } from '@deepseek-ai/cordis'
 import { SettingsSchemaService } from '@deepseek-ai/dsh-client-ui-settings/src/client/schema.ts'
-import { SettingsDescribeMirror } from '@deepseek-ai/dsh-client-ui-settings/src/client/settings-mirror.ts'
-import { SettingsScopeController } from '@deepseek-ai/dsh-client-ui-settings/src/client/settings-scope.ts'
+import { SettingsDescribeMirror } from '@deepseek-ai/dsh-client-ui-settings/src/model/settings-mirror.ts'
+import { SettingsScopeController } from '@deepseek-ai/dsh-client-ui-settings/src/model/settings-scope.ts'
 import { RemoteError } from '@deepseek-ai/dsh-client-test-runtime'
 import { decodeWelcomeSection, WelcomeNoticeStore } from '../src/client/welcome-store.ts'
 import {

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import type { SettingsNamespaceView } from '@deepseek-ai/dsh-api-remotes/client'
 import { RemoteError } from '@deepseek-ai/dsh-client-test-runtime'
-import { SettingsDescribeMirror, type SettingsDescribeView } from '../src/client/settings-mirror.ts'
+import { SettingsDescribeMirror, type SettingsDescribeView } from '../src/model/settings-mirror.ts'
 
 /** What a Remote call answers with: no carrier envelope, and a typed failure. */
 type Answer<T> =
@@ -71,6 +71,13 @@ describe('SettingsDescribeMirror', () => {
     await mirror.load()
     expect(mirror.getSnapshot()).toMatchObject({ status: 'ready', error: 'busy' })
     expect(mirror.getSnapshot().view?.namespaces).toHaveLength(1)
+  })
+
+  it('records a non-Error rejection as its string form', async () => {
+    const describeCall = vi.fn().mockRejectedValueOnce('plain-string failure')
+    const mirror = new SettingsDescribeMirror(ctxWith(describeCall))
+    await mirror.load()
+    expect(mirror.getSnapshot()).toMatchObject({ status: 'idle', view: undefined, error: 'plain-string failure' })
   })
 
   it('returns to idle after a first read that never succeeded, so ensure retries', async () => {

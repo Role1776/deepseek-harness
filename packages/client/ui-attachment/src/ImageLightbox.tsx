@@ -1,15 +1,10 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { IconCloseOutline16 } from '@deepseek-ai/dsh-client-ui-primitives'
+import type { ImageLightboxLabels } from './model/slots.ts'
 import css from './ImageLightbox.module.css'
 
-/** Lightbox strings the owner resolves from its own locale namespace. */
-export interface ImageLightboxLabels {
-  /** Accessible name of the preview dialog. */
-  dialog: string
-  /** Accessible label of the close control. */
-  close: string
-}
+export type { ImageLightboxLabels } from './model/slots.ts'
 
 /**
  * Document-level original-image preview opened by clicking a thumbnail.

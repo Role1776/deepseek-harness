@@ -6,23 +6,10 @@ import clsx from 'clsx'
 import {
   IconChevronLeftOutline14, IconChevronRightOutline14,
 } from '@deepseek-ai/dsh-client-ui-primitives'
+import type { AttachmentRailItem, AttachmentRailLabels } from './model/slots.ts'
 import css from './AttachmentRail.module.css'
 
-/** One ordered draft attachment rendered by the rail owner. */
-export interface AttachmentRailItem {
-  /** Stable identity for the React key. */
-  id: string
-}
-
-/** Rail-level strings the owner resolves from its own locale namespace. */
-export interface AttachmentRailLabels {
-  /** Accessible name of the rail group. */
-  group: string
-  /** Accessible label of the left paging arrow. */
-  scrollLeft: string
-  /** Accessible label of the right paging arrow. */
-  scrollRight: string
-}
+export type { AttachmentRailItem, AttachmentRailLabels } from './model/slots.ts'
 
 /** Approximate pixels per wheel step for `deltaMode` LINE deltas (Firefox
  * notch wheels report lines, not pixels). */

@@ -12,8 +12,8 @@ import type { ISessions } from '@deepseek-ai/dsh-api-session-controller/client'
 import type {} from '@deepseek-ai/dsh-client-locale/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import type { InputTriggerSource } from '../types.ts'
-import { InputTriggerController } from './controller.ts'
-import type { InputTriggerServiceContract } from './contract.ts'
+import { InputTriggerController } from '../model/controller.ts'
+import type { InputTriggerServiceContract } from '../model/service-contract.ts'
 
 /**
  * All mutable service state in one holder: cordis service methods run behind

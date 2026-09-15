@@ -22,19 +22,20 @@ import type {} from '@deepseek-ai/dsh-api-remotes/types'
 import type {} from '@deepseek-ai/dsh-settings/types'
 import { SettingsSchemaService } from './schema.ts'
 import { SettingsScopeBinder } from './settings-scope.ts'
-import { SettingsDescribeMirror } from './settings-mirror.ts'
+import { SettingsDescribeMirror } from '../model/settings-mirror.ts'
 
 export type {
   SettingsGeneralItemOwnerProps, SettingsHeaderOwnerProps, SettingsOnboardingOwnerProps,
   SettingsPluginsTabOwnerProps, SettingsSectionOwnerProps, SettingsTriggerOwnerProps,
-} from './contract/slots.ts'
-export type { SettingsScopeController, SettingsScopeBinder } from './settings-scope.ts'
-export type { SettingsScope, SettingsScopeSnapshot, SettingsScopeSpec } from './settings-contract.ts'
+} from '../model/slots.ts'
+export type { SettingsScopeBinder } from './settings-scope.ts'
+export type { SettingsScopeController } from '../model/settings-scope.ts'
+export type { SettingsScope, SettingsScopeSnapshot, SettingsScopeSpec } from '../model/settings-contract.ts'
 export type { SettingsSchemaService } from './schema.ts'
 export type { SchemaNode } from './schema.ts'
 export type {
   SettingsDescribeFace, SettingsDescribeView, SettingsMirrorSnapshot,
-} from './settings-mirror.ts'
+} from '../model/settings-mirror.ts'
 
 /**
  * Required services: the Remote namespace the mirror reads through and the

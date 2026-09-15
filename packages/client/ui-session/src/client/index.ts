@@ -3,129 +3,59 @@ import { Service, type Context } from '@deepseek-ai/cordis'
 import type {
   ISessions,
   SessionBinding,
-  SessionListState,
-  SessionSnapshot,
-  UseProjection,
 } from '@deepseek-ai/dsh-api-session-controller/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import { notifySubscribers } from '@deepseek-ai/dsh-client-store'
-import { standardHookPropName } from '@deepseek-ai/dsh-client-ui-slots'
 import type {
   HostObservable,
   KeyedStandardSource,
-  MaybeSnapshotSelectorHook,
   RootStandardSourceContribution,
   ScopedStandardSourceBinding,
   SlotScopeAdapter,
-  SnapshotSelectorHook,
   StandardSourceBinding,
 } from '@deepseek-ai/dsh-client-ui-slots'
 // Type-only service merge for ctx.slots.
 import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
+import {
+  BUILTIN_SOURCE,
+  copyDeclared,
+  declareAbsent,
+  validateContribution,
+} from '../model/session-sources.ts'
+import type {
+  RuntimeSessionSourceDescriptor,
+  SessionSourceDescriptor,
+} from '../model/session-sources.ts'
+import {
+  PendingInteractionDomain,
+  samePendingInteractions,
+} from '../model/pending-interactions.ts'
+import type {
+  PendingInteractionPublisher,
+  RuntimePendingDomain,
+  SessionPendingInteractionBase,
+  SessionPendingInteractionSnapshot,
+} from '../model/pending-interactions.ts'
 import { renderSessionArea } from './session-provider.tsx'
 
-/** Selector hook over the Session Controller list and current selection. */
-export type UseSessions = SnapshotSelectorHook<SessionListState>
-/** Selector hook over one Session's lifecycle and control state. */
-export type SessionSnapshotSelector = SnapshotSelectorHook<SessionSnapshot>
-/** Public name for the Session lifecycle selector hook. */
-export type UseSession = SessionSnapshotSelector
+export type { UseSessions, SessionSnapshotSelector, UseSession } from '../model/slots.ts'
+export type {
+  SessionPendingInteractionBase,
+  SessionPendingInteractionMap,
+  SessionPendingInteraction,
+  SessionPendingInteractionSnapshot,
+  UseSessionPendingInteraction,
+  PendingInteractionPublisher,
+} from '../model/pending-interactions.ts'
+export type {
+  SessionSourceContribution,
+  SessionSourceDescriptor,
+} from '../model/session-sources.ts'
 
-/** Common identity carried by every Session-scoped pending interaction. */
-export interface SessionPendingInteractionBase {
-  /** Opaque request identity; a replacement request must use a new key. */
-  readonly key: string
-  /** Domain-owned presentation discriminator. */
-  readonly kind: string
-  /** Session whose UI can answer this interaction. */
-  readonly sessionId: SessionId
-}
-
-/** Declaration-merged roster of domain-owned pending interaction values. */
-export interface SessionPendingInteractionMap {}
-
-/** Every pending interaction contributed by the assembled Client. */
-export type SessionPendingInteraction =
-  [keyof SessionPendingInteractionMap] extends [never]
-    ? SessionPendingInteractionBase
-    : SessionPendingInteractionMap[keyof SessionPendingInteractionMap]
-
-/** Current effective pending interaction by Session. */
-export type SessionPendingInteractionSnapshot = ReadonlyMap<SessionId, SessionPendingInteraction>
-/** Selector hook over Session-scoped pending interactions. */
-export type UseSessionPendingInteraction = SnapshotSelectorHook<SessionPendingInteractionSnapshot>
-
-/** Publish one pending interaction and define how plugin teardown delegates it. */
-export type PendingInteractionPublisher<T extends SessionPendingInteractionBase> = (
-  interaction: T,
-  delegate: () => Promise<void>,
-) => () => void
-
-interface PendingInteractionEntry<T> {
-  readonly interaction: T
-  readonly delegate: () => Promise<void>
-}
-
-class PendingInteractionDomain<T extends SessionPendingInteractionBase> {
-  private readonly values = new Map<string, PendingInteractionEntry<T>>()
-
-  constructor(
-    readonly precedence: (interaction: T) => number,
-    private readonly changed: () => void,
-  ) {}
-
-  valuesSnapshot(): readonly T[] {
-    return [...this.values.values()].map(entry => entry.interaction)
-  }
-
-  publish(interaction: T, delegate: () => Promise<void>): () => void {
-    if (this.values.has(interaction.key)) {
-      throw new Error(`ui-session: duplicate pending interaction key '${interaction.key}'`)
-    }
-    this.values.set(interaction.key, { interaction, delegate })
-    this.changed()
-    let active = true
-    return () => {
-      if (!active) return
-      active = false
-      if (!this.values.delete(interaction.key)) return
-      this.changed()
-    }
-  }
-
-  /** Remove every pending value and return the operations that settle their owners. */
-  release(): readonly (() => Promise<void>)[] {
-    const delegates = [...this.values.values()].map(entry => entry.delegate)
-    this.values.clear()
-    return delegates
-  }
-}
-
-declare module '@deepseek-ai/dsh-client-ui-slots' {
-  interface GlobalStandardProps {
-    /** Session list and current selection. */
-    useSessions: UseSessions
-    /** Pending user interaction presented by a Session-scoped UI consumer. */
-    useSessionPendingInteraction: UseSessionPendingInteraction
-  }
-
-  interface SessionStandardProps {
-    /** Current Session lifecycle and control state. */
-    useSession: SessionSnapshotSelector
-    /** Current Session identity. */
-    sessionId: SessionId
-    /** Host-computed projection values addressed by projection key. */
-    useProjection: UseProjection
-  }
-
-  interface SessionMaybeStandardProps {
-    /** Current Session state, absent while no Session is selected. */
-    useSession: MaybeSnapshotSelectorHook<SessionSnapshot>
-    /** Current Session identity, absent while no Session is selected. */
-    sessionId: SessionId | undefined
-    /** Host-computed projection values; every key is absent without a Session. */
-    useProjection: UseProjection
-  }
+interface MaterializedBinding {
+  readonly owner: SessionBinding
+  readonly value: ScopedStandardSourceBinding
+  readonly release: () => void
 }
 
 declare module '@deepseek-ai/cordis' {
@@ -134,80 +64,6 @@ declare module '@deepseek-ai/cordis' {
     uiSession: UiSession
   }
 }
-
-type SessionSourceRoster = readonly string[] | undefined
-type StandardMemberKind = 'hook' | 'keyed hook' | 'prop'
-
-type SessionSourceRecord<Roster extends SessionSourceRoster, Value> =
-  Roster extends readonly string[] ? Readonly<Record<Roster[number], Value>> : never
-
-/** Bare values produced by one Session-scoped source contribution. */
-export interface SessionSourceContribution<
-  Hooks extends SessionSourceRoster = SessionSourceRoster,
-  KeyedHooks extends SessionSourceRoster = SessionSourceRoster,
-  Props extends SessionSourceRoster = SessionSourceRoster,
-> {
-  readonly hooks?: SessionSourceRecord<Hooks, HostObservable<unknown>>
-  readonly keyedHooks?: SessionSourceRecord<KeyedHooks, KeyedStandardSource>
-  readonly props?: SessionSourceRecord<Props, unknown>
-}
-
-/** Static roster and per-Session resolver for one standard-props contribution. */
-export interface SessionSourceDescriptor<
-  Hooks extends SessionSourceRoster = SessionSourceRoster,
-  KeyedHooks extends SessionSourceRoster = SessionSourceRoster,
-  Props extends SessionSourceRoster = SessionSourceRoster,
-> {
-  readonly hooks?: Hooks
-  readonly keyedHooks?: KeyedHooks
-  readonly props?: Props
-  /**
-   * Resolve every declared member for one Session binding.
-   * @param binding - Controller-owned Session binding.
-   * @returns all declared bare sources and stable props.
-   */
-  resolve(binding: SessionBinding): SessionSourceContribution<
-    NoInfer<Hooks>,
-    NoInfer<KeyedHooks>,
-    NoInfer<Props>
-  >
-}
-
-interface RuntimeSessionSourceContribution {
-  readonly hooks?: Readonly<Record<string, HostObservable<unknown>>>
-  readonly keyedHooks?: Readonly<Record<string, KeyedStandardSource>>
-  readonly props?: Readonly<Record<string, unknown>>
-}
-
-interface RuntimeSessionSourceDescriptor {
-  readonly hooks?: readonly string[]
-  readonly keyedHooks?: readonly string[]
-  readonly props?: readonly string[]
-  resolve(binding: SessionBinding): RuntimeSessionSourceContribution
-}
-
-type RuntimePendingDomain = PendingInteractionDomain<SessionPendingInteractionBase>
-
-interface MaterializedBinding {
-  readonly owner: SessionBinding
-  readonly value: ScopedStandardSourceBinding
-  readonly release: () => void
-}
-
-const BUILTIN_SOURCE = {
-  hooks: ['session'],
-  keyedHooks: ['projection'],
-  props: ['sessionId'],
-  resolve: binding => ({
-    hooks: { session: binding.session },
-    keyedHooks: { projection: key => binding.session.projections.faceOf(key) },
-    props: { sessionId: binding.sessionId },
-  }),
-} satisfies SessionSourceDescriptor<
-  readonly ['session'],
-  readonly ['projection'],
-  readonly ['sessionId']
->
 
 /** Session-scoped source roster and renderer adapter. */
 export class UiSession extends Service {
@@ -272,9 +128,9 @@ export class UiSession extends Service {
    * @returns disposer owned by the caller's Cordis fiber.
    */
   provide<
-    const Hooks extends SessionSourceRoster = undefined,
-    const KeyedHooks extends SessionSourceRoster = undefined,
-    const Props extends SessionSourceRoster = undefined,
+    const Hooks extends readonly string[] | undefined = undefined,
+    const KeyedHooks extends readonly string[] | undefined = undefined,
+    const Props extends readonly string[] | undefined = undefined,
   >(descriptor: SessionSourceDescriptor<Hooks, KeyedHooks, Props>): () => void {
     const runtimeDescriptor = descriptor as unknown as RuntimeSessionSourceDescriptor
     const dispose = this.ctx.effect(() => {
@@ -439,62 +295,6 @@ export class UiSession extends Service {
   }
 }
 
-function validateContribution(
-  descriptor: RuntimeSessionSourceDescriptor,
-  contribution: RuntimeSessionSourceContribution,
-): void {
-  rejectUndeclared('hook', descriptor.hooks, contribution.hooks)
-  rejectUndeclared('keyed hook', descriptor.keyedHooks, contribution.keyedHooks)
-  rejectUndeclared('prop', descriptor.props, contribution.props)
-}
-
-function rejectUndeclared(
-  kind: string,
-  declared: readonly string[] | undefined,
-  values: Readonly<Record<string, unknown>> | undefined,
-): void {
-  for (const name of Object.keys(values ?? {})) {
-    if (!(declared ?? []).includes(name)) {
-      throw new Error(`uiSession.provide: undeclared ${kind} '${name}'`)
-    }
-  }
-}
-
-function copyDeclared<T>(
-  kind: StandardMemberKind,
-  target: Record<string, T>,
-  declared: readonly string[] | undefined,
-  values: Readonly<Record<string, T>> | undefined,
-  finalProps: Set<string>,
-): void {
-  for (const name of declared ?? []) {
-    claimStandardProp(kind, name, finalProps)
-    const value = values?.[name]
-    if (value === undefined) throw new Error(`uiSession.provide: missing ${kind} '${name}'`)
-    target[name] = value
-  }
-}
-
-function declareAbsent(
-  kind: StandardMemberKind,
-  target: Record<string, undefined>,
-  declared: readonly string[] | undefined,
-  finalProps: Set<string>,
-): void {
-  for (const name of declared ?? []) {
-    claimStandardProp(kind, name, finalProps)
-    target[name] = undefined
-  }
-}
-
-function claimStandardProp(kind: StandardMemberKind, name: string, finalProps: Set<string>): void {
-  const propName = kind === 'prop' ? name : standardHookPropName(name)
-  if (finalProps.has(propName)) {
-    throw new Error(`uiSession.provide: duplicate ${kind} '${name}' at prop '${propName}'`)
-  }
-  finalProps.add(propName)
-}
-
 /** Required Controller and renderer services. */
 export const inject = ['sessions', 'slots']
 
@@ -511,15 +311,4 @@ export function apply(ctx: Context): void {
     },
   } satisfies RootStandardSourceContribution)
   ctx.slots.installScope('session', service.adapter)
-}
-
-function samePendingInteractions(
-  left: ReadonlyMap<SessionId, SessionPendingInteractionBase>,
-  right: ReadonlyMap<SessionId, SessionPendingInteractionBase>,
-): boolean {
-  if (left.size !== right.size) return false
-  for (const [sessionId, interaction] of left) {
-    if (right.get(sessionId) !== interaction) return false
-  }
-  return true
 }

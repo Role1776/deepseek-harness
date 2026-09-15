@@ -1,5 +1,4 @@
 import { useEffect, useId, useMemo, useState, type ReactNode } from 'react'
-import type { PluginInventorySnapshot } from '@deepseek-ai/dsh-api-remotes/client'
 import {
   IconChevronDownOutline14,
   IconSearchOutline16,
@@ -7,86 +6,28 @@ import {
   StateDot,
   Tag,
 } from '@deepseek-ai/dsh-client-ui-primitives'
-import type { StateDotState, TagTone } from '@deepseek-ai/dsh-client-ui-primitives'
-import type { InjectFace, PropsLocale, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
-import type { PluginInventoryLocaleKey } from './locales.ts'
+import type {
+  AgentPresetGroup,
+  AgentPresetRow,
+  EnablementKind,
+  PluginInventoryEntry,
+  PluginFiberPhase,
+  PluginInventorySettingsTabProps,
+  Translate,
+  ViewState,
+} from '../model/inventory-presentation.ts'
+import {
+  PHASE_DOT_STATES,
+  TAG_TONES,
+  entrySubtitle,
+  fallbackPreset,
+  groupEnabledIn,
+  matches,
+  moduleShortName,
+  phaseLabel,
+  presetLabel,
+} from '../model/inventory-presentation.ts'
 import css from './PluginInventorySettingsTab.module.css'
-
-type PluginInventoryEntry = PluginInventorySnapshot['entries'][number]
-type AgentPresetGroup = NonNullable<PluginInventorySnapshot['agentPresets']>[number]
-type AgentPresetRow = AgentPresetGroup['rows'][number]
-
-/** Registration-side Remote face used by the section. */
-export interface PluginInventorySettingsTabInjected {
-  /** Read a current Host inventory snapshot. */
-  list: () => Promise<PluginInventorySnapshot>
-  /**
-   * Display name for one preset: shipped presets resolve through the
-   * agent-preset dictionaries, user-authored ones keep their own metadata.
-   */
-  presetName: (preset: AgentPresetGroup) => string
-}
-type PluginFiberPhase = PluginInventoryEntry['fiberPhase']
-
-/** Full component props assembled by the Settings slot renderer. */
-export type PluginInventorySettingsTabProps =
-  PropsRuntime<'settings.plugins.tab'>
-  & PropsLocale<'settings.pluginInventory'>
-  & InjectFace<PluginInventorySettingsTabInjected>
-
-type Translate = PluginInventorySettingsTabProps['t']
-
-type ViewState =
-  | { readonly status: 'loading' }
-  | { readonly status: 'error' }
-  | { readonly status: 'ready'; readonly snapshot: PluginInventorySnapshot }
-
-const PHASE_KEYS = {
-  pending: 'pending',
-  loading: 'loadingPhase',
-  active: 'active',
-  failed: 'failed',
-  unloading: 'unloading',
-} satisfies Record<Exclude<PluginFiberPhase, null>, PluginInventoryLocaleKey>
-
-/** Localized accessible label for one root Fiber phase. */
-function phaseLabel(phase: PluginFiberPhase, t: Translate): string {
-  return phase === null ? t('unobserved') : t(PHASE_KEYS[phase])
-}
-
-/** Compact a module specifier without guessing whether its Loader id was generated. */
-function moduleShortName(moduleName: string): string {
-  const unscoped = moduleName.startsWith('@') ? moduleName.slice(moduleName.indexOf('/') + 1) : moduleName
-  return unscoped
-    .replace(/^cordis:/, '')
-    .replace(/^cordis-plugin-/, '')
-    .replace(/^dsh-(?:host-|client-)?/, '')
-}
-
-/** Display an entry identity without the composition-only `include:` marker. */
-function entrySubtitle(entryId: string): string {
-  return entryId.replace(/^include:/, '')
-}
-
-/** Whether one row's module name or entry id matches the catalog query. */
-function matches(moduleName: string, entryId: string | null, normalizedQuery: string): boolean {
-  if (normalizedQuery.length === 0) return true
-  return [moduleName, ...entryId === null ? [] : [entryId]]
-    .some(value => value.toLocaleLowerCase().includes(normalizedQuery))
-}
-
-/** The roster row shown when the preset switcher has no explicit choice. */
-function fallbackPreset(presets: readonly AgentPresetGroup[]): AgentPresetGroup | undefined {
-  return presets.find(preset => preset.isDefault) ?? presets[0]
-}
-
-/** The switcher's display label for one preset. */
-function presetLabel(preset: AgentPresetGroup, t: Translate, presetName: (preset: AgentPresetGroup) => string): string {
-  const name = presetName(preset)
-  if (preset.broken !== undefined) return t('presetOptionBroken', { name })
-  if (preset.isDefault) return t('presetOptionDefault', { name })
-  return name
-}
 
 /** One expandable plugin card; the caller owns the trailing status content. */
 function PluginCard({ rowKey, moduleName, entryId, trailing, ariaLabel, failed, expanded, onToggle, children }: {
@@ -158,17 +99,6 @@ function CardFacts({ moduleName, moduleLabel, entryId, facts }: {
   )
 }
 
-/* `pending` is the only phase with no work under way. `loading` and
- * `unloading` are both live transitions the Host is running — an async
- * disposer can hold `unloading` for a while — so both animate. */
-const PHASE_DOT_STATES = {
-  pending: 'idle',
-  loading: 'ongoing',
-  active: 'done',
-  failed: 'error',
-  unloading: 'ongoing',
-} as const satisfies Record<NonNullable<PluginFiberPhase>, StateDotState>
-
 /** Status dot naming a live root-fiber phase; rows with no live fiber show none. */
 function PhaseDot({ phase, t }: { readonly phase: NonNullable<PluginFiberPhase>; readonly t: Translate }): ReactNode {
   const status = phaseLabel(phase, t)
@@ -179,17 +109,6 @@ function PhaseDot({ phase, t }: { readonly phase: NonNullable<PluginFiberPhase>;
     </span>
   )
 }
-
-/** Enablement states one inventory row can report. */
-type EnablementKind = 'enabled' | 'disabled' | 'conditional' | 'preset' | 'failed'
-
-const TAG_TONES = {
-  enabled: 'success',
-  disabled: 'neutral',
-  conditional: 'warning',
-  preset: 'info',
-  failed: 'danger',
-} as const satisfies Record<EnablementKind, TagTone>
 
 /** Enablement tag; `kind` selects the palette. */
 function StateTag({ kind, label }: { readonly kind: EnablementKind; readonly label: string }): ReactNode {
@@ -224,18 +143,7 @@ export function PluginInventorySettingsTab({ list, presetName, t }: PluginInvent
   const selected = presets.find(preset => preset.id === chosenPreset) ?? fallbackPreset(presets)
 
   /** Presets that actually enable a module, keyed by module name. */
-  const enabledIn = useMemo(() => {
-    const found = new Map<string, [AgentPresetGroup, ...AgentPresetGroup[]]>()
-    for (const preset of presets) {
-      for (const row of preset.rows) {
-        if (row.enabled !== true) continue
-        const groups = found.get(row.moduleName)
-        if (groups === undefined) found.set(row.moduleName, [preset])
-        else if (!groups.includes(preset)) groups.push(preset)
-      }
-    }
-    return found
-  }, [presets])
+  const enabledIn = useMemo(() => groupEnabledIn(presets), [presets])
 
   const entries = snapshot?.entries ?? []
   const failedEntries: PluginInventoryEntry[] = []

@@ -8,7 +8,7 @@ import { resolveSlotLabel } from '@deepseek-ai/dsh-client-ui-slots'
 import { usePinnedBrowserLanguages } from '@deepseek-ai/dsh-client-test-runtime'
 import { apply, inject, NS } from '../src/client/index.ts'
 import { PluginInventorySettingsTab } from '../src/client/PluginInventorySettingsTab.tsx'
-import type { PluginInventorySettingsTabInjected } from '../src/client/PluginInventorySettingsTab.tsx'
+import type { PluginInventorySettingsTabInjected } from '../src/model/inventory-presentation.ts'
 import { apply as hostApply } from '../src/index.ts'
 
 usePinnedBrowserLanguages('zh-CN')

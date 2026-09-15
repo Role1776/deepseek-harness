@@ -9,11 +9,12 @@ import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
 import type {} from '@deepseek-ai/dsh-client-ui-agent-preset/client'
 // Inline-safe shared fold: shipped ids map to dictionary keys in one home.
 import { presetDisplayText } from '@deepseek-ai/dsh-agent-presets/display'
-import { PluginInventorySettingsTab, type PluginInventorySettingsTabInjected } from './PluginInventorySettingsTab.tsx'
-import { en, zh, type PluginInventoryLocaleKey } from './locales.ts'
+import { PluginInventorySettingsTab } from './PluginInventorySettingsTab.tsx'
+import type { PluginInventorySettingsTabInjected } from '../model/inventory-presentation.ts'
+import { en, zh, type PluginInventoryLocaleKey } from '../model/locales.ts'
 
-export type { PluginInventorySettingsTabInjected, PluginInventorySettingsTabProps } from './PluginInventorySettingsTab.tsx'
-export type { PluginInventoryLocaleKey } from './locales.ts'
+export type { PluginInventorySettingsTabInjected, PluginInventorySettingsTabProps } from '../model/inventory-presentation.ts'
+export type { PluginInventoryLocaleKey } from '../model/locales.ts'
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {
   interface LocaleNamespaceMap {

@@ -5,8 +5,8 @@ import { PluginInventorySettingsTab } from '../src/client/PluginInventorySetting
 import type {
   PluginInventorySettingsTabInjected,
   PluginInventorySettingsTabProps,
-} from '../src/client/PluginInventorySettingsTab.tsx'
-import { en, type PluginInventoryLocaleKey } from '../src/client/locales.ts'
+} from '../src/model/inventory-presentation.ts'
+import { en, type PluginInventoryLocaleKey } from '../src/model/locales.ts'
 
 afterEach(cleanup)
 

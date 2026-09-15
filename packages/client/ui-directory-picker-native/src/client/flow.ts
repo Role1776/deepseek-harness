@@ -7,12 +7,7 @@ import { useEffect, useRef } from 'react'
 import type { ReactElement } from 'react'
 // Type-only: the owner contract of the directory-flow holes.
 import type { DirectoryFlowOwnerProps } from '@deepseek-ai/dsh-client-ui-workspace/client'
-
-/** Injected face: the wire call the flow drives (bound in apply's closure). */
-export interface NativeFlowInjected {
-  /** Ask the local Host to open its native single-directory chooser. */
-  pick: () => Promise<string | null>
-}
+import type { NativeFlowInjected } from '../model/slots.ts'
 
 /**
  * Renderless flow occupant: each rising `open` edge runs exactly one pick and

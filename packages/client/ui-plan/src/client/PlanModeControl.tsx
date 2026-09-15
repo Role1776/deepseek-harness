@@ -5,6 +5,7 @@ import { IconCloseFill14 } from '@deepseek-ai/dsh-client-ui-primitives'
 // its {locked} owner share).
 import type {} from '@deepseek-ai/dsh-client-ui-conversation/client'
 import type { PlanChipInjected } from './index.ts'
+import { effectivePlanTarget } from '../model/plan-target.ts'
 import css from './PlanModeControl.module.css'
 
 /** Full plan-seat component props: runtime share (standard kit + locked owner prop) & injected share & the locale seat. */
@@ -30,7 +31,7 @@ export function PlanChip({ useProjection, locked, exitPlanMode, t }: PlanChipPro
   }, [])
 
   if (plan === undefined) return null
-  const target = plan.pending ? !plan.active : plan.active
+  const target = effectivePlanTarget(plan)
   if (!target) return null
 
   const off = (): void => {

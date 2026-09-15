@@ -17,8 +17,8 @@ import { chatViewDefinition } from '@deepseek-ai/dsh-client-ui-chat/src/client/c
 import { GoalCommandInputView } from '../src/client/GoalCommandInputView.tsx'
 import {
   goalCommandInputDefinition, goalCommandText,
-} from '../src/client/goal-command-input.ts'
-import { zh } from '../src/client/locales.ts'
+} from '../src/model/goal-command-input.ts'
+import { zh } from '../src/model/locales.ts'
 
 afterEach(cleanup)
 

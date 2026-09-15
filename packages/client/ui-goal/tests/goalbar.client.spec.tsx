@@ -6,8 +6,8 @@ import type { GoalSnapshot } from '@deepseek-ai/dsh-goal/client'
 import { makeTranslate, RemoteError } from '@deepseek-ai/dsh-client-test-runtime'
 import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts'
 import { GoalBar } from '../src/client/GoalBar.tsx'
-import type { GoalActionResult, GoalBarActions } from '../src/client/slots.ts'
-import { zh } from '../src/client/locales.ts'
+import type { GoalActionResult, GoalBarActions } from '../src/model/slots.ts'
+import { zh } from '../src/model/locales.ts'
 
 const t: Parameters<typeof GoalBar>[0]['t'] = makeTranslate(zh, commonZh)
 

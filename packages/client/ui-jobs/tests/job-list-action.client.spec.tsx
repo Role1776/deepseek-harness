@@ -6,7 +6,7 @@ import type { SessionListState } from '@deepseek-ai/dsh-api-session-controller/c
 import type { SessionJob as JobView } from '@deepseek-ai/dsh-api-session-controller/types'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import { JobListAction, type JobListActionProps } from '../src/client/JobListAction.tsx'
-import { zh } from '../src/client/locales.ts'
+import { zh } from '../src/model/locales.ts'
 
 // Live rows render `now - startedAt`, so every assertion needs a pinned clock.
 beforeEach(() => {

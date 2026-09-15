@@ -14,9 +14,9 @@ import {
   IconCheckOutline16, IconCloseOutline16, IconEditOutline16, IconGoalOutline16,
   IconPauseOutline16, IconPlayOutline16, IconTrashOutline16, Tooltip,
 } from '@deepseek-ai/dsh-client-ui-primitives'
-import type { InjectFace, PropsLocale, TranslateNS } from '@deepseek-ai/dsh-client-ui-slots'
-import type { GoalActionResult, GoalBarActions, GoalBarInjected } from './slots.ts'
-import type { GoalKey } from './locales.ts'
+import type { InjectFace, PropsLocale } from '@deepseek-ai/dsh-client-ui-slots'
+import { goalPhaseLabel, goalShowsPause, goalShowsResume, goalStripVisible } from '../model/goal-presentation.ts'
+import type { GoalActionResult, GoalBarActions, GoalBarInjected } from '../model/slots.ts'
 import css from './GoalBar.module.css'
 
 export interface GoalBarProps extends GoalBarActions {
@@ -24,19 +24,6 @@ export interface GoalBarProps extends GoalBarActions {
   goal: GoalSnapshot | null | undefined
   /** Process-local continuation activation; absent while the live read is pending. */
   activation?: GoalActivation
-}
-
-/** Strip label keys per visible phase; complete goals render nothing. */
-const PHASE_LABELS = {
-  active: 'phase.active',
-  paused: 'phase.paused',
-  blocked: 'phase.blocked',
-} as const satisfies Record<string, GoalKey>
-
-/** Strip label for an active goal using its process-local activation. */
-function activeLabel(activation: GoalActivation | undefined, t: TranslateNS<'goal'>): string {
-  if (activation === 'disarmed') return t('phase.active.disarmed')
-  return t(PHASE_LABELS.active)
 }
 
 export function GoalBar({ goal, activation, onEdit, onPause, onResume, onClear, t }: GoalBarProps & PropsLocale<'goal'>) {
@@ -83,7 +70,7 @@ export function GoalBar({ goal, activation, onEdit, onPause, onResume, onClear, 
   }, [onClear, runAction])
 
   // Loading, absent, and complete goals have no strip at all.
-  if (goal === undefined || goal === null || goal.phase === 'complete' || goal.id === clearedGoalId) return null
+  if (!goalStripVisible(goal, clearedGoalId)) return null
 
   if (editing) {
     return (
@@ -132,9 +119,8 @@ export function GoalBar({ goal, activation, onEdit, onPause, onResume, onClear, 
   }
 
   const title = goal.phase === 'blocked' ? goal.blockedReason?.message : undefined
-  const label = goal.phase === 'active' ? activeLabel(activation, t) : t(PHASE_LABELS[goal.phase])
-  const showResume = goal.phase === 'paused'
-    || (goal.phase === 'active' && activation === 'disarmed')
+  const label = goalPhaseLabel(goal.phase, activation, t)
+  const showResume = goalShowsResume(goal.phase, activation)
   return (
     <div className={css.dock} data-goal-bar>
       <div className={css.bar} title={title}>
@@ -143,7 +129,7 @@ export function GoalBar({ goal, activation, onEdit, onPause, onResume, onClear, 
         <span className={css.objective}>{goal.objective}</span>
         {actionError !== null && <span className={css.error} role="alert">{actionError}</span>}
         <div className={css.actions}>
-          {goal.phase === 'active' && activation === 'armed' && (
+          {goalShowsPause(goal.phase, activation) && (
             <Tooltip label={t('action.pause')} side="bottom" delayMs={500}>
               <button type="button" className={css.iconBtn} disabled={pending} onClick={() => { void runAction(onPause) }} aria-label={t('action.pause')}>
                 <IconPauseOutline16 size={14} />

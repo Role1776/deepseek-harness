@@ -19,9 +19,9 @@ import type {} from '@deepseek-ai/dsh-plan-mode/client'
 import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
 import type {} from '@deepseek-ai/dsh-client-ui-session/client'
 import { PlanChip } from './PlanModeControl.tsx'
-import { en, zh, type PlanKey } from './locales.ts'
+import { en, zh, type PlanKey } from '../model/locales.ts'
 
-export type { PlanKey } from './locales.ts'
+export type { PlanKey } from '../model/locales.ts'
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {
   interface LocaleNamespaceMap {

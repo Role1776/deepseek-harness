@@ -25,18 +25,18 @@ import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
 import type {} from '@deepseek-ai/dsh-client-ui-session/client'
 // Type-only: the `goal` SessionProjectionMap key merge (single source, the domain's pure outlet).
 import type { GoalProjection, GoalRef } from '@deepseek-ai/dsh-goal/client'
-import type { GoalActionResult, GoalBarInjected } from './slots.ts'
-import { createGoalActivationSource } from './activation-source.ts'
+import type { GoalActionResult, GoalBarInjected } from '../model/slots.ts'
+import { createGoalActivationSource } from '../model/activation-source.ts'
 import { GoalDock } from './GoalBar.tsx'
 import { GoalCommandInputView } from './GoalCommandInputView.tsx'
-import { goalCommandInputDefinition } from './goal-command-input.ts'
-import { en, zh, type GoalKey } from './locales.ts'
+import { goalCommandInputDefinition } from '../model/goal-command-input.ts'
+import { en, zh, type GoalKey } from '../model/locales.ts'
 
 export { GoalBar, GoalDock } from './GoalBar.tsx'
 export type {
   GoalActionResult, GoalBarActions,
-} from './slots.ts'
-export type { GoalKey } from './locales.ts'
+} from '../model/slots.ts'
+export type { GoalKey } from '../model/locales.ts'
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {
   interface LocaleNamespaceMap {

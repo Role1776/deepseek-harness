@@ -28,7 +28,7 @@ kind: "package-reference"
 - **正文**：以该 id 为键的 `sidebar.right.pane.tab` slot：strip 下的一行标题行，然后是树。标题行与文档预览（`ui-sidebar-documentpreview`）的相同：根路径，目录部分灰色、最后一段正色，从不省略号截断（比行宽的路径保留末尾、淡出开头），右端是它唯一的控件、重新读取。这一行是复制而非共享，因为插件 bundle 只经平台模块共享运行时代码；待 artifact 与各 slot 的形态定下来后，可以在 `ui-primitives` 放一份供每个 pane 标题行使用。
 - **标签页标题**：以该 id 为键的 `sidebar.right.pane.tab.title` slot：类型标签前的一枚 16px 共享 `FileTypeIcon` 文件夹图标。树本身的行不画这枚图标。
 
-`src/client/` 下七个源文件：`definition.tsx`（类型是什么）、`store.ts`（它保存什么）、`face.ts`（它如何列目录，含 Remote 绑定）、`FilesBody.tsx`（它画什么，含排序与失败行两个辅助函数）、`FilesTitle.tsx`（标签页标题）、`locales.ts`（它说什么）、`index.ts`（接线）。
+无框架逻辑位于 `src/model/`：`store.ts`（它保存什么）、`face.ts`（它如何列目录，含 Remote 绑定）、`locales.ts`（它说什么）、`files-presentation.ts`（条目排序与失败行）。视图保留在 `src/client/`：`definition.tsx`（类型是什么）、`FilesBody.tsx`（它画什么）、`FilesTitle.tsx`（标签页标题）、`index.ts`（接线）。
 
 <a id="the-tree"></a>
 ## 树

@@ -13,17 +13,17 @@
 import { useEffect, useLayoutEffect, useRef } from 'react'
 import type { ReactNode, RefObject } from 'react'
 import clsx from 'clsx'
-import type { RemoteFailure } from '@deepseek-ai/dsh-api-remotes/client'
 import type { PropsLocale, PropsRuntime, PropsStore, TranslateNS } from '@deepseek-ai/dsh-client-ui-slots'
 import {
   FileTypeIcon, IconFolderClose16, IconFolderOpen16, IconRefreshOutline16, classifyFileType,
 } from '@deepseek-ai/dsh-client-ui-primitives'
 import { fileAddressFor, pathPartsOf } from '@deepseek-ai/dsh-util-workspace-path'
 import type { WorkspaceDirectoryEntry } from '@deepseek-ai/dsh-api-workspace-files/types'
-import { childPath } from './face.ts'
-import type { FilesInjected } from './face.ts'
-import type {} from './locales.ts'
-import type { FilesTabState, createFilesStore } from './store.ts'
+import { childPath } from '../model/face.ts'
+import type { FilesInjected } from '../model/face.ts'
+import type {} from '../model/locales.ts'
+import { failureLine, orderEntries } from '../model/files-presentation.ts'
+import type { FilesTabState, createFilesStore } from '../model/store.ts'
 import css from './FilesBody.module.css'
 
 /** The body's composed props: the tab it draws, its store, its face, and its copy. */
@@ -32,40 +32,6 @@ export type FilesBodyProps =
   & PropsStore<ReturnType<typeof createFilesStore>>
   & FilesInjected
   & PropsLocale<'sidebarFiles'>
-
-/** Natural, case-insensitive name order, so `file2` precedes `file10`. */
-const byName = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' })
-
-/**
- * Order one level's entries for display: directories first, then everything
- * else, each group by name. The endpoint's order is a listing fact; this is the
- * reader's.
- * @param entries - the listing as the endpoint returned it.
- * @returns a new array, directories first, then by name within each group.
- */
-export function orderEntries(entries: readonly WorkspaceDirectoryEntry[]): WorkspaceDirectoryEntry[] {
-  return [...entries].sort((left, right) => {
-    const group = Number(right.type === 'directory') - Number(left.type === 'directory')
-    return group !== 0 ? group : byName.compare(left.name, right.name)
-  })
-}
-
-/**
- * Say why a directory could not be listed, in terms of the directory.
- * @param t - namespace-bound translate.
- * @param failure - the settled Remote failure.
- * @returns the line to show under the directory.
- */
-export function failureLine(t: TranslateNS<'sidebarFiles'>, failure: RemoteFailure): string {
-  switch (failure.code) {
-    case 'workspace-file/not-found': return t('error.notFound')
-    case 'workspace-file/outside-workspace': return t('error.outsideWorkspace')
-    case 'workspace-file/not-directory': return t('error.notDirectory')
-    // Carrier and unclassified host failures reach the reader as themselves:
-    // this tree knows nothing useful to add to a transport-level message.
-    default: return t('error.unavailable', { message: failure.message })
-  }
-}
 
 /* jscpd:ignore-start -- the header row is the document preview's (ui-sidebar-documentpreview
    TextPreview `usePathClipped`), copied because a plugin bundle shares runtime code

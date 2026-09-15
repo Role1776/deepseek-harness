@@ -2,8 +2,8 @@
 import { vi } from 'vitest'
 import type { Mock } from 'vitest'
 import type { RemoteResult } from '@deepseek-ai/dsh-api-remotes/client'
-import type { ListWorkspaceDirectory } from '../src/client/face.ts'
-import type { DirLevel } from '../src/client/store.ts'
+import type { ListWorkspaceDirectory } from '../src/model/face.ts'
+import type { DirLevel } from '../src/model/store.ts'
 
 /** The scripted listing: the mock the face receives, and the hand that settles it. */
 export interface ScriptedList {

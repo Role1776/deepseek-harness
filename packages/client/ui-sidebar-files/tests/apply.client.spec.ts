@@ -15,7 +15,7 @@ import { apply, inject } from '../src/client/index.ts'
 import { apply as hostApply } from '../src/index.ts'
 import { FilesBody } from '../src/client/FilesBody.tsx'
 import { FilesTitle } from '../src/client/FilesTitle.tsx'
-import { en, zh } from '../src/client/locales.ts'
+import { en, zh } from '../src/model/locales.ts'
 
 interface Recorded {
   name: string

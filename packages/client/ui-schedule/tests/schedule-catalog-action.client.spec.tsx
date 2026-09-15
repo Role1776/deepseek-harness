@@ -11,10 +11,12 @@ import {
   formatScheduleLocalTime,
   formatScheduleRelative,
   orderScheduleRecords,
+} from '../src/model/schedule-presentation.ts'
+import {
   ScheduleCatalogAction,
   type ScheduleCatalogActionProps,
 } from '../src/client/ScheduleCatalogAction.tsx'
-import { en, zh } from '../src/client/locales.ts'
+import { en, zh } from '../src/model/locales.ts'
 
 const SESSION = 'schedule-session' as SessionId
 const START = Date.parse('2026-08-25T12:00:00.000Z')

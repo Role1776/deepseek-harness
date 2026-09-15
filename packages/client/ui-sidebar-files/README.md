@@ -28,7 +28,7 @@ The right Sidebar's navigator tab type: the session's workspace root as a tree, 
 - **The body** — the keyed `sidebar.right.pane.tab` seat under that id: a header row under the strip, then the tree. The header row is the document preview's (`ui-sidebar-documentpreview`): the root path, its directories greyed and its last segment in full ink, never ellipsized (a path wider than the row keeps its end and fades its start), with the one control, reload, at its right. The row is copied rather than shared because a plugin bundle shares runtime code only through the platform modules; once the artifact and slot surfaces settle, one copy in `ui-primitives` could serve every pane header.
 - **The chip title** — the keyed `sidebar.right.pane.tab.title` seat under that id: a shared `FileTypeIcon` folder glyph at 16px before the type's label. The tree's own rows never draw this sheet.
 
-Seven source files under `src/client/`: `definition.tsx` (the type), `store.ts` (what it keeps), `face.ts` (how it lists, Remote binding included), `FilesBody.tsx` (what it draws, with its ordering and failure-line helpers), `FilesTitle.tsx` (the chip title), `locales.ts` (what it says), and `index.ts` (the wiring).
+Framework-free logic lives under `src/model/`: `store.ts` (what it keeps), `face.ts` (how it lists, Remote binding included), `locales.ts` (what it says), and `files-presentation.ts` (entry ordering and failure lines). Views stay under `src/client/`: `definition.tsx` (the type), `FilesBody.tsx` (what it draws), `FilesTitle.tsx` (the chip title), and `index.ts` (the wiring).
 
 <a id="the-tree"></a>
 ## The tree

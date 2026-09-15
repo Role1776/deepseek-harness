@@ -54,8 +54,9 @@ The browser plugin contributes `schedule-catalog` to `conversation.session.heade
 | File | Role |
 |---|---|
 | [`src/client/index.ts`](src/client/index.ts) | Browser entry: locale registration and Session-header slot contribution |
-| [`src/client/ScheduleCatalogAction.tsx`](src/client/ScheduleCatalogAction.tsx) | Visibility, ordering, formatting, popover, and keyboard behavior |
-| [`src/client/locales.ts`](src/client/locales.ts) | English and Chinese catalog copy |
+| [`src/client/ScheduleCatalogAction.tsx`](src/client/ScheduleCatalogAction.tsx) | Visibility, popover, and keyboard behavior |
+| [`src/model/schedule-presentation.ts`](src/model/schedule-presentation.ts) | Ordering and frequency, local-time, and relative-time formatting |
+| [`src/model/locales.ts`](src/model/locales.ts) | English and Chinese catalog copy |
 | [`src/index.ts`](src/index.ts) | Empty Host apply that keeps the optional browser feature addressable by Loader |
 | — | No runtime invariant companion is published because this read-only client catalog owns no mutable cross-plugin state. |
 

@@ -54,8 +54,9 @@ dsh web --patch apps/cli/config/examples/schedule/cordis.yml
 | 文件 | 职责 |
 |---|---|
 | [`src/client/index.ts`](src/client/index.ts) | 浏览器入口：注册 locale 并贡献会话头部 slot |
-| [`src/client/ScheduleCatalogAction.tsx`](src/client/ScheduleCatalogAction.tsx) | 可见性、排序、格式化、弹层与键盘行为 |
-| [`src/client/locales.ts`](src/client/locales.ts) | 中英文目录文案 |
+| [`src/client/ScheduleCatalogAction.tsx`](src/client/ScheduleCatalogAction.tsx) | 可见性、弹层与键盘行为 |
+| [`src/model/schedule-presentation.ts`](src/model/schedule-presentation.ts) | 排序，以及频率、本地时间、相对时间格式化 |
+| [`src/model/locales.ts`](src/model/locales.ts) | 中英文目录文案 |
 | [`src/index.ts`](src/index.ts) | 空的 Host apply，使 Loader 可以寻址该可选浏览器功能 |
 | — | 不发布运行时不变量伴生入口；这个只读客户端目录不拥有可变的跨插件状态。 |
 

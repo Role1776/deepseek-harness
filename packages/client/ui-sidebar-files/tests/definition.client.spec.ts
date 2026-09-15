@@ -14,7 +14,7 @@ import { sessionFileAddress } from '@deepseek-ai/dsh-util-workspace-path'
 import {
   FILES_ID, FILES_KIND, filesDefinition,
 } from '../src/client/definition.tsx'
-import { zh } from '../src/client/locales.ts'
+import { zh } from '../src/model/locales.ts'
 
 const t = makeTranslate(zh)
 

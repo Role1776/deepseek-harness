@@ -27,7 +27,7 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | ui-primitives | pending |
 | ui-reference | done |
 | ui-renderer | pending |
-| ui-schedule | pending |
+| ui-schedule | done |
 | ui-session | done |
 | ui-settings | pending |
 | ui-settings-general | pending |
@@ -36,7 +36,7 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | ui-settings-plugins | pending |
 | ui-sidebar | pending |
 | ui-sidebar-documentpreview | pending |
-| ui-sidebar-files | pending |
+| ui-sidebar-files | done |
 | ui-sidebar-right | pending |
 | ui-skill | done |
 | ui-slots | pending |
@@ -45,7 +45,7 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | ui-tool | pending |
 | ui-trajectory | pending |
 | ui-user-questions | done |
-| ui-workflow-run | pending |
+| ui-workflow-run | done |
 | ui-workspace | pending |
 
 ## Notes for next session
@@ -60,3 +60,7 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 - **A moved file's own relative imports.** Repointing test paths is not enough: a moved file that imported a sibling (`../locales.ts`, `../draft-store.ts`, `./turn-deliverables.ts`) must repoint those too. In the ui-approval partial move `model/slots.ts` still said `../locales.ts`; only a compile/typecheck or a grep catches it, the purity gate does not.
 - **Split combined view imports.** `import { View, type Injected } from './Foo.tsx'` breaks when the type moves; split into `View` from the view and `type Injected` from `../model/slots.ts`, and repoint that type out of the `index.ts` re-export.
 - **README and JSDoc paths.** Moved-file prose references (`src/client/controller.ts` in ui-open-in-app README/zh, doc-comment `contract/slots.ts` in ui-user-questions index) go stale silently; grep the package README pair and index comments for the old path when a file moves.
+- **Pure helpers inside a `.tsx` view still move.** A formatter or ordering helper defined in a component file (`orderEntries`, `failureLine` in ui-sidebar-files `FilesBody.tsx`) is model code by the convention; extract it to `src/model/` and repoint both the view import and the spec that imported it from the view. The view keeps only the call sites.
+- **A moved locale file owns the namespace merge.** `locales.ts` may hold `declare module '@deepseek-ai/dsh-client-ui-slots'`; after the move, every consumer's `import type {} from './locales.ts'` must become `../model/locales.ts`, or the augmentation silently stops loading for that program.
+- **A constant shared by a moved formatter and the view moves too.** ui-schedule's `SECOND_MS` was defined among the formatters but also drives the view's ticking interval; export it from the model file and import it back rather than duplicating the literal.
+- **Move only framework-free helpers out of a `.tsx`.** The view keeps its `PropsRuntime`/`PropsLocale` props type, CSS imports, and `react-dom` calls (ui-schedule's `createPortal`); the model takes the pure formatters and ordering and imports `TranslateNS` type-only.

@@ -5,9 +5,11 @@
  * the body into the keyed `sidebar.right.pane.tab` seat and the chip title into
  * the keyed `sidebar.right.pane.tab.title` seat, both under the type's `id`.
  *
- * The file split is this package's layering: what the type IS
- * (`definition.tsx`), what it keeps (`store.ts`), how it lists (`face.ts`), what
- * it draws (`FilesBody.tsx`, `FilesTitle.tsx`), what it says (`locales.ts`),
+ * The file split is this package's layering: framework-free logic under
+ * `../model/` — what it keeps (`store.ts`), how it lists (`face.ts`), what it
+ * says (`locales.ts`), and its ordering and failure lines
+ * (`files-presentation.ts`) — and the views under `src/client/`: what the type
+ * IS (`definition.tsx`), what it draws (`FilesBody.tsx`, `FilesTitle.tsx`),
  * and this module, which only wires them together.
  */
 import type { Context as ClientContext } from '@deepseek-ai/cordis'
@@ -16,15 +18,15 @@ import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
 import type {} from '@deepseek-ai/dsh-client-ui-session/client'
 import type {} from '@deepseek-ai/dsh-client-ui-sidebar-right/client'
 import { FILES_ID, filesDefinition } from './definition.tsx'
-import { createList, filesFace } from './face.ts'
+import { createList, filesFace } from '../model/face.ts'
 import { FilesBody } from './FilesBody.tsx'
 import { FilesTitle } from './FilesTitle.tsx'
-import { en, zh } from './locales.ts'
-import { createFilesStore } from './store.ts'
+import { en, zh } from '../model/locales.ts'
+import { createFilesStore } from '../model/store.ts'
 
-export type { SidebarFilesKey } from './locales.ts'
-export type { DirLevel, FilesState, FilesTabState, LevelState } from './store.ts'
-export type { FilesInjected, ListWorkspaceDirectory, WorkspaceFilesListRemote } from './face.ts'
+export type { SidebarFilesKey } from '../model/locales.ts'
+export type { DirLevel, FilesState, FilesTabState, LevelState } from '../model/store.ts'
+export type { FilesInjected, ListWorkspaceDirectory, WorkspaceFilesListRemote } from '../model/face.ts'
 export type { FilesBodyProps } from './FilesBody.tsx'
 
 /** This package's copy namespace. */

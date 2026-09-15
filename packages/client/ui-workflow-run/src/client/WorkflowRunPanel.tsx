@@ -10,16 +10,12 @@ import type { PropsLocale, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots
 import type { SessionListState } from '@deepseek-ai/dsh-api-session-controller/client'
 import { shallowEqual } from '@deepseek-ai/dsh-client-store'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type { WorkflowRunKey } from './locales.ts'
+import type { WorkflowRunKey } from '../model/locales.ts'
 import type {
   WorkflowRunMemberData, WorkflowRunPhaseData, WorkflowRunStatus,
-} from './workflow-definition.ts'
+} from '../model/workflow-definition.ts'
+import type { WorkflowRunInjected } from '../model/slots.ts'
 import css from './WorkflowRunPanel.module.css'
-
-/** Navigation action injected from the plugin's own Session Controller access. */
-export interface WorkflowRunInjected {
-  readonly openSession: (id: SessionId) => void
-}
 
 /** Complete keyed Chat renderer props. */
 export type WorkflowRunPanelProps =

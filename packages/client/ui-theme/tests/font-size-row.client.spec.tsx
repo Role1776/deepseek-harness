@@ -10,7 +10,7 @@ import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
 import { bindSnapshotSelector } from '@deepseek-ai/dsh-client-test-runtime'
 import { FontSizeRow } from '../src/client/FontSizeRow.tsx'
 import type { FontSizeRowComponentProps } from '../src/client/FontSizeRow.tsx'
-import { createFontSizeRowStore } from '../src/client/settings-store.ts'
+import { createFontSizeRowStore } from '../src/model/settings-store.ts'
 
 // Every fixture carries the resource hook the resources plugin merges into GlobalStandardProps.
 const useResource = (() => ({ status: 'none' as const, value: undefined, failure: undefined, reload: () => {} })) as GlobalStandardProps['useResource']

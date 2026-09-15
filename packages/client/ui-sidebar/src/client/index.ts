@@ -1,24 +1,23 @@
 /** Registers the sidebar shell and global panel navigation. */
 import type { Context as ClientContext } from '@deepseek-ai/cordis'
 import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
-import { resolveSlotLabel } from '@deepseek-ai/dsh-client-ui-slots'
-import type { MainPanelId } from '@deepseek-ai/dsh-client-ui-layout/client'
 // Type-only: pulls the locale plugin's Context merge (ctx.locale).
 import type {} from '@deepseek-ai/dsh-client-locale/client'
 // Type-only: pulls the SlotRegistry service merge (ctx.slots).
 import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
 // Type-only: pulls the Session root standard-props merge.
 import type {} from '@deepseek-ai/dsh-client-ui-session/client'
-import type { SidebarPanelMetadata, SidebarRootInjected } from './contract/slots.ts'
+import type { SidebarPanelMetadata, SidebarRootInjected } from '../model/slots.ts'
+import { en, zh, type SidebarKey } from '../model/locales.ts'
+import { panelsEqual, selectPanels } from '../model/panels.ts'
 import { SidebarRoot } from './SidebarRoot.tsx'
-import { en, zh, type SidebarKey } from './locales.ts'
 
 export type {
   SidebarBrandMarkOwnerProps, SidebarBrandNameOwnerProps, SidebarFooterActionOwnerProps,
   SidebarPanelIconOwnerProps, SidebarPanelMetadata,
   SidebarRootComponentProps, SidebarRootInjected, SidebarSectionOwnerProps, SidebarSettingsOwnerProps,
-} from './contract/slots.ts'
-export type { SidebarKey } from './locales.ts'
+} from '../model/slots.ts'
+export type { SidebarKey } from '../model/locales.ts'
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {
   interface LocaleNamespaceMap {
@@ -45,16 +44,8 @@ export function apply(ctx: ClientContext): void {
   ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'ui-sidebar: dictionaries')
   const panels = createSnapshotStore<readonly SidebarPanelMetadata[]>([])
   const syncPanels = (): void => {
-    const next = ctx.slots.entriesOfSlot('sidebar.panellist').map(({ options }) => {
-      // The list registration requires an id; StoredEntry erases the slot kind.
-      const id = options.id as MainPanelId
-      return { id, order: options.order ?? 0, label: resolveSlotLabel(options.label) ?? id }
-    }).sort((a, b) => a.order - b.order)
-    const previous = panels.getSnapshot()
-    if (previous.length === next.length && previous.every((panel, index) => {
-      const candidate = next[index] as SidebarPanelMetadata
-      return panel.id === candidate.id && panel.order === candidate.order && panel.label === candidate.label
-    })) return
+    const next = selectPanels(ctx.slots.entriesOfSlot('sidebar.panellist'))
+    if (panelsEqual(panels.getSnapshot(), next)) return
     panels.set(next)
   }
   ctx.effect(() => ctx.slots.subscribe('sidebar.panellist', syncPanels), 'ui-sidebar: panel entries')

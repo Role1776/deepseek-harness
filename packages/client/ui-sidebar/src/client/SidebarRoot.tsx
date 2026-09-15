@@ -24,7 +24,8 @@ import {
 import type { InjectFace, PropsRenderSlots, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
 import type {
   SidebarPanelMetadata, SidebarRootComponentProps, SidebarRootInjected, SidebarSectionOwnerProps,
-} from './contract/slots.ts'
+} from '../model/slots.ts'
+import { localBuildVersion } from '../model/build-version.ts'
 import css from './SidebarRoot.module.css'
 
 /** Wide-content unmount delay; matches the 150ms wide-content fade-out. */
@@ -37,16 +38,6 @@ const COLLAPSE_SETTLE_MS = 150
  * edge — on the way to the conversation, or around a portalled menu.
  */
 const SCROLLBAR_LINGER_MS = 2000
-
-/** Format complete-build metadata for the local brand badge. */
-function localBuildVersion(): string | undefined {
-  const version = process.env.DSH_CLIENT_VERSION
-  if (version === undefined) return undefined
-  const commit = process.env.DSH_CLIENT_COMMIT_HASH
-  return version
-    + (commit === undefined ? '' : `-${commit}`)
-    + (process.env.DSH_CLIENT_GIT_DIRTY === 'true' ? '-dirty' : '')
-}
 
 type PanelRowProps =
   Pick<SidebarPanelMetadata, 'id' | 'label'>
@@ -82,7 +73,7 @@ function PanelRow({ id, label, wide, usePanelInfo, selectPanel, renderSlot }: Pa
 
 /**
  * Render the sidebar column shell.
- * @param props - composed slot props (runtime share + injected callbacks, contract/slots.ts).
+ * @param props - composed slot props (runtime share + injected callbacks, model/slots.ts).
  * @returns the sidebar element tree.
  */
 export function SidebarRoot({

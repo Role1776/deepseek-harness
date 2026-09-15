@@ -8,9 +8,9 @@
 import type { GlobalStandardProps } from '@deepseek-ai/dsh-client-ui-slots'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { act, cleanup, fireEvent, render } from '@testing-library/react'
-import type { SidebarRootComponentProps, SidebarSectionOwnerProps } from '../src/client/contract/slots.ts'
+import type { SidebarRootComponentProps, SidebarSectionOwnerProps } from '../src/model/slots.ts'
 import { SidebarRoot } from '../src/client/SidebarRoot.tsx'
-import { en } from '../src/client/locales.ts'
+import { en } from '../src/model/locales.ts'
 
 // Every fixture carries the resource hook the resources plugin merges into GlobalStandardProps.
 const useResource = (() => ({ status: 'none' as const, value: undefined, failure: undefined, reload: () => {} })) as GlobalStandardProps['useResource']

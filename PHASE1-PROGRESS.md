@@ -34,14 +34,14 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | ui-settings-models | pending |
 | ui-settings-plugin-inventory | done |
 | ui-settings-plugins | pending |
-| ui-sidebar | pending |
+| ui-sidebar | done |
 | ui-sidebar-documentpreview | pending |
 | ui-sidebar-files | done |
 | ui-sidebar-right | pending |
 | ui-skill | done |
-| ui-slots | pending |
+| ui-slots | view-only |
 | ui-subagent | done |
-| ui-theme | pending |
+| ui-theme | done |
 | ui-tool | pending |
 | ui-trajectory | pending |
 | ui-user-questions | done |
@@ -83,3 +83,8 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 - **Split a Service subclass from the controller it publishes instead of leaving the whole file in the view.** ui-settings `settings-scope.ts` held `SettingsScopeBinder extends Service` plus the framework-free `SettingsScopeController`; the controller moved to `model/settings-scope.ts`, and the binder stays. The controller no longer imports the `SettingsSchemaService` class: it takes a structural `SettingsSchemaOps` interface (`validate`/`rehydrate`) the Service satisfies, so model has no client-path dependency. `SchemaNode` moved to `model/schema.ts` and `client/schema.ts` re-exports it.
 - **The generated slot catalog pins slot-source paths.** Moving `contract/slots.ts` to `model/slots.ts` makes `verify-client-catalog` stale; run `pnpm run gen-client-catalog`. The regen also corrected a previously stale `ui-approval` path, so a package-only diff is not guaranteed.
 - **A moved file can carry a branch the full coverage run covers from elsewhere.** ui-settings `settings-mirror.ts`'s `String(error)` arm had no direct test in the package suite; moving it to model exposed it, and one added non-Error rejection case closed it. When a moved file reports a branch gap you did not expect, add the missing direct test rather than reaching for an exemption.
+- **ui-slots is marked view-only, not split.** Its whole tree (`src/index.ts`, `renderer.ts`, `store.ts`) is already framework-free and DOM-free (only `import type { ReactNode }` and type-only cordis/store imports), so the purity gate has nothing to strip. Moving it wholesale to `src/model/` would change the package's `./src/*` public path API and its entrypoint for no coverage gain, because the gate already finds no DOM. Prefer the view-only marking unless a view layer is introduced there.
+- **Extract the plugin body's projection, not its subscriptions.** ui-sidebar's `apply` built its panel rows and equality check inline over `ctx.slots.entriesOfSlot`; the pure projection (`selectPanels`) and comparison (`panelsEqual`) moved to `model/panels.ts`, while the snapshot store, `ctx.slots.subscribe`, and `locale.subscribe` wiring stayed in `client/index.ts`. The moved helpers import `resolveSlotLabel` and the `StoredEntry` type from ui-slots, which is framework-free.
+- **A formatter that reads only build-time env moves.** ui-sidebar `SidebarRoot.tsx`'s `localBuildVersion()` reads `process.env.DSH_CLIENT_*` and nothing DOM; it became `model/build-version.ts`, and the view imports it back. Its existing render-path test cases keep the file at 100%.
+- **Re-base a moved file's own relative imports against its new directory, not its depth.** ui-theme `client/settings-store.ts` imported `../theme-settings.ts`; from `model/settings-store.ts` the correct path is still `../theme-settings.ts` (both are children of `src`), not `../../`. Deriving the specifier from the source directory rather than hand-counting levels avoids this.
+- **A pure domain file can carry types, frozen registries, and validators together.** ui-theme's `client/index.ts` mixed its public token types, the `BUILTIN_THEMES`/`BUILTIN_INSPECT_TOKENS` data, `dynamicToken`, and `validateOverrides` with the DOM-bound `ThemeRuntime` and `bootstrapFontSize`. All the pure parts moved to `model/theme.ts` and the service imports them back; the `declare module` Context/Events merges stayed in the entry because they name the service class.

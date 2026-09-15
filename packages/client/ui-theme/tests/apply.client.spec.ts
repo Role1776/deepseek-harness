@@ -12,7 +12,7 @@ import type { AppearanceRowInjected, FontSizeRowInjected, ThemeRuntime } from '@
 import { THEME_SETTINGS_NAMESPACE, ThemeSettingsSchema } from '../src/theme-settings.ts'
 import { AppearanceRow } from '../src/client/AppearanceRow.tsx'
 import { FontSizeRow } from '../src/client/FontSizeRow.tsx'
-import type { createAppearanceRowStore, createFontSizeRowStore } from '../src/client/settings-store.ts'
+import type { createAppearanceRowStore, createFontSizeRowStore } from '../src/model/settings-store.ts'
 
 // These specs assert the shipped Chinese copy. The lane has no jsdom `window`,
 // so browser-language detection never runs and a fresh LocaleRuntime opens on

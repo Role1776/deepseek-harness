@@ -6,9 +6,9 @@ import type { ReactNode } from 'react'
 import type {
   SidebarFooterActionOwnerProps, SidebarRootComponentProps, SidebarSectionOwnerProps,
   SidebarSettingsOwnerProps,
-} from '../src/client/contract/slots.ts'
+} from '../src/model/slots.ts'
 import { SidebarRoot } from '../src/client/SidebarRoot.tsx'
-import { en } from '../src/client/locales.ts'
+import { en } from '../src/model/locales.ts'
 import { en as commonEn } from '@deepseek-ai/dsh-client-locale/src/locales/en.ts'
 
 // Every fixture carries the resource hook the resources plugin merges into GlobalStandardProps.

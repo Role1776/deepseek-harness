@@ -8,7 +8,7 @@ import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
 import { bindSnapshotSelector } from '@deepseek-ai/dsh-client-test-runtime'
 import { AppearanceRow } from '../src/client/AppearanceRow.tsx'
 import type { AppearanceRowComponentProps } from '../src/client/AppearanceRow.tsx'
-import { createAppearanceRowStore } from '../src/client/settings-store.ts'
+import { createAppearanceRowStore } from '../src/model/settings-store.ts'
 import type { ThemePreference } from '../src/client/index.ts'
 
 // Every fixture carries the resource hook the resources plugin merges into GlobalStandardProps.

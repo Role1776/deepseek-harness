@@ -1,6 +1,6 @@
 /** Appearance and font-size row stores: snapshot-mirror actions and the revision guards. */
 import { describe, expect, it } from 'vitest'
-import { createAppearanceRowStore, createFontSizeRowStore } from '../src/client/settings-store.ts'
+import { createAppearanceRowStore, createFontSizeRowStore } from '../src/model/settings-store.ts'
 
 describe('createAppearanceRowStore', () => {
   it('init shape: system preference with revision at -1', () => {

@@ -14,8 +14,8 @@ import { makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
 import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts'
 import { FEEDBACK_CATEGORIES } from '@deepseek-ai/dsh-command-feedback'
 import { FeedbackDialog } from '../src/client/FeedbackDialog.tsx'
-import type { FeedbackDialogState } from '../src/client/dialog.ts'
-import { en, zh } from '../src/client/locales.ts'
+import type { FeedbackDialogState } from '../src/model/dialog.ts'
+import { en, zh } from '../src/model/locales.ts'
 
 afterEach(cleanup)
 

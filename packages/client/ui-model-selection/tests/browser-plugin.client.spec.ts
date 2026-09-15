@@ -17,9 +17,9 @@ import { createSnapshotStore, type SnapshotStore } from '@deepseek-ai/dsh-client
 import { TestRemote } from '@deepseek-ai/dsh-client-test-runtime'
 import type { ModelSelection, ModelSelectionProjection } from '@deepseek-ai/dsh-api-session-controller/types'
 import type { CommandContribution, PopupSelectSpec, SelectOption } from '@deepseek-ai/dsh-client-ui-commands/client'
-import type { ModelSelectInjected } from '../src/client/slots.ts'
+import type { ModelSelectInjected } from '../src/model/slots.ts'
 import { apply, inject } from '../src/client/index.ts'
-import { zh } from '../src/client/locales.ts'
+import { zh } from '../src/model/locales.ts'
 
 const sid = (k: string): SessionId => k as SessionId
 

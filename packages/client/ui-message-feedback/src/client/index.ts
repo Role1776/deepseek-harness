@@ -23,19 +23,19 @@ import type {} from '@deepseek-ai/dsh-client-ui-chat/client'
 import type {} from '@deepseek-ai/dsh-client-ui-session/client'
 import { FeedbackDialog } from './FeedbackDialog.tsx'
 import { MessageFeedbackActions } from './MessageFeedbackActions.tsx'
-import type { FeedbackDialogInjected, MessageFeedbackInjected } from './slots.ts'
-import { FeedbackSurface } from './surface.ts'
-import { en, zh } from './locales.ts'
+import type { FeedbackDialogInjected, MessageFeedbackInjected } from '../model/slots.ts'
+import { FeedbackSurface } from '../model/surface.ts'
+import { en, zh } from '../model/locales.ts'
 
 export type {
   MessageFeedbackActionFailure, MessageFeedbackActionResult, MessageFeedbackStatus,
   MessageFeedbackView,
-} from './controller.ts'
-export type { FeedbackDialogState, FeedbackDialogTarget, FeedbackSubmit } from './dialog.ts'
+} from '../model/controller.ts'
+export type { FeedbackDialogState, FeedbackDialogTarget, FeedbackSubmit } from '../model/dialog.ts'
 export type {
   FeedbackDialogInjected, FeedbackDialogProps, MessageFeedbackActionProps, MessageFeedbackInjected,
-} from './slots.ts'
-export type { MessageFeedbackKey } from './locales.ts'
+} from '../model/slots.ts'
+export type { MessageFeedbackKey } from '../model/locales.ts'
 
 /** Dictionary namespace owned by this plugin. */
 const NS = 'feedback'

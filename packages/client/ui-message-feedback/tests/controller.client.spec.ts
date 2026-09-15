@@ -12,7 +12,7 @@ import { RemoteError } from '@deepseek-ai/dsh-client-test-runtime'
 import type {
   MessageFeedbackItem, MessageFeedbackVersion,
 } from '@deepseek-ai/dsh-message-feedback/types'
-import { MessageFeedbackController } from '../src/client/controller.ts'
+import { MessageFeedbackController } from '../src/model/controller.ts'
 
 const SESSION = 's-1' as SessionId
 const MSG = 'm-1' as MessageId

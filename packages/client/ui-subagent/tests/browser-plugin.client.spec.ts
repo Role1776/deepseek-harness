@@ -10,12 +10,9 @@ import { SlotRegistry } from '@deepseek-ai/dsh-client-ui-renderer/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import type { ComposerChainProps } from '@deepseek-ai/dsh-client-ui-conversation/client'
 import { apply as applyLocale, inject as localeInject } from '@deepseek-ai/dsh-client-locale/client'
-import {
-  SubagentHeaderLineage, type SubagentCatalogInjected,
-} from '../src/client/SubagentHeaderLineage.tsx'
-import {
-  SubagentReadOnlyComposer, type SubagentReadOnlyMatch,
-} from '../src/client/SubagentReadOnlyComposer.tsx'
+import { SubagentHeaderLineage } from '../src/client/SubagentHeaderLineage.tsx'
+import { SubagentReadOnlyComposer } from '../src/client/SubagentReadOnlyComposer.tsx'
+import type { SubagentCatalogInjected, SubagentReadOnlyMatch } from '../src/model/slots.ts'
 import { apply, inject } from '../src/client/index.ts'
 
 function summary(partial: Partial<SessionSummary> & { id: SessionId }): SessionSummary {

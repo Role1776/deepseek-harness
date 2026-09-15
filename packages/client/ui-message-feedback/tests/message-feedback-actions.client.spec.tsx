@@ -18,8 +18,8 @@ import type {
 import { MessageFeedbackActions } from '../src/client/MessageFeedbackActions.tsx'
 import type {
   MessageFeedbackActionResult, MessageFeedbackView,
-} from '../src/client/controller.ts'
-import { zh } from '../src/client/locales.ts'
+} from '../src/model/controller.ts'
+import { zh } from '../src/model/locales.ts'
 
 afterEach(cleanup)
 

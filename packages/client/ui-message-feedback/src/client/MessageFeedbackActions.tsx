@@ -12,8 +12,8 @@ import {
   IconDislikeFill16, IconDislikeOutline16, IconLikeFill16, IconLikeOutline16, Tooltip,
 } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { MessageFeedbackRating } from '@deepseek-ai/dsh-message-feedback/types'
-import type { MessageFeedbackActionFailure } from './controller.ts'
-import type { MessageFeedbackActionProps } from './slots.ts'
+import type { MessageFeedbackActionFailure } from '../model/controller.ts'
+import type { MessageFeedbackActionProps } from '../model/slots.ts'
 import css from './MessageFeedbackActions.module.css'
 
 /**

@@ -6,8 +6,8 @@
  */
 import { describe, expect, it, vi } from 'vitest'
 import type { MessageId } from '@deepseek-ai/dsh-api-remotes/client'
-import type { MessageFeedbackActionResult } from '../src/client/controller.ts'
-import { FeedbackDialogController, type FeedbackSubmit } from '../src/client/dialog.ts'
+import type { MessageFeedbackActionResult } from '../src/model/controller.ts'
+import { FeedbackDialogController, type FeedbackSubmit } from '../src/model/dialog.ts'
 
 const MSG = 'm-1' as MessageId
 const MESSAGE_TARGET = { kind: 'message', messageId: MSG, rating: 'positive' } as const

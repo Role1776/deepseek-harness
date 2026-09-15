@@ -1,11 +1,7 @@
 import type { PropsLocale, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
-import { NS } from './locales.ts'
+import { NS } from '../model/locales.ts'
+import type { SubagentReadOnlyMatch } from '../model/slots.ts'
 import css from './SubagentReadOnlyComposer.module.css'
-
-/** Why a catalog-addressed conversation cannot accept human input. */
-export interface SubagentReadOnlyMatch {
-  reason: 'one-shot' | 'parent-unavailable'
-}
 
 /** Full chain props after the read-only subagent selector accepts the owner currency. */
 export type SubagentReadOnlyComposerProps =

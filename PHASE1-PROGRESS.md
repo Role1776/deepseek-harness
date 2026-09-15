@@ -19,8 +19,8 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | ui-input-trigger | pending |
 | ui-jobs | done |
 | ui-layout | pending |
-| ui-message-feedback | pending |
-| ui-model-selection | pending |
+| ui-message-feedback | done |
+| ui-model-selection | done |
 | ui-open-in-app | done |
 | ui-permission-presets | done |
 | ui-plan | done |
@@ -40,7 +40,7 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | ui-sidebar-right | pending |
 | ui-skill | done |
 | ui-slots | pending |
-| ui-subagent | pending |
+| ui-subagent | done |
 | ui-theme | pending |
 | ui-tool | pending |
 | ui-trajectory | pending |
@@ -64,3 +64,9 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 - **A moved locale file owns the namespace merge.** `locales.ts` may hold `declare module '@deepseek-ai/dsh-client-ui-slots'`; after the move, every consumer's `import type {} from './locales.ts'` must become `../model/locales.ts`, or the augmentation silently stops loading for that program.
 - **A constant shared by a moved formatter and the view moves too.** ui-schedule's `SECOND_MS` was defined among the formatters but also drives the view's ticking interval; export it from the model file and import it back rather than duplicating the literal.
 - **Move only framework-free helpers out of a `.tsx`.** The view keeps its `PropsRuntime`/`PropsLocale` props type, CSS imports, and `react-dom` calls (ui-schedule's `createPortal`); the model takes the pure formatters and ordering and imports `TranslateNS` type-only.
+- **The plugin body's pure helpers are model code.** A selector or argument builder defined inside `src/client/index.ts` moves to `model/` alongside its result type, and the view/entry import it back (ui-subagent's `selectReadOnlySubagent`, ui-model-selection's row builders).
+- **A removed `import type { X } from '@deepseek-ai/.../client'` may also have been the SlotMap merge.** That single type import can be doing double duty (a draft `ComposerChainProps` import also pulled the ui-conversation slot merge). Replace it with a bare `import type {} from '...'` side-effect import before running the root client program.
+- **`import type { NS }` plus `TranslateNS<typeof NS>` works** for a model formatter: the const-typed namespace can be imported type-only because only `typeof` reads it.
+- **A per-session controller that only uses `ClientContext` type-only and `ctx.remote` moves to model too** (ui-permission-presets `settings-store.ts` precedent); only a cordis `Service` subclass that registers itself stays in `src/client` (ui-model-selection `service.ts`).
+- **Moving a `vitest.config.ts` coverage-exempt file activates the 100% gate.** Some `ui-*/src/client/*.ts` paths sit in the config's GUI-debt `coverage.exclude`; the moment the file lands in `src/model` it is gated, and its error/stale/disposed branches the existing suite never needed now fail. Remove the stale exclude path and add direct unit tests for those branches (ui-model-selection's `model-directory.client.spec.ts`). Do this before trusting the per-package coverage run.
+- **Re-grep views, not just tests, when repointing a moved module.** `import type { X } from './slots.ts'` in a `.tsx` erases at run time so vitest passes, but `tsc` fails the root client program (TS2307 plus cascaded implicit-any errors). Check every `src/client/*.tsx` relative import.

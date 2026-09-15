@@ -18,7 +18,7 @@ import { LocaleRuntime } from '@deepseek-ai/dsh-client-locale/client'
 import type { MessageId } from '@deepseek-ai/dsh-api-remotes/client'
 import type { MessageFeedbackItem, MessageFeedbackVersion } from '@deepseek-ai/dsh-message-feedback/types'
 import type { CommandDecoration } from '@deepseek-ai/dsh-client-ui-commands/client'
-import type { FeedbackDialogInjected, MessageFeedbackInjected } from '../src/client/slots.ts'
+import type { FeedbackDialogInjected, MessageFeedbackInjected } from '../src/model/slots.ts'
 import { apply, inject } from '../src/client/index.ts'
 import { apply as nodeApply } from '../src/index.ts'
 

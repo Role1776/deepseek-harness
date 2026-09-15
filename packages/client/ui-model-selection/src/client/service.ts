@@ -16,8 +16,8 @@ import { Service } from '@deepseek-ai/cordis'
 import type { Context } from '@deepseek-ai/cordis'
 import type {} from '@deepseek-ai/dsh-api-session-controller/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import { ModelCatalogDirectory } from './catalog.ts'
-import { ModelDirectory } from './directory.ts'
+import { ModelCatalogDirectory } from '../model/catalog.ts'
+import { ModelDirectory } from '../model/directory.ts'
 
 declare module '@deepseek-ai/cordis' {
   interface Context {

@@ -3,7 +3,7 @@ import {
 } from 'react'
 import { createPortal } from 'react-dom'
 import {
-  type SessionListState, type SessionProjectionMap, type SessionSummary,
+  type SessionListState, type SessionSummary,
   type SubagentCatalogSnapshot,
 } from '@deepseek-ai/dsh-api-session-controller/client'
 import type { SubagentAddress } from '@deepseek-ai/dsh-subagent/client'
@@ -12,21 +12,17 @@ import {
   IconChevronDownOutline14, IconChevronRightOutline14, IconRefreshOutline14, StateDot,
 } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { PropsLocale, PropsRuntime, TranslateNS } from '@deepseek-ai/dsh-client-ui-slots'
-import { NS } from './locales.ts'
+import { NS } from '../model/locales.ts'
+import type { SubagentCatalogInjected } from '../model/slots.ts'
+import {
+  activityDuration, diagnosticReason, formatDuration, formatExactDuration, formatTokens, tokenTotal,
+} from '../model/subagent-presentation.ts'
+import { indexSubagentDescendants } from '../model/subagent-lineage.ts'
 import type {} from '@deepseek-ai/dsh-client-ui-conversation/client'
 import type {} from '@deepseek-ai/dsh-token-meter/client'
 import css from './SubagentHeaderLineage.module.css'
-import { indexSubagentDescendants } from './subagent-lineage.ts'
 
-type CatalogEntry = SubagentCatalogSnapshot['entries'][number]
 type Catalogs = SessionListState['subagentsByParent']
-
-/** Business actions supplied by the slot registration. */
-export interface SubagentCatalogInjected {
-  openChild: (address: SubagentAddress) => void
-  refresh: (parentSessionId: SessionId) => void
-  setCatalogOpen: (parentSessionId: SessionId, open: boolean) => void
-}
 
 /** Full props for the session-header lineage renderer. */
 export type SubagentHeaderLineageProps =
@@ -47,132 +43,10 @@ interface CatalogRowsProps {
   closeCatalog: () => void
 }
 
-function diagnosticReason(
-  entry: Extract<CatalogEntry, { kind: 'diagnostic' }>,
-  t: TranslateNS<typeof NS>,
-): string {
-  switch (entry.reason) {
-    case 'corrupt': return t('diagnostic.corrupt')
-    case 'unsupported': return t('diagnostic.unsupported')
-    case 'unavailable': return t('diagnostic.unavailable')
-  }
-}
-
 function treeItems(root: HTMLDivElement | null): HTMLElement[] {
   return root === null
     ? []
     : Array.from(root.querySelectorAll<HTMLElement>('[role="treeitem"]:not([aria-disabled="true"])'))
-}
-
-/** Compact token count shared in shape with the conversation stats strip. */
-function formatTokens(value: number, t: TranslateNS<typeof NS>): string {
-  const scaled = (next: number): string => next >= 100
-    ? String(Math.round(next))
-    : String(Math.round(next * 10) / 10)
-  if (value < 1_000) return String(value)
-  if (value < 1_000_000) return t('tokens.thousand', { value: scaled(value / 1_000) })
-  return t('tokens.million', { value: scaled(value / 1_000_000) })
-}
-
-/** Sum the four disjoint durable provider-usage buckets. */
-function tokenTotal(
-  usage: SessionProjectionMap['tokenUsage'] | undefined,
-): number | undefined {
-  return usage === undefined
-    ? undefined
-    : usage.uncachedInputTokens + usage.outputTokens
-      + usage.cacheReadTokens + usage.cacheWriteTokens
-}
-
-/** Exact whole-second active-turn duration for one catalog row. */
-function activityDuration(
-  summary: SessionSummary | undefined,
-  activity: 'running' | 'inactive',
-  now: number,
-): number | undefined {
-  if (summary === undefined) return undefined
-  const timing: SessionProjectionMap['subagentTiming'] | undefined
-    = summary.projectionValues?.subagentTiming
-  if (timing === undefined) return undefined
-  if (timing.active === undefined) return timing.settledMs
-  const end = activity === 'running'
-    ? now
-    : timing.active.through
-  return timing.settledMs + Math.max(0, end - timing.active.since)
-}
-
-interface DurationParts {
-  seconds: number
-  minutes: number
-  hours: number
-  days: number
-  totalMinutes: number
-  totalHours: number
-}
-
-function splitDuration(ms: number): DurationParts {
-  const totalSeconds = Math.floor(Math.max(0, ms) / 1_000)
-  const totalMinutes = Math.floor(totalSeconds / 60)
-  const totalHours = Math.floor(totalMinutes / 60)
-  return {
-    seconds: totalSeconds % 60,
-    minutes: totalMinutes % 60,
-    hours: totalHours % 24,
-    days: Math.floor(totalHours / 24),
-    totalMinutes,
-    totalHours,
-  }
-}
-
-/** Format a duration with decreasing visual precision at larger scales. */
-function formatDuration(ms: number, t: TranslateNS<typeof NS>): string {
-  const { seconds, minutes, hours, days, totalMinutes, totalHours } = splitDuration(ms)
-  if (days >= 365) {
-    const years = Math.floor(days / 365)
-    const months = Math.floor((days % 365) / 30)
-    return months === 0
-      ? t('duration.years', { years })
-      : t('duration.yearsMonths', { years, months })
-  }
-  if (days >= 30) {
-    const months = Math.floor(days / 30)
-    const remainingDays = days % 30
-    return remainingDays === 0
-      ? t('duration.months', { months })
-      : t('duration.monthsDays', { months, days: remainingDays })
-  }
-  if (days > 0) {
-    return hours === 0
-      ? t('duration.days', { days })
-      : t('duration.daysHours', { days, hours })
-  }
-  if (totalHours > 0) {
-    return t('duration.hours', {
-      hours: totalHours,
-      minutes: String(minutes).padStart(2, '0'),
-      seconds: String(seconds).padStart(2, '0'),
-    })
-  }
-  if (totalMinutes > 0) {
-    return t('duration.minutes', {
-      minutes: totalMinutes,
-      seconds: String(seconds).padStart(2, '0'),
-    })
-  }
-  return t('duration.seconds', { seconds })
-}
-
-/** Preserve exact whole seconds for hover and accessible naming. */
-function formatExactDuration(ms: number, t: TranslateNS<typeof NS>): string {
-  const { seconds, minutes, hours, days } = splitDuration(ms)
-  return days === 0
-    ? formatDuration(ms, t)
-    : t('duration.exactDays', {
-      days,
-      hours: String(hours).padStart(2, '0'),
-      minutes: String(minutes).padStart(2, '0'),
-      seconds: String(seconds).padStart(2, '0'),
-    })
 }
 
 const NO_DESCENDANTS = { count: 0, runningCount: 0 } as const

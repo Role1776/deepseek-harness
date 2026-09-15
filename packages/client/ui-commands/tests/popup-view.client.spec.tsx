@@ -10,13 +10,13 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
-import type { SelectOption } from '../src/client/contract.ts'
-import type { PopupSpec, TokenSegment } from '../src/client/popup.ts'
-import { PopupSelectController } from '../src/client/popup.ts'
+import type { SelectOption } from '../src/model/contract.ts'
+import type { PopupSpec, TokenSegment } from '../src/model/popup.ts'
+import { PopupSelectController } from '../src/model/popup.ts'
 import { PopupSelectView } from '../src/client/PopupSelectView.tsx'
 import { makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
 import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts'
-import { zh } from '../src/client/locales.ts'
+import { zh } from '../src/model/locales.ts'
 
 // The framework-injected t seat, stubbed over the zh dictionaries (the default locale).
 const t: Parameters<typeof PopupSelectView>[0]['t'] = makeTranslate(zh, commonZh)

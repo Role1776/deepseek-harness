@@ -14,9 +14,9 @@ import { AgentPresetLabel } from '../src/client/AgentPresetLabel.tsx'
 import type { AgentPresetLabelProps } from '../src/client/AgentPresetLabel.tsx'
 import { AgentPresetSeat } from '../src/client/AgentPresetSeat.tsx'
 import type { AgentPresetSeatProps } from '../src/client/AgentPresetSeat.tsx'
-import type { AgentPresetSettingsState } from '../src/client/settings-store.ts'
-import type { AgentPresetSeatState } from '../src/client/seat-store.ts'
-import { en } from '../src/client/locales.ts'
+import type { AgentPresetSettingsState } from '../src/model/settings-store.ts'
+import type { AgentPresetSeatState } from '../src/model/seat-store.ts'
+import { en } from '../src/model/locales.ts'
 
 afterEach(cleanup)
 

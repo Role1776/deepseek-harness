@@ -8,8 +8,8 @@
 import { describe, expect, it } from 'vitest'
 import type { SessionId } from '@deepseek-ai/dsh-api-remotes/client'
 import { CommandDefinitionId } from '@deepseek-ai/dsh-commands/brand'
-import type { CommandDescriptor } from '../src/client/directory.ts'
-import { CommandDirectory } from '../src/client/directory.ts'
+import type { CommandDescriptor } from '../src/model/directory.ts'
+import { CommandDirectory } from '../src/model/directory.ts'
 
 const sid = (k: string): SessionId => k as SessionId
 const S1 = sid('s1')
@@ -336,5 +336,20 @@ describe('ensureReady (per key)', () => {
     pull(S1, 0).resolve([{ name: 'stale', description: 'loser' }])
     pull(S1, 1).resolve(CMDS)
     await expect(wait).resolves.toEqual(CMDS)
+  })
+
+  it('names a non-Error warmup rejection by its string form', async () => {
+    const { dir, pull } = bench()
+    const wait = dir.ensureReady(S1, signal())
+    pull(S1, 0).reject('gateway down')
+    await expect(wait).rejects.toThrow('command directory warmup failed: gateway down')
+  })
+
+  it('a non-Error abort reason becomes the generic wait-aborted error', async () => {
+    const { dir } = bench()
+    const ac = new AbortController()
+    const wait = dir.ensureReady(S1, ac.signal)
+    ac.abort('superseded')
+    await expect(wait).rejects.toThrow('command directory wait aborted')
   })
 })

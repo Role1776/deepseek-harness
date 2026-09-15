@@ -16,10 +16,10 @@ import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import { RemoteError, TestRemote } from '@deepseek-ai/dsh-client-test-runtime'
 import { IconGoalOutline16 } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { ClientSessionContext, ConsumeTokenRequest, InputTriggerPick, InputTriggerSource, SubmitAttachment } from '@deepseek-ai/dsh-client-ui-input-trigger/client'
-import type { CommandContribution, CommandDecoration, PopupSelectSpec, SelectOption } from '../src/client/contract.ts'
-import type { CommandDescriptor } from '../src/client/directory.ts'
+import type { CommandContribution, CommandDecoration, PopupSelectSpec, SelectOption } from '../src/model/contract.ts'
+import type { CommandDescriptor } from '../src/model/directory.ts'
 import { CommandUiRuntime } from '../src/client/service.ts'
-import { en, zh, type CommandKey } from '../src/client/locales.ts'
+import { en, zh, type CommandKey } from '../src/model/locales.ts'
 
 const sid = (k: string): SessionId => k as SessionId
 

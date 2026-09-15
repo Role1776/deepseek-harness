@@ -9,8 +9,8 @@
 import { describe, expect, it } from 'vitest'
 import type { Context as ClientContext } from '@deepseek-ai/cordis'
 import { RemoteError } from '@deepseek-ai/dsh-client-test-runtime'
-import { AgentPresetSectionController, draftBlocker } from '../src/client/section-store.ts'
-import type { CopyDraft, PresetRow } from '../src/client/section-store.ts'
+import { AgentPresetSectionController, draftBlocker } from '../src/model/section-store.ts'
+import type { CopyDraft, PresetRow } from '../src/model/section-store.ts'
 
 interface FakePreset { trust: 'system' | 'user'; content: string; name?: string }
 interface Recorded { method: string; payload: unknown }

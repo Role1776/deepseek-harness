@@ -20,8 +20,8 @@ import {
 } from '@deepseek-ai/dsh-client-ui-primitives'
 // Type-only: pulls the ui-conversation SlotMap merge (the hero seat).
 import type {} from '@deepseek-ai/dsh-client-ui-conversation/client'
-import type { AgentPresetSeatState } from './seat-store.ts'
-import { presetDisplayText } from './locales.ts'
+import type { AgentPresetSeatState } from '../model/seat-store.ts'
+import { presetDisplayText } from '../model/locales.ts'
 import css from './AgentPresetSeat.module.css'
 
 /** Registration-side business face for the hero chip. */

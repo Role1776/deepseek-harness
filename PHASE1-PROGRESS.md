@@ -4,15 +4,15 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 
 | Package | Status |
 |---|---|
-| ui-agent-preset | pending |
+| ui-agent-preset | done |
 | ui-approval | done |
 | ui-attachment | pending |
 | ui-brand-official | view-only |
 | ui-chat | pending |
-| ui-commands | pending |
+| ui-commands | done |
 | ui-conversation | pending |
 | ui-deliverables | done |
-| ui-directory-picker-browse | pending |
+| ui-directory-picker-browse | done |
 | ui-directory-picker-native | done |
 | ui-dockkit | pending |
 | ui-goal | done |
@@ -70,3 +70,7 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 - **A per-session controller that only uses `ClientContext` type-only and `ctx.remote` moves to model too** (ui-permission-presets `settings-store.ts` precedent); only a cordis `Service` subclass that registers itself stays in `src/client` (ui-model-selection `service.ts`).
 - **Moving a `vitest.config.ts` coverage-exempt file activates the 100% gate.** Some `ui-*/src/client/*.ts` paths sit in the config's GUI-debt `coverage.exclude`; the moment the file lands in `src/model` it is gated, and its error/stale/disposed branches the existing suite never needed now fail. Remove the stale exclude path and add direct unit tests for those branches (ui-model-selection's `model-directory.client.spec.ts`). Do this before trusting the per-package coverage run.
 - **Re-grep views, not just tests, when repointing a moved module.** `import type { X } from './slots.ts'` in a `.tsx` erases at run time so vitest passes, but `tsc` fails the root client program (TS2307 plus cascaded implicit-any errors). Check every `src/client/*.tsx` relative import.
+- **A formerly exempt defensive guard can be genuinely unreachable.** ui-commands `popup.ts`'s `settle()` entry guard (`this.binding !== binding || !s.open || s.submitting`) is always false because `select()` and `confirm()` already enforce it synchronously before the call; no public sequence can trip it. The repo-sanctioned fix is a `/* v8 ignore next -- <reason> */` on the guard, not a `vitest.config.ts` exclusion. Cover the *reachable* uncovered branches with direct unit tests first (late options failure, non-Error failure text, repeat acknowledge, cancel without a confirmation).
+- **A formatter stays in the view when it needs React component values.** ui-commands `presentation.ts` maps built-in host commands to icon components, so only its pure sectioning (`MenuSection`, `SECTION_ROWS`, `sectionRows`) moved to `model/presentation.ts`; the icon face (`builtinRowFace`) stayed in `src/client/presentation.ts`. `CommandDirectory`, `PopupSelectController`, `contract`, `resolution`, and `locales` were fully framework-free and moved whole.
+- **README implementation prose names moved paths.** ui-commands README/zh `## Understand the implementation` named `src/client/contract.ts`, `resolution.ts`, and `presentation.ts`; update both sides and re-record with `pnpm run verify-translation-pairing --write <README.md>`.
+- **Import only the model helpers the view still calls.** After moving ui-directory-picker-browse's pure helpers out of `DirectoryBrowser.tsx`, `draftDirectory` and `levelDirectory` were used only by the moved `readDraft`; importing them into the view failed `tsc` with TS6133. Keep such helpers module-private in the model file and import only what the view reads. The three debounce constants are shared by the model helpers and the view's timers, so they are exported and imported back rather than duplicated.

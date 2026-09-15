@@ -25,13 +25,14 @@ import type {
   CandidateRequest, ClientSessionContext, CommandClaim, PickOutcome, InputTriggerCandidate, InputTriggerPick,
   SubmitAttachment, SubmitEnvelope, SubmitOutcome,
 } from '@deepseek-ai/dsh-client-ui-input-trigger/client'
-import type { CommandContribution, CommandDecoration, CommandUiContract } from './contract.ts'
-import type { CommandDescriptor } from './directory.ts'
-import { CommandDirectory } from './directory.ts'
-import { PopupSelectController } from './popup.ts'
-import { builtinRowFace, sectionRows } from './presentation.ts'
-import { claimToken } from './resolution.ts'
-import type { TokenSegment } from './popup.ts'
+import type { CommandContribution, CommandDecoration, CommandUiContract } from '../model/contract.ts'
+import type { CommandDescriptor } from '../model/directory.ts'
+import { CommandDirectory } from '../model/directory.ts'
+import { PopupSelectController } from '../model/popup.ts'
+import { builtinRowFace } from './presentation.ts'
+import { sectionRows } from '../model/presentation.ts'
+import { claimToken } from '../model/resolution.ts'
+import type { TokenSegment } from '../model/popup.ts'
 
 declare module '@deepseek-ai/cordis' {
   interface Events {

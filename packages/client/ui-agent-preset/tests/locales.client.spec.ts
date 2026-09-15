@@ -1,7 +1,7 @@
 /** Web-localized copy for the four shipped presets and file copy for every other row. */
 
 import { describe, expect, it } from 'vitest'
-import { en, presetDisplayText, zh } from '../src/client/locales.ts'
+import { en, presetDisplayText, zh } from '../src/model/locales.ts'
 
 const translate = (bundle: typeof en) => (key: keyof typeof en): string => bundle[key]
 

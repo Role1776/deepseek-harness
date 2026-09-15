@@ -12,8 +12,8 @@ import { bindSnapshotSelector } from '@deepseek-ai/dsh-client-test-runtime'
 import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
 import { AgentPresetSection } from '../src/client/AgentPresetSection.tsx'
 import type { AgentPresetSectionProps } from '../src/client/AgentPresetSection.tsx'
-import type { AgentPresetSectionState, CopyDraft } from '../src/client/section-store.ts'
-import { en } from '../src/client/locales.ts'
+import type { AgentPresetSectionState, CopyDraft } from '../src/model/section-store.ts'
+import { en } from '../src/model/locales.ts'
 
 afterEach(cleanup)
 

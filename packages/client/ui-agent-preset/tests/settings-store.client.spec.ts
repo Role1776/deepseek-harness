@@ -14,13 +14,13 @@ import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import {
   AGENT_PRESET_SETTINGS_NS, AgentPresetSettingsController,
   writeDefaultPreset, writeModeSelectionEnabled,
-} from '../src/client/settings-store.ts'
+} from '../src/model/settings-store.ts'
 
 /** The roster store over a scripted context. */
 function derivedController(ctx: ClientContext) {
   return new AgentPresetSettingsController(ctx)
 }
-import { AgentPresetSeatController } from '../src/client/seat-store.ts'
+import { AgentPresetSeatController } from '../src/model/seat-store.ts'
 
 type SeatSession = Pick<SessionSummary, 'id' | 'blank' | 'projectionValues'>
 

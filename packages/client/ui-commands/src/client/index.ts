@@ -18,19 +18,19 @@ import type {} from '@deepseek-ai/dsh-client-ui-session/client'
 import { CommandUiRuntime } from './service.ts'
 import type { PopupSelectInjected } from './PopupSelectView.tsx'
 import { PopupSelectView } from './PopupSelectView.tsx'
-import { en, zh, type CommandKey } from './locales.ts'
+import { en, zh, type CommandKey } from '../model/locales.ts'
 
 export { CommandUiRuntime } from './service.ts'
-export { CommandDirectory } from './directory.ts'
-export type { CommandDescriptor, DirectoryStatus } from './directory.ts'
-export { filterOptions, PopupSelectController } from './popup.ts'
-export type { PopupSelectDeps, PopupSpec, PopupState, TokenSegment } from './popup.ts'
+export { CommandDirectory } from '../model/directory.ts'
+export type { CommandDescriptor, DirectoryStatus } from '../model/directory.ts'
+export { filterOptions, PopupSelectController } from '../model/popup.ts'
+export type { PopupSelectDeps, PopupSpec, PopupState, TokenSegment } from '../model/popup.ts'
 export type { PopupSelectInjected, PopupSelectViewProps } from './PopupSelectView.tsx'
 export type {
   ActionSpec, CommandContribution, CommandDecoration, CommandUiContract, CommandUiSpec, PopupSelectSpec,
   SelectConfirmation, SelectOption,
-} from './contract.ts'
-export type { CommandKey } from './locales.ts'
+} from '../model/contract.ts'
+export type { CommandKey } from '../model/locales.ts'
 
 declare module '@deepseek-ai/cordis' {
   interface Context {

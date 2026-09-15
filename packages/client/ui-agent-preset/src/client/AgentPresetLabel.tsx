@@ -15,8 +15,8 @@ import { IconAgentPresetOutline16 } from '@deepseek-ai/dsh-client-ui-primitives'
 // Type-only: pulls the ui-conversation SlotMap merge (the header actions).
 import type {} from '@deepseek-ai/dsh-client-ui-conversation/client'
 import type {} from '@deepseek-ai/dsh-agent-presets/types'
-import type { AgentPresetSettingsState } from './settings-store.ts'
-import { presetDisplayText } from './locales.ts'
+import type { AgentPresetSettingsState } from '../model/settings-store.ts'
+import { presetDisplayText } from '../model/locales.ts'
 import css from './AgentPresetLabel.module.css'
 
 /** Registration-side business face for the header label. */

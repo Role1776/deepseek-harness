@@ -14,8 +14,8 @@ import { useSyncExternalStore } from 'react'
 import clsx from 'clsx'
 import { IconCheckOutline16, RiskConfirmation, useAnchoredMaxHeight } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { PropsLocale } from '@deepseek-ai/dsh-client-ui-slots'
-import { filterOptions } from './popup.ts'
-import type { PopupSelectController } from './popup.ts'
+import { filterOptions } from '../model/popup.ts'
+import type { PopupSelectController } from '../model/popup.ts'
 import css from './PopupSelectView.module.css'
 
 /** Design cap on the card height (same MenuDropdown family as the slash menu). */

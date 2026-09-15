@@ -31,10 +31,10 @@ import { AgentPresetSeat } from './AgentPresetSeat.tsx'
 import type { AgentPresetSeatInjected } from './AgentPresetSeat.tsx'
 import { AgentPresetSection } from './AgentPresetSection.tsx'
 import type { AgentPresetSectionInjected } from './AgentPresetSection.tsx'
-import { AgentPresetSeatController } from './seat-store.ts'
-import { AgentPresetSectionController } from './section-store.ts'
-import { en, zh, type AgentPresetSettingsKey } from './locales.ts'
-import { AGENT_PRESET_SETTINGS_NS, AgentPresetSettingsController } from './settings-store.ts'
+import { AgentPresetSeatController } from '../model/seat-store.ts'
+import { AgentPresetSectionController } from '../model/section-store.ts'
+import { en, zh, type AgentPresetSettingsKey } from '../model/locales.ts'
+import { AGENT_PRESET_SETTINGS_NS, AgentPresetSettingsController } from '../model/settings-store.ts'
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {
   interface LocaleNamespaceMap {
@@ -46,12 +46,12 @@ declare module '@deepseek-ai/dsh-client-ui-slots' {
 export type { AgentPresetLabelInjected, AgentPresetLabelProps } from './AgentPresetLabel.tsx'
 export type { AgentPresetSeatInjected, AgentPresetSeatProps } from './AgentPresetSeat.tsx'
 export type { AgentPresetSectionInjected, AgentPresetSectionProps } from './AgentPresetSection.tsx'
-export type { AgentPresetSeatState } from './seat-store.ts'
+export type { AgentPresetSeatState } from '../model/seat-store.ts'
 export {
   draftBlocker, type AgentPresetSectionState, type CopyDraft, type PresetRow, type PresetView,
-} from './section-store.ts'
-export type { AgentPresetOption, AgentPresetSettingsState } from './settings-store.ts'
-export { AGENT_PRESET_SETTINGS_NS, writeDefaultPreset } from './settings-store.ts'
+} from '../model/section-store.ts'
+export type { AgentPresetOption, AgentPresetSettingsState } from '../model/settings-store.ts'
+export { AGENT_PRESET_SETTINGS_NS, writeDefaultPreset } from '../model/settings-store.ts'
 
 /** Required services (cordis fiber inject). */
 export const inject = [

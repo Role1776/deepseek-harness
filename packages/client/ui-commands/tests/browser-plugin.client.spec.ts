@@ -12,7 +12,7 @@ import { createScope, scopeOf } from '@deepseek-ai/dsh-api-session-controller/cl
 import { SlotRegistry } from '@deepseek-ai/dsh-client-ui-renderer/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import type { InputTriggerSource } from '@deepseek-ai/dsh-client-ui-input-trigger/client'
-import type { CommandUiContract } from '../src/client/contract.ts'
+import type { CommandUiContract } from '../src/model/contract.ts'
 import type { PopupSelectInjected } from '../src/client/PopupSelectView.tsx'
 import { LocaleRuntime } from '@deepseek-ai/dsh-client-locale/client'
 import { apply, CommandUiRuntime, inject } from '../src/client/index.ts'

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
-import type { SelectOption } from '../src/client/contract.ts'
-import type { PopupSpec, TokenSegment } from '../src/client/popup.ts'
-import { filterOptions, PopupSelectController } from '../src/client/popup.ts'
+import type { SelectOption } from '../src/model/contract.ts'
+import type { PopupSpec, TokenSegment } from '../src/model/popup.ts'
+import { filterOptions, PopupSelectController } from '../src/model/popup.ts'
 
 interface Ctx { readonly session: string }
 const CTX_A: Ctx = { session: 'A' }
@@ -387,5 +387,45 @@ describe('dismiss / dispose', () => {
     popup.dismiss({ focusComposer: true })
     expect(deps.focusComposer).toHaveBeenCalledTimes(1)
     expect(popup.state.getSnapshot().open).toBe(false)
+  })
+})
+
+describe('failure text and guard edges', () => {
+  it('surfaces a non-Error options failure as its string form', async () => {
+    const popup = new PopupSelectController<Ctx>(makeDeps())
+    // A thrown string reaches the rejection handler as a non-Error reason.
+    popup.open('theme', spec({ options: () => Promise.resolve().then(() => { throw 'gateway down' }) }), CTX_A, SEGMENT)
+    await Promise.resolve()
+    await Promise.resolve()
+    expect(popup.state.getSnapshot()).toMatchObject({ status: 'failed', error: 'gateway down' })
+  })
+
+  it('a reopen drops a late options failure from the superseded shell', async () => {
+    const popup = new PopupSelectController<Ctx>(makeDeps())
+    let rejectFirst!: (error: unknown) => void
+    popup.open('alpha', spec({
+      options: () => new Promise((_resolve, reject) => { rejectFirst = reject }),
+    }), CTX_A, SEGMENT)
+    popup.open('beta', spec(), CTX_A, SEGMENT)
+    rejectFirst(new Error('stale'))
+    await Promise.resolve()
+    await Promise.resolve()
+    expect(popup.state.getSnapshot()).toMatchObject({ command: 'beta', status: 'ready' })
+  })
+
+  it('acknowledge ignores a repeat of the current checkbox value', async () => {
+    const { popup } = await readyPopup({ options: () => Promise.resolve([GATED]) })
+    await popup.select(0)
+    popup.acknowledge(true)
+    const before = popup.state.getSnapshot()
+    popup.acknowledge(true)
+    expect(popup.state.getSnapshot()).toBe(before)
+  })
+
+  it('cancelConfirmation is a no-op without a pending confirmation', async () => {
+    const { popup } = await readyPopup()
+    const before = popup.state.getSnapshot()
+    popup.cancelConfirmation()
+    expect(popup.state.getSnapshot()).toBe(before)
   })
 })

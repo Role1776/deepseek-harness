@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-09-sidebar-and-preview-interaction-polish.md
-2026-09-09-sidebar-and-preview-interaction-polish.md: eba8bd3a2314c7eaf18cd9982aa4e599665dbc62
-2026-09-09-sidebar-and-preview-interaction-polish.zh.md: 93d88d41e99f50621c80d69d615e39852b715c89
+2026-09-09-sidebar-and-preview-interaction-polish.md: 522a9dff5d52fd0844460e4d8919e9138d8c8ebb
+2026-09-09-sidebar-and-preview-interaction-polish.zh.md: 78960f1d7c39a793cd2156ae066a2a1b2c03a1c1

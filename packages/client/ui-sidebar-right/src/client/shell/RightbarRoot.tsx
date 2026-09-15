@@ -1,6 +1,6 @@
 /** Root-scoped controller for the right Sidebar's Session content. */
 import type { PropsRenderSlots, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
-import type {} from '../contract/slots.ts'
+import type {} from '../../model/slots.ts'
 
 /**
  * Render the Session-bound Sidebar only while the Conversation is selected.

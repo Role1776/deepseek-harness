@@ -9,7 +9,7 @@
  */
 import type {
   ApplyResult, FloatRect, LayoutOp, LayoutState, NodeId, PaneId, PaneNode, TabId,
-} from '../contract/types.ts'
+} from './types.ts'
 import {
   assertNever, entriesOf, findParent, findTabPane, firstDockPaneId, floatIndex, floatRect, getPane, getSplit, getTab,
   insertAt, keysOf, neighbourTabId, normalizeSizes, onlyTabId, paneWithTabs, removeAt, replaceInParent, withNodes, withTabs,

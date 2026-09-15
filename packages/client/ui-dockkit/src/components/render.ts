@@ -3,9 +3,9 @@
  * to the package — the outward contracts are in `adapter.ts`.
  */
 import type { PointerEvent as ReactPointerEvent, ReactNode } from 'react'
-import type { DockLabels, TabMenuExtras, TabRenderer } from '../contract/adapter.ts'
-import type { PaneId, SplitId, TabId } from '../contract/types.ts'
-import type { DropTarget } from '../engine/geometry.ts'
+import type { DockLabels, TabMenuExtras, TabRenderer } from '../model/adapter.ts'
+import type { PaneId, SplitId, TabId } from '../model/types.ts'
+import type { DropTarget } from '../model/geometry.ts'
 
 /** Why a pane's split control is disabled: the pane budget, or too little width for two halves. */
 export type SplitBlock = 'budget' | 'width'

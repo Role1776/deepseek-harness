@@ -3,7 +3,7 @@
  * are the V1 rules the interaction layer enforces before it dispatches, kept
  * pure so they can be asserted without a browser.
  */
-import type { DockZone, LayoutState, SplitAxis, SplitDirection } from '../contract/types.ts'
+import type { DockZone, LayoutState, SplitAxis, SplitDirection } from './types.ts'
 import { assertNever, dockPaneIds } from './tree.ts'
 
 /** V1 caps the docked grid at four panes; floating panes do not count. */

@@ -10,7 +10,7 @@ dockkit 的空间规则在每次 commit 后测量各 pane 的标签条，判断�
 
 ## Decision
 
-当嵌入方选择隐藏被阻止的分屏控件时，空间规则无条件将分屏控件的占位排除在标签条固定部分之外，使读数与控件当前是否挂载无关。[`measurePaneFits`](../../../../packages/client/ui-dockkit/src/components/measure.ts) 接收嵌入方的 `hideSplitWhenBlocked` 选择，测量已渲染控件的盒子加标签条的列间距（`splitControlFootprint`），并作为 [`PaneMeasure.splitControlWidth`](../../../../packages/client/ui-dockkit/src/engine/geometry.ts) 传入，由 `halvesFit` 从固定部分中减去。排除该占位本身也是正确的：窄到无法分屏的一半会隐藏自己的控件，所以这份占位并不属于一半必须承载的内容。将被阻止控件渲染为禁用态的嵌入方不传该值，控件照旧计入固定部分。
+当嵌入方选择隐藏被阻止的分屏控件时，空间规则无条件将分屏控件的占位排除在标签条固定部分之外，使读数与控件当前是否挂载无关。[`measurePaneFits`](../../../../packages/client/ui-dockkit/src/components/measure.ts) 接收嵌入方的 `hideSplitWhenBlocked` 选择，测量已渲染控件的盒子加标签条的列间距（`splitControlFootprint`），并作为 [`PaneMeasure.splitControlWidth`](../../../../packages/client/ui-dockkit/src/model/geometry.ts) 传入，由 `halvesFit` 从固定部分中减去。排除该占位本身也是正确的：窄到无法分屏的一半会隐藏自己的控件，所以这份占位并不属于一半必须承载的内容。将被阻止控件渲染为禁用态的嵌入方不传该值，控件照旧计入固定部分。
 
 ## Alternatives considered
 

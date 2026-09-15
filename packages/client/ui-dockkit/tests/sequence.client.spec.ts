@@ -3,12 +3,12 @@
  * the redo branch a new operation discards.
  */
 import { describe, expect, it } from 'vitest'
-import { replay } from '../src/engine/operations.ts'
-import { createIdMinter, createInitialState } from '../src/engine/initial.ts'
+import { replay } from '../src/model/operations.ts'
+import { createIdMinter, createInitialState } from '../src/model/initial.ts'
 import { asPane, asTab, fileTab, seedTab } from './fixtures.client.ts'
-import { EMPTY_HISTORY, isFocusOp, record, Sequencer } from '../src/engine/sequence.ts'
-import { dockPaneIds, getPane, getSplit } from '../src/engine/tree.ts'
-import type { LayoutState, PaneId, TabId } from '../src/contract/types.ts'
+import { EMPTY_HISTORY, isFocusOp, record, Sequencer } from '../src/model/sequence.ts'
+import { dockPaneIds, getPane, getSplit } from '../src/model/tree.ts'
+import type { LayoutState, PaneId, TabId } from '../src/model/types.ts'
 
 interface Fixture {
   readonly initial: LayoutState

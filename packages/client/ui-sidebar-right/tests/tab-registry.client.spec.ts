@@ -9,9 +9,9 @@
  */
 import { describe, expect, it, vi } from 'vitest'
 import { Context } from '@deepseek-ai/cordis'
-import { SidebarRightTabRegistry } from '../src/client/tab-registry.ts'
-import type { SidebarRightTabDefinition } from '../src/client/tab-registry.ts'
-import { defaultSeed } from '../src/client/contract/seed.ts'
+import { SidebarRightTabRegistry } from '../src/model/tab-registry.ts'
+import type { SidebarRightTabDefinition } from '../src/model/tab-registry.ts'
+import { defaultSeed } from '../src/model/seed.ts'
 
 /** A type recognizing `patterns`, titled by its kind. */
 function typeFor(

@@ -4,7 +4,7 @@
  * React and DOM types so the drop rules can be asserted without a browser; the
  * component layer measures rectangles and calls in.
  */
-import type { DockZone, FloatRect, PaneId } from '../contract/types.ts'
+import type { DockZone, FloatRect, PaneId } from './types.ts'
 import { DOCK_EDGE_FRACTION, zoneAt } from './constraints.ts'
 
 /** A measured rectangle in viewport coordinates. */

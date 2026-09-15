@@ -12,10 +12,10 @@ import { dockPaneIds, getPane } from '@deepseek-ai/dsh-client-ui-dockkit'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import { apply, inject } from '../src/client/index.ts'
 import { intentsFor } from '../src/client/shell/SidebarRight.tsx'
-import type { SidebarRightTabInfo, SidebarRightTabMenuOwnerProps } from '../src/client/contract/slots.ts'
-import type { createSidebarRightStore } from '../src/client/stores.ts'
+import type { SidebarRightTabInfo, SidebarRightTabMenuOwnerProps } from '../src/model/slots.ts'
+import type { createSidebarRightStore } from '../src/model/stores.ts'
 
-declare module '../src/client/contract/params.ts' {
+declare module '../src/model/params.ts' {
   interface SidebarRightResourceParamsMap {
     test: { line?: number; x?: number }
   }

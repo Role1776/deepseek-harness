@@ -3,9 +3,9 @@
  * and ask `halvesFit` whether a split would leave two working halves. Pixels
  * live here and in `geometry.ts`; the engine's planners never see them.
  */
-import type { PaneId } from '../contract/types.ts'
-import { halvesFit, SPLIT_MINIMUMS } from '../engine/geometry.ts'
-import type { HalvesFit, Rect, SplitMinimums } from '../engine/geometry.ts'
+import type { PaneId } from '../model/types.ts'
+import { halvesFit, SPLIT_MINIMUMS } from '../model/geometry.ts'
+import type { HalvesFit, Rect, SplitMinimums } from '../model/geometry.ts'
 
 const NO_RECT: Rect = { x: 0, y: 0, width: 0, height: 0 }
 

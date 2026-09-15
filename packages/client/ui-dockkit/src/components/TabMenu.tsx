@@ -17,7 +17,7 @@
 import { Children, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
 import { createPortal } from 'react-dom'
-import type { DockLabels } from '../contract/adapter.ts'
+import type { DockLabels } from '../model/adapter.ts'
 import css from './dockkit.module.css'
 
 /** Gap between the opening control and the menu, and the viewport margin kept clear. */

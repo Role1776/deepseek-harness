@@ -5,7 +5,7 @@
  */
 import { afterEach, describe, expect, it } from 'vitest'
 import { fitOf, measurePaneFits, paneElements, sameFits } from '../src/components/measure.ts'
-import type { HalvesFit, Rect } from '../src/engine/geometry.ts'
+import type { HalvesFit, Rect } from '../src/model/geometry.ts'
 import { asPane } from './fixtures.client.ts'
 
 /** Give one element a fixed rectangle, as a browser's layout would. */

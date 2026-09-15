@@ -35,7 +35,7 @@ import {
   planDropTab, planDuplicateTab, planFloatTab, planOpenContent, planPlaceTab, planResizeSplit, planSetExpanded,
   planSetMode, planSettle, planSplitPane, planUnfloatPane, record, replay, stepBack, stepForward,
 } from '@deepseek-ai/dsh-client-ui-dockkit'
-import { GUIDE_KIND, pageAddress, type SidebarRightSeed } from './contract/seed.ts'
+import { GUIDE_KIND, pageAddress, type SidebarRightSeed } from './seed.ts'
 
 /** One session's docking surface: the layout, its sequence, and the id counter. */
 export interface SurfaceState {

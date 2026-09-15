@@ -13,14 +13,14 @@ import { Context } from '@deepseek-ai/cordis'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import type { LayoutState, PaneId, TabId } from '@deepseek-ai/dsh-client-ui-dockkit'
 import { dockPaneIds, findTabPane, getPane } from '@deepseek-ai/dsh-client-ui-dockkit'
-import { createSidebarRightController } from '../src/client/service.ts'
-import { SidebarRightTabRegistry } from '../src/client/tab-registry.ts'
-import { createSidebarRightStore } from '../src/client/stores.ts'
-import { guideDefinition } from '../src/client/tabs/guide/definition.ts'
+import { createSidebarRightController } from '../src/model/service.ts'
+import { SidebarRightTabRegistry } from '../src/model/tab-registry.ts'
+import { createSidebarRightStore } from '../src/model/stores.ts'
+import { guideDefinition } from '../src/model/guide-definition.ts'
 
 // The params map is empty in this package; a test-only scheme lets specs hand
 // parameters through the typed `open`/`navigate` faces.
-declare module '../src/client/contract/params.ts' {
+declare module '../src/model/params.ts' {
   interface SidebarRightResourceParamsMap {
     test: { line?: number; x?: number }
   }

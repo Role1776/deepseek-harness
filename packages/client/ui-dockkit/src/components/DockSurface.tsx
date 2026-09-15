@@ -10,14 +10,14 @@
  */
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
-import type { DockIntents, DockLabels, TabMenuExtras, TabRenderer } from '../contract/adapter.ts'
-import type { LayoutState, PaneId, SplitId, TabId } from '../contract/types.ts'
-import { clampSizes, FLOAT_DEFAULT_SIZE, MIN_PANE_FRACTION } from '../engine/constraints.ts'
-import { getSplit, topRightPaneId } from '../engine/tree.ts'
-import type { DropTarget, HalvesFit } from '../engine/geometry.ts'
+import type { DockIntents, DockLabels, TabMenuExtras, TabRenderer } from '../model/adapter.ts'
+import type { LayoutState, PaneId, SplitId, TabId } from '../model/types.ts'
+import { clampSizes, FLOAT_DEFAULT_SIZE, MIN_PANE_FRACTION } from '../model/constraints.ts'
+import { getSplit, topRightPaneId } from '../model/tree.ts'
+import type { DropTarget, HalvesFit } from '../model/geometry.ts'
 import {
   containsPoint, dividerSizes, floatRectAt, insertionIndex, passedThreshold, zoneInRect,
-} from '../engine/geometry.ts'
+} from '../model/geometry.ts'
 import { fitOf, measurePaneFits, paneElements, sameFits } from './measure.ts'
 import { useGesture } from './pointer.ts'
 import { PaneTree, type SizePreview } from './PaneTree.tsx'

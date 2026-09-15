@@ -14,7 +14,7 @@ import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
 import type { IconProps } from '@deepseek-ai/dsh-client-ui-primitives'
 import { GuideBody } from '../src/client/tabs/guide/GuideBody.tsx'
 import type { GuideBodyProps } from '../src/client/tabs/guide/GuideBody.tsx'
-import type { SidebarRightGuideBox } from '../src/client/tab-registry.ts'
+import type { SidebarRightGuideBox } from '../src/model/tab-registry.ts'
 import { bindSnapshotSelector } from '@deepseek-ai/dsh-client-test-runtime'
 import css from '../src/client/tabs/guide/GuideBody.module.css'
 

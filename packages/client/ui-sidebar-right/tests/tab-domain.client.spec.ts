@@ -10,12 +10,12 @@ import { describe, expect, it, vi } from 'vitest'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import type { LayoutState, TabId } from '@deepseek-ai/dsh-client-ui-dockkit'
 import { DockController, getPane } from '@deepseek-ai/dsh-client-ui-dockkit'
-import { TabDomain } from '../src/client/tab-domain.ts'
-import type { SidebarRightNavigator } from '../src/client/tab-domain.ts'
+import { TabDomain } from '../src/model/tab-domain.ts'
+import type { SidebarRightNavigator } from '../src/model/tab-domain.ts'
 
 // The params map is empty in this package; a test-only scheme lets specs hand
 // parameters through the typed `open`/`navigate` faces.
-declare module '../src/client/contract/params.ts' {
+declare module '../src/model/params.ts' {
   interface SidebarRightResourceParamsMap {
     test: { line?: number; x?: number }
   }

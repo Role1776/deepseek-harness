@@ -14,7 +14,7 @@
  */
 import type {
   DockMode, DockZone, FloatRect, LayoutOp, LayoutState, PaneId, SplitId, TabId,
-} from '../contract/types.ts'
+} from './types.ts'
 import { canSplit } from './constraints.ts'
 import { createIdMinter, createInitialState, type IdMinter, type TabFactory } from './initial.ts'
 import {

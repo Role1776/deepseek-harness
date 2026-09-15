@@ -28,46 +28,46 @@ import type { ILayout } from '@deepseek-ai/dsh-client-ui-layout/client'
 import type {} from '@deepseek-ai/dsh-client-ui-layout/client'
 import type {} from '@deepseek-ai/dsh-client-ui-conversation/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type {} from './contract/slots.ts'
+import type {} from '../model/slots.ts'
 import { GuideBody, type GuideInjected } from './tabs/guide/GuideBody.tsx'
 import { GuideTitle } from './tabs/guide/GuideTitle.tsx'
 import { ExpandButton } from './shell/ExpandButton.tsx'
 import { RightbarSeat, type SidebarRightInjected } from './shell/SidebarRight.tsx'
 import { RightbarRoot } from './shell/RightbarRoot.tsx'
-import { createSidebarRightController, type SidebarRightController } from './service.ts'
-import { SidebarRightTabRegistry } from './tab-registry.ts'
-import { createSidebarRightStore } from './stores.ts'
-import { en, zh } from './locales.ts'
-import { GUIDE_ID, guideDefinition } from './tabs/guide/definition.ts'
+import { createSidebarRightController, type SidebarRightController } from '../model/service.ts'
+import { SidebarRightTabRegistry } from '../model/tab-registry.ts'
+import { createSidebarRightStore } from '../model/stores.ts'
+import { en, zh } from '../model/locales.ts'
+import { GUIDE_ID, guideDefinition } from '../model/guide-definition.ts'
 import { guideTabInfoFactory, tabInfoFactory } from './tab-info.ts'
 import type { TabId } from '@deepseek-ai/dsh-client-ui-dockkit'
-import { defaultSeed } from './contract/seed.ts'
+import { defaultSeed } from '../model/seed.ts'
 
 export type { RightbarSeatProps, SidebarRightInjected, SidebarRightPresentation } from './shell/SidebarRight.tsx'
 export type { GuideBodyProps, GuideInjected } from './tabs/guide/GuideBody.tsx'
 export type { ExpandButtonProps } from './shell/ExpandButton.tsx'
-export type { SidebarRightState, SurfaceState } from './stores.ts'
+export type { SidebarRightState, SurfaceState } from '../model/stores.ts'
 export type {
   ISidebarRight, SidebarRightBinding, SidebarRightOpenResourceOptions, SidebarRightOpenTabOptions,
   SidebarRightPlacement, SurfaceActions,
-} from './service.ts'
+} from '../model/service.ts'
 export type {
   SidebarRightGuideBox, SidebarRightGuideEntry, SidebarRightTabClaim, SidebarRightTabDefinition,
   SidebarRightTabPriority,
-} from './tab-registry.ts'
+} from '../model/tab-registry.ts'
 export type {
   SidebarRightTabInfo, SidebarRightTabInjected, UseSidebarRightTabInfo, SidebarRightTabActions,
   SidebarRightTabMenuOwnerProps, SidebarRightTabNavigation, SidebarRightTabPlacement,
-} from './contract/slots.ts'
+} from '../model/slots.ts'
 export type {
   SidebarRightNavigationParams, SidebarRightResourceParams, SidebarRightResourceParamsMap,
   SidebarRightTabParams, SidebarRightTabParamsFor, SidebarRightTabParamsMap,
-} from './contract/params.ts'
+} from '../model/params.ts'
 // The layout ids and rectangle the navigation face takes, so a caller needs no import from the kit.
 export type { FloatRect, PaneId, TabId, TabRecord } from '@deepseek-ai/dsh-client-ui-dockkit'
-export type { PinResource, SidebarRightNavigator, TabOccurrence } from './tab-domain.ts'
-export type { SidebarRightKey } from './locales.ts'
-export type { OpenContentIntent } from './stores.ts'
+export type { PinResource, SidebarRightNavigator, TabOccurrence } from '../model/tab-domain.ts'
+export type { SidebarRightKey } from '../model/locales.ts'
+export type { OpenContentIntent } from '../model/stores.ts'
 
 /** This package's copy namespace. */
 const NS = 'sidebarRight'

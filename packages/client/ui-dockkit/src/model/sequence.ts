@@ -14,7 +14,7 @@
  * in an external store needs; `Sequencer` is a thin mutable wrapper over exactly
  * those functions, for an embedder that would rather hold the state here.
  */
-import type { FocusOpType, LayoutOp, LayoutState } from '../contract/types.ts'
+import type { FocusOpType, LayoutOp, LayoutState } from './types.ts'
 import { applyOp } from './operations.ts'
 
 /** One recorded intent: its operations, and the operations that undo them all. */

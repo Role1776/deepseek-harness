@@ -5,7 +5,7 @@
  */
 import type {
   FloatRect, LayoutNode, LayoutState, NodeId, PaneId, PaneNode, SplitNode, TabId, TabRecord,
-} from '../contract/types.ts'
+} from './types.ts'
 
 /**
  * Reject an unhandled discriminant at the end of a closed switch.

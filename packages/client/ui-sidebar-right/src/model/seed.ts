@@ -10,7 +10,7 @@
  * type would use — the guide is not special in the machinery, only in being
  * always available.
  */
-import type { SidebarRightTabRegistry } from '../tab-registry.ts'
+import type { SidebarRightTabRegistry } from './tab-registry.ts'
 
 /** One pane's initial page, resolved from the current registered guide entries. */
 export interface SidebarRightSeed {

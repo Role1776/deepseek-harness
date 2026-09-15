@@ -14,7 +14,7 @@
  */
 import type {
   DockMode, DockZone, FloatRect, LayoutOp, LayoutState, PaneId, PaneNode, SplitId, TabId, TabRecord,
-} from '../contract/types.ts'
+} from './types.ts'
 import { canSplit, clampSizes, FLOAT_DEFAULT_SIZE, zoneSplit } from './constraints.ts'
 import type { TabFactory } from './initial.ts'
 import { applyOp } from './operations.ts'

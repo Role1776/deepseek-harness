@@ -9,7 +9,7 @@ import { createElement } from 'react'
 import { cleanup, render } from '@testing-library/react'
 import { Context } from '@deepseek-ai/cordis'
 import { makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
-import { SidebarRightTabRegistry } from '@deepseek-ai/dsh-client-ui-sidebar-right/src/client/tab-registry.ts'
+import { SidebarRightTabRegistry } from '@deepseek-ai/dsh-client-ui-sidebar-right/src/model/tab-registry.ts'
 import { sessionFileAddress } from '@deepseek-ai/dsh-util-workspace-path'
 import {
   FILES_ID, FILES_KIND, filesDefinition,

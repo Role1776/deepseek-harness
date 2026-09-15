@@ -11,8 +11,8 @@
 import { describe, expect, it, vi } from 'vitest'
 import type { LayoutState, PaneId, TabId } from '@deepseek-ai/dsh-client-ui-dockkit'
 import { dockPaneIds, findTabPane, getPane, getSplit } from '@deepseek-ai/dsh-client-ui-dockkit'
-import { createSidebarRightStore } from '../src/client/stores.ts'
-import { pageAddress } from '../src/client/contract/seed.ts'
+import { createSidebarRightStore } from '../src/model/stores.ts'
+import { pageAddress } from '../src/model/seed.ts'
 
 const SESSION = 's-test'
 

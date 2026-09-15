@@ -10,7 +10,7 @@ import { useSyncExternalStore } from 'react'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import { ExpandButton } from '../src/client/shell/ExpandButton.tsx'
 import type { ExpandButtonProps } from '../src/client/shell/ExpandButton.tsx'
-import { createSidebarRightStore } from '../src/client/stores.ts'
+import { createSidebarRightStore } from '../src/model/stores.ts'
 
 const SESSION = 's-test' as SessionId
 

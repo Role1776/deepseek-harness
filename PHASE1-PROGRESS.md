@@ -14,7 +14,7 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | ui-deliverables | done |
 | ui-directory-picker-browse | done |
 | ui-directory-picker-native | done |
-| ui-dockkit | pending |
+| ui-dockkit | done |
 | ui-goal | done |
 | ui-input-trigger | done |
 | ui-jobs | done |
@@ -37,7 +37,7 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 | ui-sidebar | done |
 | ui-sidebar-documentpreview | pending |
 | ui-sidebar-files | done |
-| ui-sidebar-right | pending |
+| ui-sidebar-right | done |
 | ui-skill | done |
 | ui-slots | view-only |
 | ui-subagent | done |
@@ -100,3 +100,10 @@ Convention: `packages/client/ui-<name>/src/model/` holds framework-free state, s
 - **Repointing a spec's client import can drop a same-block import that did not match the grep.** ui-settings-models `provider-form.client.spec.tsx` imported `SettingsDescribeMirror` from ui-settings' model on the line between two `../src/client/*` imports; editing only the matched lines silently removed it. Read the whole import block before rewriting, not just grep hits.
 - **An exempt file that moves to `model` becomes gated and its stale exclusion must go.** ui-settings-models `welcome-store.ts` was listed in `vitest.config.ts` `coverage.exclude`; moving it to `model/` left the old path dead and the new model file under the 100% gate, which its existing `welcome-store.client.spec.ts` satisfies (its two pre-existing `v8 ignore` guards carry over). Remove the stale exemption; keep the still-exempt view file (`DeepSeekOnboardingDialog.tsx`).
 - **Extract the exported pure blocks, not every view-local predicate.** ui-settings-models moved its whole pure modules (`store`, `welcome-store`, `operations`, `schema-operations`, `apiKey`, `locales`, `slot-contract.ts` → `model/slots.ts`) plus the exported/standalone helper blocks (`deepseek-models.ts` capacity + validation, `section.ts` selectors/actions, `provider-editor.ts` draft/path-ops/ref). Unexported helpers that only gate one component's own render (e.g. ModelListEditor's `textOf`/`adopt`) stayed in the view. `src/onboarding-copy.ts` stays framework-free at the package root, as `theme-settings.ts` does in ui-theme.
+- **A package whose whole engine is already framework-free moves wholesale.** ui-dockkit's `src/contract/{types,adapter}.ts` and all of `src/engine/*.ts` had no DOM global and only a type-only `ReactNode` import; they moved flat into `src/model/` and the flattening rewrites the engine's own `../contract/types.ts` to `./types.ts`. Only `src/components/` stayed view, and `adapter.ts` staying model is correct because `verify-client-model-purity` admits type-only React imports.
+- **A no-slot static library needs no catalog or `vitest.config.ts` change.** ui-dockkit registers nothing, so `gen-client-catalog` output and the coverage exemptions were untouched; its existing engine/component specs already held every moved model file at 100% with no new tests.
+- **A moved view file's relative depth grows with its nesting.** From `src/client/shell/` the model is `../../model/`, from `src/client/tabs/guide/` it is `../../../model/`, not `../model/`; a prefix-scoped bulk rewrite that forgets the extra level resolves to a nonexistent `src/client/model/` and fails only at collect/typecheck. Check each view directory's depth separately.
+- **A file named `service.ts` is not automatically a cordis Service.** ui-sidebar-right's `service.ts` held only the framework-free `SidebarRightController` and its option interfaces (`SidebarRightBinding`, `SidebarRightPlacement`, `ISidebarRight`), so it moved whole to `model/service.ts`; the `declare module '@deepseek-ai/cordis'` merge and the `apply` body that names it stayed in `src/client/index.ts`.
+- **A slot declaration that owns a hook-context type must bring that interface into model.** `contract/slots.ts` imported `TabHookContext` from the view `tab-info.ts`; the interface moved into `model/slots.ts` (its `hookContext:` field lives there), and the view's React hook factory imports it back. Keeping it in the view would make model depend on a `.ts` that value-imports `react`.
+- **Move a nested guide definition to a distinct flat name.** `tabs/guide/definition.ts` became `model/guide-definition.ts` rather than `model/definition.ts`, so the flat model directory keeps a name that says what is defined.
+- **`./src/*` internals cross-package.** ui-sidebar-files and ui-sidebar-documentpreview specs imported `ui-sidebar-right/src/client/tab-registry.ts`; repoint them to `/src/model/tab-registry.ts` (the `src/client/index.ts` import stays), then `pnpm run gen-client-catalog` repins the five `slots.ts` `source` lines.

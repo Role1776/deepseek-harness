@@ -20,8 +20,8 @@ import type { LayoutState, PaneId, TabId, TabRecord } from '@deepseek-ai/dsh-cli
 import { findTabPane } from '@deepseek-ai/dsh-client-ui-dockkit'
 import { createSnapshotStore, type SnapshotStore } from '@deepseek-ai/dsh-client-store'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type { SidebarRightNavigationParams } from './contract/params.ts'
-import type { SidebarRightTabActions, SidebarRightTabNavigation, SidebarRightTabPlacement } from './contract/slots.ts'
+import type { SidebarRightNavigationParams } from './params.ts'
+import type { SidebarRightTabActions, SidebarRightTabNavigation, SidebarRightTabPlacement } from './slots.ts'
 import type { SidebarRightOpenResourceOptions, SidebarRightOpenTabOptions, SidebarRightPlacement } from './service.ts'
 
 /**
